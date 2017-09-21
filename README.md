@@ -2,7 +2,7 @@
 a PAWI project of HSLU about a clock pendelum analyzer
 
 ## Documentation
-the repo uses a latex documentation located at [docs/](docs/)
+the repo uses a latex documentation located at [docs/](docs/)  
 the pdf is not included and has to be generated with following code
 ```
 ```
