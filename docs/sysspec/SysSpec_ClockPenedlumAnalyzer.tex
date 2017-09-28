@@ -1,0 +1,45 @@
+\documentclass[a4paper, 10pt, fleqn]{article}
+\usepackage{../custom}
+\usepackage{../pageformatting}
+
+\usepackage[ngerman]{babel}
+%mathe packages
+\usepackage{amsmath}
+
+\graphicspath{{pdf/}{images/}}
+
+%============PAGE PROPERTIES=============
+\newcommand{\revisiondate}{\today}
+\newcommand{\documenttitle}{Clock Pendelum Analyzer} % used for title in title and subtitle pages
+\newcommand{\authors}{Tobias Kreienbühl \& Daniel Föhn} %used for title page only
+\newcommand{\subauthors}{im Auftrag der Hochschule Luzern} %used for title page only
+\newcommand{\subtitle}{Sys Spec} % used for title and subtitle pages
+\newcommand{\documentdesc}{System Spezifikationen des \documenttitle}
+
+
+\begin{document}
+	\begin{titlepage}
+		\titleGM
+		\thispagestyle{empty}
+	\end{titlepage}
+	
+	\tableofcontents
+	
+	\clearpage
+	\input{introduction.tex}
+    
+    \clearpage
+    \input{vision.tex}
+    
+    \subtitlepage{System Spezifikation}
+	\input{systemdesign.tex}
+    \clearpage
+    \input{interfaces.tex}
+    
+    \clearpage
+    \listoffigures
+    \listoftables
+\clearpage
+\thispagestyle{empty}
+	\section*{Anhang}
+\end{document}
