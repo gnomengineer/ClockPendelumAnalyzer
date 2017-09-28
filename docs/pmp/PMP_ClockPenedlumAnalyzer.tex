@@ -1,0 +1,68 @@
+\documentclass[a4paper, 10pt, fleqn]{article}
+\usepackage{custom}
+\usepackage{pageformatting}
+
+\usepackage[ngerman]{babel}
+%mathe packages
+\usepackage{amsmath}
+
+\graphicspath{{pdf/}{images/}}
+
+%============PAGE PROPERTIES=============
+\newcommand{\revisiondate}{\today}
+\newcommand{\documenttitle}{Projektname }%usedfortitleintitleandsubtitlepages
+\newcommand{\authors}{mainauthor}%usedfortitlepageonly
+\newcommand{\subauthors}{co-authors}%usedfortitlepageonly
+\newcommand{\subtitle}{PMP}%usedfortitleandsubtitlepages
+\newcommand{\documentdesc}{Ein Projekt Management Plan für ...}
+
+
+\begin{document}
+	\begin{titlepage}
+		\titleGM
+		\thispagestyle{empty}
+	\end{titlepage}
+	
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	
+	\clearpage
+	\section{Einführung}
+		\subsection{Zweck des Dokuments}
+		\subsection{Zielpublikum}
+		\subsection{Versionierung}
+			\begin{table}[h]
+				\centering
+				\begin{tabularx}{\textwidth}{|c|c|X|}
+				\hline
+				\rowcolor{shadecolor}\textbf{Version} & \textbf{Datum} & \textbf{Kommentar}\\ \hline
+				V1.0 & \today & initial file \\ \hline
+				\end{tabularx}
+			\end{table}
+		\subsection{Glossar}
+			\begin{description}
+				\item[Abkürzung]- Erklärung
+			\end{description}
+
+\subtitlepage{Projektmanagement}
+	\section{Projektorganisation}
+		\textit{Wer ist involviert und wer ist zuständig für was}
+	\section{Projektrahmenplan}
+		\textit{Was sind die Meilensteine und Projektziele}
+	\section{Risikomanagement}
+		\textit{Was sind die Projektrisiken}
+	\section{Zeitplanung}
+		\textit{Zeitplan der Sprints und Meilensteine}
+	\section{Test}
+		\subsection{Testumgebung}
+			\textit{in welcher Umgebung wurden die Tests gemacht}
+		\subsection{Testfälle}
+			\textit{Was wird durch das Testen abgedeckt}
+			\subsubsection{Unit Tests}
+			\subsubsection{Blackbox Tests}
+
+\clearpage
+\thispagestyle{empty}
+	\section*{Anhang}
+\end{document}
