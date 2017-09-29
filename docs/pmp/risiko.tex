@@ -1,3 +1,47 @@
-        
-	\section{Risikomanagement}
-		\textit{Was sind die Projektrisiken}
+%!TEX root = PMP_ClockPendelumAnalyzer.tex
+\section{Risikomanagement}
+    In diesem Kapitel werden allfällige Risiken identifiziert, bewertet und verwaltet. 
+    \subsection{Risikobewertung}
+    Im Projekt wurden folgende Risiken identifiziert und anhand der Auswirkung und Eintrittswahrscheinlichkeit bewertet.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|l|l|c|c|c|}
+            \hline
+            \textbf{Nr} & \textbf{Risiko} & \textbf{Auswirkung} & \textbf{Eintrittsw'keit} & \textbf{Risikowert}\\ \hline
+            1 & Fehlerhafte Implementation & 2 & 2 & 4\\ \hline
+            2 & Teammitglied fällt aus & 2 & 2 & 4\\ \hline
+            3 & Dozent fällt aus & 1 & 1 & 1\\ \hline
+            4 & Teamdifferenzen & 2 & 1 & 2\\ \hline
+            5 & Verlust des Programmcodes & 3 & 1 & 3\\ \hline
+            6 & Motivation verschwindet & 2 & 1 & 2\\ \hline
+            7 & Fehlende Kommunikation mit Stakeholder & 3 & 1 & 3\\ \hline
+            8 & RTC Module kommen zu spät & 3 & 1 & 3\\ \hline
+            9 & Eingeschränkte Debugging Funktionalität & 2 & 3 & 6\\ \hline
+            10 & Hardwareteile gehen kaputt & 2 & 2 & 4\\ \hline
+            11 & Projektreport geht verloren & 3 & 1 & 3\\ \hline
+            12 & Testuhr geht verloren & 2 & 1 & 2\\ \hline
+            13 & Umsetzung entspricht nicht den Erwartungen & 3 & 2 & 6\\ \hline
+        \end{tabular}
+        \caption{Tabelle der identifizierten Risiken}
+    \end{table}
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics{Risikomatrix.png}
+        \caption{Risikobewertung in einer 3x3 Matrix}
+    \end{figure}
+    
+    \clearpage
+    \subsection{Massnahmekatalog}
+    Die Risiken mit einem Wert von 6 oder 9 werden als kritisch empfunden und erhalten eine Auflistung von Massnahmen gegen Auswirkung und Eintritt.
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cp{7cm}p{7cm}}
+            \textbf{RisikoNr} & \textbf{Massnahmen gegen Auswirkung} & \textbf{Massnahmen gegen Eintrittsw'keit}\\ \hline
+            9 & \tabitem Alternative IDE für Debugging Zwecke & \tabitem Persönliche Präferenzen zurückstellen \\ \hline 
+            13 & & \tabitem regelmässiges Reporting an die Stakeholder\\
+            & &\tabitem gutes Requirementsengineering\\ \hline
+            
+        \end{tabular}
+        \caption{Massnahmen gegen kritische Risiken}
+    \end{table}
