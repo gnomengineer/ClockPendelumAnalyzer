@@ -100,6 +100,9 @@
   \noalign{\global\setlength{\arrayrulewidthOriginal}{\arrayrulewidth}}%
   \noalign{\global\setlength{\arrayrulewidth}{#1}}\cline{#2}%
   \noalign{\global\setlength{\arrayrulewidth}{\arrayrulewidthOriginal}}}
+
+\newcommand{\header}{\textbf{Work Item}&\textbf{Datum}&\textbf{Zeitaufwand (in Std)}\\\toprule}
+\newcommand{\footer}{\midrule\textbf{Total Arbeitsstunden}&-&\textbf{ }\\\midrule\bottomrule}
 %=============================
 
 \begin{document}
@@ -112,17 +115,15 @@
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{p{9cm}|p{3cm}|c}
-			\textbf{Beschreibung}
-			&
-            \textbf{Datum}
-            &
-			\textbf{Zeitaufwand}\\\toprule
-            &\\\midrule
-			\textbf{Total Arbeitsstunden}
-			&
-            -
-            &
-			\textbf{0h 0min}\\\midrule\bottomrule
+            \header
+            
+            \#3: Die Entwickler haben Zugriff auf PM und VCS& 28.09 & 1.5\\
+            \#5: Der PO hat eine Grundstruktur des Projekt Reports& 28.09 & 2\\
+            \#15: Der Projektreport hat einen Rahmenplan & 28.09 & 0.5\\
+            & 29.09 & 1\\
+            \#7: Das Projekt hat Risiken aufgeführt & 29.09 & 3\\
+            
+            \footer
 		\end{tabular}
 	\end{table}
 \end{document}
