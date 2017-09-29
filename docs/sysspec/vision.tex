@@ -1,12 +1,26 @@
+% !TEX root = SysSpec_ClockPendulumAnalyser.tex
 \section{Ausgangslage}
-\textit{wie war die Ausgangslage}
+Eine Pendeluhr besteht grundsätzlich aus drei Komponenten: dem Energiespeicher (eine Spiralfeder
+oder ein Gewicht), einer Dosiereinheit (Pendel mit Hemmung), welche die Energie portioniert an ein
+Räderwerk abgibt und einer Anzeigeeinheit (das Zifferblatt).\\
+Die Genauigkeit einer Pendeluhr wird wesentlich bestimmt durch das Pendel. Die volle Periode eines Sekundenpendels sollte exakt 2 Sekunden betragen; dann läuft die Uhr exakt. Eine Abweichung von 1 Millisekunde addiert sich im Laufe des Tages auf einen Fehler von ca. 43 Sekunden.\\
+Die genauste, rein mechanische Pendeluhr der Geschichte, die AChF-3, wurde von Fedchenko 1959
+hergestellt. Die durchschnittliche Abweichung pro Tag betrug 0.003 s.\\
+Durch die genaue Messung einer Periode kann der Fehler pro Tag vorausgesagt werden. Durch (a)
+Verlängern oder Verkürzen des Pendels oder durch (b) Vergrössern oder Verkleinern des
+Pendelgewichts kann dann der Fehler minimiert werden. Zur Feinjustierung wird im Falle (b) meist ein
+Gewicht verwendet, welches etwa in halber Pendelhöhe angebracht wird. Beispielsweise wird dazu
+beim Big-Ben in London ein \glqq{}Penny\grqq{} verwendet, welcher zu einer Änderung der Zeit von 0.4 s pro Tag führt.\\
+Bei Pendeluhren in Privathaushalten erfolgt die Ermittlung der Abweichung durch Beobachten der Zeitabweichung über eine gewisse Zeitspanne, z.B. eine Woche oder ein Monat, gegenüber einer Referenz. Anschliessend kann die Nachjustierung erfolgen. 
 
 \section{Ziele}
-\textit{Was ist nach dem Projekt besser}
+Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die genauigkeit des Pendels direkt anzeigen kann.
+Die Genauigkeit der Messungen soll auf Sub-Mikrosekunden genau erfolgen.
+Weiter soll ein Pendel auch über längere Zeit beobachtet werden können.
+Die Messdaten sollen visualisiert werden um die Auswertung der Daten zu erleichtern.
 
 \section{Scope}
-\textit{Wie das System im Umfeld integriert wird}
-
+Die Konstruktion eines Pendels ist nicht teil dieses Projekts
 
 \section{Anforderung}
 \subsection{funktionale Anforderungen}
