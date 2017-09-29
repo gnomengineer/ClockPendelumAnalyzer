@@ -5,8 +5,10 @@
 \usepackage[ngerman]{babel}
 %mathe packages
 \usepackage{amsmath}
+\usepackage{booktabs}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
-\graphicspath{{pdf/}{images/}}
+\graphicspath{{pdf/}{../images/}}
 
 %============PAGE PROPERTIES=============
 \newcommand{\revisiondate}{\today}
@@ -37,7 +39,8 @@
 				\begin{tabularx}{\textwidth}{|c|c|X|}
 				\hline
 				\rowcolor{shadecolor}\textbf{Version} & \textbf{Datum} & \textbf{Kommentar}\\ \hline
-				V1.0 & \today & initial file \\ \hline
+				V1.0 & 28.09.2017 & initiale datei \\ \hline
+                V1.1 & 29.09.2017 & rahmenplan und projektrisiken\\
 				\end{tabularx}
 			\end{table}
 		\subsection{Glossar}
@@ -47,13 +50,71 @@
 
 \subtitlepage{Projektmanagement}
 	\section{Projektorganisation}
-		\textit{Wer ist involviert und wer ist zuständig für was}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=.5\textwidth]{organisation.png}
+            \caption{einfache Projektorganisationsstruktur}
+        \end{figure}
+		\textbf{Entwickler:} Tobias Kreienbühl
+        \begin{itemize}
+            \item Projektplanung
+            \item Entwicklung der Software
+            \item Entwicklung der Mechanik
+            \item Mathematische Umsetzung
+        \end{itemize}
+        \vspace{.5cm}
+        \textbf{Entwickler:} Daniel Föhn
+        \begin{itemize}
+            \item Projektplanung
+            \item Entwicklung der Software
+            \item Entwicklung der Elektronik
+            \item Aufbau der Environment
+        \end{itemize}
+        \vspace{.5cm}
+        \textbf{Auftraggeber:} Josef Bürgler
+        \begin{itemize}
+            \item Anforderungen abnehmen
+            \item 
+        \end{itemize}
+    
+    \clearpage
 	\section{Projektrahmenplan}
-		\textit{Was sind die Meilensteine und Projektziele}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\textwidth]{../../rahmenplan.png}
+            \caption{Rahmenplan mit Phasen, Meilensteine und Sprints}
+        \end{figure}
+        \begin{tabularx}{\textwidth}{lll}
+            \textbf{MS1} & Zeitpunkt: & Freitag 6.10.\\
+            & Artefakte: & \tabitem PMP\\
+            & & \tabitem Entwurf des Grobkonzepts\\
+            & Ergebnisse: & \tabitem definierte Vorgehensart\\
+            & & \tabitem Rahmenplanung\\
+            & & \tabitem Vision (Scope, Ziele etc) im Grobkonzept\\
+            \textbf{MS2} & Zeitpunkt: & Donnerstag 16.11.2017\\
+            & Artefakte & \tabitem Prototyp 1\\
+            & Ergebnisse: & \tabitem lauffähiger 1. Prototyp\\
+            & & \tabitem 80\% der Sys Spec\\
+            \textbf{MS3} & Zeitpunkt: & Donnerstag 14.12.2017\\
+            & Artefakte & \tabitem PMP \\
+            & & \tabitem SysSpec \\
+            & & \tabitem Arbeitsjournal \\
+            & & \tabitem Prototyp 2\\
+            & Ergebnisse: & \tabitem lauffähiger 2. Prototyp\\
+            & & \tabitem fertige System Spezifikation (Projektreport)\\
+            & & \tabitem fertiger PMP\\
+        \end{tabularx}
+    \clearpage
+	\section{Zeitplanung}
+        Das Projekt wird mit einer agilen Zeitplanung mit Hilfe von Sprints durchgeführt. Die Sprints dauern jeweils 2 Wochen
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=.5\textwidth]{sprint_overview.png}
+        \end{figure}
+        
 	\section{Risikomanagement}
 		\textit{Was sind die Projektrisiken}
-	\section{Zeitplanung}
-		\textit{Zeitplan der Sprints und Meilensteine}
+
 	\section{Test}
 		\subsection{Testumgebung}
 			\textit{in welcher Umgebung wurden die Tests gemacht}
