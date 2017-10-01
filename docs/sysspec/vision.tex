@@ -14,19 +14,51 @@ beim Big-Ben in London ein \glqq{}Penny\grqq{} verwendet, welcher zu einer Ände
 Bei Pendeluhren in Privathaushalten erfolgt die Ermittlung der Abweichung durch Beobachten der Zeitabweichung über eine gewisse Zeitspanne, z.B. eine Woche oder ein Monat, gegenüber einer Referenz. Anschliessend kann die Nachjustierung erfolgen. 
 
 \section{Ziele}
-Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die genauigkeit des Pendels direkt anzeigen kann.
-Die Genauigkeit der Messungen soll auf Sub-Mikrosekunden genau erfolgen.
-Weiter soll ein Pendel auch über längere Zeit beobachtet werden können.
+Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die genauigkeit des Pendels direkt anzeigen kann.\\
+Die Genauigkeit der Messungen soll auf (Sub)-Mikrosekunden genau erfolgen.\\
+Weiter sollen die Messdaten eines Pendels auch über längere Zeit beobachtet werden können.\\
 Die Messdaten sollen visualisiert werden um die Auswertung der Daten zu erleichtern.
 
 \section{Scope}
-Die Konstruktion eines Pendels ist nicht teil dieses Projekts
-
+Dieses Projekt beschränkt sich auf das Erstellen von Funktionsmuster (Prototypen) inkl Visualisierung der Messdaten.\\
+Es werden ausschliesslich die folgenden Pendeltypen unterstützt:
+\begin{itemize}
+	\item Einfachpendel
+	\item Doppelpendel
+	\item Kreispendel
+\end{itemize}
+Die Pendellänge muss zwischen 150 und 1000mm liegen\\
+Die Konstruktion eines Pendels ist nicht Teil dieses Projekts.
 \section{Anforderung}
+
 \subsection{funktionale Anforderungen}
-\textit{alle Anforderungen, welche Code benötigen}
+	\begin{itemize}
+		\item Die Messgenauigkeit muss im Mikrosekundenbereich liegen, dies soll über drei 	Messpunkte, also Passierpunkte des Pendels, realisiert werden. Optional sind Nanosekunden anzustrben. Zum Erreichen der Messgenauigkeit soll die quadratische Approximation genutzt werden.
+		\item Die Messvorrichtung darf keinerlei mechanische Eingriffe an dem zu messenden Pendel erfordern und soll hinter dem Pendel angebracht werden können.
+		\item Als Referenzclock soll für Prototyp 1 eine 32kHz RTC\footnote{RTC = Real Time Clock} verwendet werden, für Prototyp 2 eine GPS- disziplinierte 10MHz RTC.
+		\item Die Messdaten müssen über einen Zeitraum von 3 Monaten verfügbar sein und dürfen bei einem Stromunterbruch nicht verloren gehen.
+		\item Die Messdaten müssen in einem Webbrowser visualisiert werden. Es sollen alle gängigen Browser unterstützt werden.
+		\item (Optional) Es soll ein Temperatursensor verwendet werden, um allenfalls den Einfluss der Temperatur auf die Pendelgenauigkeit anzeigen zu können.
+		\item (Optional) Es soll ein Luftfeuchtigkeitssensor verwendet werden können, um auch diesen Einfluss darstellen zu können.
+		\item Die Messvorrichtung muss so gestaltet sein, dass sie auf die Grösse des Pendels angepasst werden kann.
+		\item Der Pendeltyp, der gemessen wird, soll vom Systembenutzer festgelegt werden können.
+		\item Der Zeitbereich der angezeigten Daten soll vom Benutzer gewählt werden können.
+		\item Die Anzeige soll sowohl auf Desktop-PC's / Notebooks, wie auch auf mobilen Devices möglich sein.
+	\end{itemize}
 \subsection{nicht-funktionale Anforderungen}
-\textit{Formulare und GUIs}
+	\begin{itemize}
+		\item Die repräsentation der Daten soll in grafischer und tabellarischer Form erfolgen.
+	\end{itemize}
 
 \section{Resultate}
+Es sind die Folgenden Resultate zu erstellen:
+\begin{itemize}
+	\item[\textbf{R1:}] Hardwaresystem für die Messung des Pendels.
+	\item[\textbf{R2:}] Applikationssoftware auf dem Messsystem.
+	\item[\textbf{R3:}] Applikationssoftware für die Darstellung der Messdaten.
+	\item[\textbf{R4:}] Dokumentation.
+\end{itemize}
+
 \section{Business Case}
+	Basierend auf der manuellen Methode ein Pendel einzustellen, also die Uhr über eine längere Zeit beobachten, Abweichung anhand einer Referenz (z.B. einer Digitalen Funk- oder GPS- Uhr), dem anschliessenden justieren des Pendels und wieder beobachten, kann durch eine genaue Messung eines Pendels der Aufwand, dieses einzustellen, reduziert werden.\\
+	 Weiter können die Messdaten dazu verwendet werden, Einflüsse wie Temperatur und Luftfeuchtigkeit direkt zu berücksichtigen. Dies führt zu einer qualitiativen Verbesserung der Einstellungen.
