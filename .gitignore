@@ -8,5 +8,6 @@ kickoff
 *.synctex.gz
 *.toc
 *.pdf
+!rahmenplan.png
 rahmenplan.*
 *.dia
