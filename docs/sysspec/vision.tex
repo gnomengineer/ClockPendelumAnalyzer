@@ -1,4 +1,4 @@
-% !TEX root = SysSpec_ClockPendulumAnalyser.tex
+%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \section{Ausgangslage}
 Eine Pendeluhr besteht grundsätzlich aus drei Komponenten: dem Energiespeicher (eine Spiralfeder
 oder ein Gewicht), einer Dosiereinheit (Pendel mit Hemmung), welche die Energie portioniert an ein
@@ -33,21 +33,26 @@ Die Konstruktion eines Pendels ist nicht Teil dieses Projekts.
 
 \subsection{funktionale Anforderungen}
 	\begin{itemize}
-		\item Die Messgenauigkeit muss im Mikrosekundenbereich liegen, dies soll über drei 	Messpunkte, also Passierpunkte des Pendels, realisiert werden. Optional sind Nanosekunden anzustrben. Zum Erreichen der Messgenauigkeit soll die quadratische Approximation genutzt werden.
-		\item Die Messvorrichtung darf keinerlei mechanische Eingriffe an dem zu messenden Pendel erfordern und soll hinter dem Pendel angebracht werden können.
-		\item Als Referenzclock soll für Prototyp 1 eine 32kHz RTC\footnote{RTC = Real Time Clock} verwendet werden, für Prototyp 2 eine GPS- disziplinierte 10MHz RTC.
-		\item Die Messdaten müssen über einen Zeitraum von 3 Monaten verfügbar sein und dürfen bei einem Stromunterbruch nicht verloren gehen.
+        \item Die Genauigkeit soll mit einer quadratischen Approximation erfolgen.
+        \item Die Messung soll an 3 verschiedenen Punkten oder wenn möglich an einem Punkt vorgenommen werden.
+        \item Als Referenzclock soll für Prototyp 1 eine 32kHz RTC\footnote{RTC = Real Time Clock} verwendet werden, für Prototyp 2 eine GPS- disziplinierte 10MHz RTC.
+        \item Die Messvorrichtung darf keinerlei mechanische Eingriffe an dem zu messenden Pendel erfordern und soll hinter dem Pendel angebracht werden können.%unklar ob nicht-f oder funktional
+        \item Die Messdaten müssen persistent gespeichert werden.
 		\item Die Messdaten müssen in einem Webbrowser visualisiert werden. Es sollen alle gängigen Browser unterstützt werden.
-		\item (Optional) Es soll ein Temperatursensor verwendet werden, um allenfalls den Einfluss der Temperatur auf die Pendelgenauigkeit anzeigen zu können.
-		\item (Optional) Es soll ein Luftfeuchtigkeitssensor verwendet werden können, um auch diesen Einfluss darstellen zu können.
 		\item Die Messvorrichtung muss so gestaltet sein, dass sie auf die Grösse des Pendels angepasst werden kann.
 		\item Der Pendeltyp, der gemessen wird, soll vom Systembenutzer festgelegt werden können.
 		\item Der Zeitbereich der angezeigten Daten soll vom Benutzer gewählt werden können.
 		\item Die Anzeige soll sowohl auf Desktop-PC's / Notebooks, wie auch auf mobilen Devices möglich sein.
+        
+		\item (Optional) Es soll ein Temperatursensor verwendet werden, um allenfalls den Einfluss der Temperatur auf die Pendelgenauigkeit anzeigen zu können.
+        \item (Optional) Es soll ein Luftfeuchtigkeitssensor verwendet werden können, um auch diesen Einfluss darstellen zu können.
 	\end{itemize}
 \subsection{nicht-funktionale Anforderungen}
 	\begin{itemize}
+		\item Die Messgenauigkeit muss im Mikrosekundenbereich liegen
+        \item Die Messdaten müssen über einen Zeitraum von 3 Monaten verfügbar sein und dürfen bei einem Stromunterbruch nicht verloren gehen.
 		\item Die repräsentation der Daten soll in grafischer und tabellarischer Form erfolgen.
+        \item (Optional) Die Messgenauigkeit muss im Nanosekundenbereich liegen.
 	\end{itemize}
 
 \section{Resultate}
