@@ -11,3 +11,8 @@ kickoff
 *.dia
 docs/README
 pcb/
+cmake-build-debug
+CMakeLists.txt
+.idea
+README.md
+LICENSE
