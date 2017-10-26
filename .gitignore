@@ -10,3 +10,4 @@ kickoff
 *.pdf
 *.dia
 docs/README
+pcb/
