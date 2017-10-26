@@ -1,0 +1,58 @@
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include "include/GPIO.h"
+
+using namespace std;
+
+GPIO::GPIO() {
+    this->m_pin = "4";
+    this->m_gpioPath = "/sys/class/gpio/gpio"+ m_pin + "/";
+    exportPin();
+}
+
+GPIO::GPIO(string pin)
+{
+    this->m_pin = pin;
+    this->m_gpioPath = "/sys/class/gpio/gpio"+ m_pin + "/";
+    exportPin();
+}
+
+GPIO::~GPIO()
+{ 
+    GPIOFileWriter gpio("/sys/class/gpio/unexport");
+    gpio << this->m_pin;
+}
+
+GPIO::exportPin(){
+    GPIOFileWriter gpio("/sys/class/gpio/export");
+    gpio << m_pin;
+}
+
+GPIO::setDirection(eDirection direction)
+{
+    string s_direction;
+    if (direction == GPIO::INPUT){
+        s_direction = "in";
+    } else if (direction == GPIO::OUTPUT) {
+        s_direction = "out";
+    }
+    GPIOFileWriter gpio(this->m_gpioPath + "direction");
+    gpio << s_direction;
+}
+
+GPIO::setValue (eValue value) {
+    GPIOFileWriter gpio(this->m_gpioPath + "value");
+    gpio << value;
+}
+
+int GPIO::readValue () {
+    int value = 0;
+    ifstream gpio((m_gpioPath + "value").c_str());
+    if (gpio < 0)
+        cout << "Error! no file open called " << m_gpioPath << "value" << endl;
+    gpio >> value;
+    gpio.close();
+    return value;
+}

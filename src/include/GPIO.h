@@ -16,14 +16,19 @@ public:
         OUTPUT
     };
 
-    GPIO(int pin);
+    GPIO();
+    GPIO(string pin);
     ~GPIO();
     void setDirection(eDirection direction);
     void setValue(eValue value);
     int readValue();
-    int pin();
+    string pin();
 
 private:
-    int m_pin;
+    void exportPin();
+    string m_pin;
+    string m_gpioPath;
 
 }
+
+#endif
