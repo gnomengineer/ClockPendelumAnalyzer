@@ -26,13 +26,6 @@ GPIO::~GPIO()
     writeToFile("/sys/class/gpio/unexport",m_pin);
 }
 
-
-int GPIO::exportPin(){
-    /*GPIOFileWriter gpio("/sys/class/gpio/export");
-    gpio << m_pin;
-    return 1;*/
-}
-
 int GPIO::setDirection(eDirection direction)
 {
     string s_direction;
@@ -42,6 +35,7 @@ int GPIO::setDirection(eDirection direction)
         s_direction = "out";
     }
 
+    cout << "-- GPIO --: setting direction of pin " << m_pin << endl;
     writeToFile(this->m_gpioPath + "direction",s_direction);
     return 1;
 }
@@ -55,11 +49,13 @@ int GPIO::setValue (eValue value) {
 int GPIO::readValue () {
     int value;
     ifstream gpio(m_gpioPath + "value");
-    if (gpio.is_open())
+    if (! gpio.is_open()) {
         cout << "-- File --: ERROR! no file open called " << m_gpioPath << "value" << endl;
-
-    gpio >> value;
-    gpio.close();
+        return -1;
+    } else {
+        gpio >> value;
+        gpio.close();
+    }
     return value;
 }
 
