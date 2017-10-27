@@ -1,18 +1,22 @@
 #ifndef GPIOFILEWRITER_H
 #define GPIOFILEWRITER_H
 
+#include <string>
+#include <fstream>
+using namespace std;
+
 class GPIOFileWriter
 {
     public:
-        GPIOFileWriter(string path);
+        GPIOFileWriter(const string& path);
         ~GPIOFileWriter();
-        void operator<<(int input);
-        void operator<<(string input);
+        int operator<<(int input);
+        int operator<<(const string& input);
 
     private:
-        void writeToStream(string input);
+        int writeToStream(const string& input);
         ofstream m_ofstream;
         string m_path;
-}
+};
 
 #endif
