@@ -3,31 +3,34 @@
 #include <sstream>
 #include <iostream>
 #include "include/GPIO.h"
-#include "include/GPIOFileWriter.h"
+//#include "include/GPIOFileWriter.h"
 
 GPIO::GPIO() {
     this->m_pin = "4";
     this->m_gpioPath = "/sys/class/gpio/gpio"+ m_pin + "/";
-    exportPin();
+    writeToFile("/sys/class/gpio/export","4");
 }
 
 GPIO::GPIO(const string& pin)
 {
     this->m_pin = pin;
     this->m_gpioPath = "/sys/class/gpio/gpio"+ m_pin + "/";
-    exportPin();
+
+    cout << "-- GPIO --: exporting pin " << pin << endl;
+    writeToFile("/sys/class/gpio/export",pin);
 }
 
 GPIO::~GPIO()
 { 
-    GPIOFileWriter gpio("/sys/class/gpio/unexport");
-    gpio << this->m_pin;
+    cout << "-- GPIO --: cleaning up pin " << m_pin << endl;
+    writeToFile("/sys/class/gpio/unexport",m_pin);
 }
 
+
 int GPIO::exportPin(){
-    GPIOFileWriter gpio("/sys/class/gpio/export");
+    /*GPIOFileWriter gpio("/sys/class/gpio/export");
     gpio << m_pin;
-    return 1;
+    return 1;*/
 }
 
 int GPIO::setDirection(eDirection direction)
@@ -38,23 +41,40 @@ int GPIO::setDirection(eDirection direction)
     } else if (direction == GPIO::OUTPUT) {
         s_direction = "out";
     }
-    GPIOFileWriter gpio(this->m_gpioPath + "direction");
-    gpio << s_direction;
+
+    writeToFile(this->m_gpioPath + "direction",s_direction);
     return 1;
 }
 
 int GPIO::setValue (eValue value) {
-    GPIOFileWriter gpio(this->m_gpioPath + "value");
-    gpio << value;
+    cout << "-- GPIO --: setting value to pin " << m_pin << endl;
+    writeToFile(this->m_gpioPath + "value", to_string(value));
     return 1;
 }
 
 int GPIO::readValue () {
     int value;
-    ifstream gpio((m_gpioPath + "value").c_str());
+    ifstream gpio(m_gpioPath + "value");
     if (gpio.is_open())
-        cout << "Error! no file open called " << m_gpioPath << "value" << endl;
+        cout << "-- File --: ERROR! no file open called " << m_gpioPath << "value" << endl;
+
     gpio >> value;
     gpio.close();
     return value;
 }
+
+int GPIO::writeToFile(const string &path, const string &input){
+    ofstream file(path);
+    if ( file.is_open()){
+        file << input;
+        cout << "-- File --: File open and written to it" << endl;
+        file.close();
+        return 1;
+    } else {
+        cout << "--File --: ERROR! file not open" << endl;
+        return -1;
+    }
+    return -1;
+}
+
+

@@ -28,6 +28,7 @@ public:
     string pin();
 
 private:
+    int writeToFile(const string& path, const string& input);
     int exportPin();
     string m_pin;
     string m_gpioPath;
