@@ -12,7 +12,8 @@ kickoff
 docs/README
 pcb/
 cmake-build-debug
-CMakeLists.txt
 .idea
-README.md
-LICENSE
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
