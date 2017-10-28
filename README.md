@@ -42,4 +42,10 @@ or to just execute the application without the tests
 ```
 make clockpendulum_analyzer
 ```
+### How To Run
 
+Once the source code is built, the application can be started as *root* with the following command. The binary file is located in $PROJECTDIR$/build/bin.
+
+```
+# bin/clockpendulum_analyzer
+```
