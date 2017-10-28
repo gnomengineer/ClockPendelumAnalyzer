@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "include/GPIO.h"
+#include "../include/GPIO.h"
 //#include "include/GPIOFileWriter.h"
 
 GPIO::GPIO() {
