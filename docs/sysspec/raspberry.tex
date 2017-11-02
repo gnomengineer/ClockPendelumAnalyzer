@@ -1,0 +1,27 @@
+\subsection{Raspberry Pi}
+Die ganze Software wird mittels C++ auf einem Raspberry Pi Version 3 (kurz RPi3) ausgeführt.
+
+\subsubsection{Betriebssystem und Software}
+Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert dass ungewünschte daemons oder andere Programme den Betrieb verlangsamen. Es wird daher nur das allernötigste installiert. In der untenstehenden Auflistung sind alle zusätzlich installierten Programme aufgelistet. 
+
+\begin{table}[h]
+    \begin{tabular}{ll}
+        ArchlinuxARM & OS für Raspberry Pi\\
+        i2c-tools 3.1.2-1 & i2c tool set für Linux\\
+        libconfig & C/C++ Konfiguration Datei Bibliothek\\
+        libbcm2835 & Broadcom BCM 2835 c Bibliothek für Raspberry Pi\\
+    \end{tabular}
+    \caption{installierte Software auf dem RPi3}
+\end{table}
+
+\noindent Das Betriebssystem wird mit einem Benutzer und möglichem SSH Zugriff eingerichtet. Um per SSH auf das Raspberry zugreifen zu können muss der Host im Netzwerk 192.168.192.0/24 sein.
+\begin{table}[h]
+    \begin{tabular}{ll}
+        Benutzer: & clockpendulum \\
+        Passwort: & cpa\_admin \\
+        IP: & 192.168.192.75 \\
+    \end{tabular}
+    \caption{Daten für den Zugriff auf das RPi3}
+\end{table}
+%user: clockpendulum
+%pw: cpa_admin
