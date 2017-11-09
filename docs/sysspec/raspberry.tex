@@ -1,5 +1,10 @@
+%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \subsection{Raspberry Pi}
 Die ganze Software wird mittels C++ auf einem Raspberry Pi Version 3 (kurz RPi3) ausgeführt.
+
+\subsubsection{Entscheidungsgrundlage}
+Für die Umsetzung auf Computerebene wurde entschieden kein Realtime OS zu verwenden. Das führte dazu, dass eine der möglichen Lösungen auf das Raspberry Pi fiel. Das Raspberry bietet eine weitverbreitete und aktive Community. Dadurch kann bei Problemen leicht auf gute Lösungsvorschläge zugegriffen werden.\\
+Um mit der Hardware auf einem guten Stand zu sein, wurde die neuste Version 3 des Raspberry Pi gewählt.
 
 \subsubsection{Betriebssystem und Software}
 Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert dass ungewünschte daemons oder andere Programme den Betrieb verlangsamen. Es wird daher nur das allernötigste installiert. In der untenstehenden Auflistung sind alle zusätzlich installierten Programme aufgelistet. 
