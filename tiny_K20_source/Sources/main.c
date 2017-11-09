@@ -40,6 +40,10 @@
 #include "TGT_SWD_OE.h"
 #include "BitIoLdd2.h"
 #include "KSDK1.h"
+#include "TU1.h"
+#include "TI1.h"
+#include "TimerIntLdd1.h"
+#include "TU2.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
