@@ -10,8 +10,8 @@ for f in $FILES
 do
     plantuml -tlatex $f
     name=${f%.$2}
-    sed -e '1,4 d' $name.latex > $name.tex 
+    sed -ie '1,4 d' $name.latex
     sed -e '$ d' $name.latex > $name.tex 
     echo "converted file $name"
-    rm $name.latex
+    rm $name.latex $name.latexe
 done
