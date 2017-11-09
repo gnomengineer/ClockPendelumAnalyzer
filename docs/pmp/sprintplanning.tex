@@ -20,3 +20,37 @@ Die Planung der Sprints wurde mit dem Programm Taiga.io durchgeführt. Unten ist
         \end{tabular}
         \caption{Status der User Stories aus Sprint 1}
     \end{table}
+
+\clearpage
+\subsection*{Sprint 2}
+Die Planung und der Abschluss von Sprint 1 ist in diesem Kapitel aufgeführt.
+\subsubsection*{Planung}
+Der Sprint enthält die gleichen User Stories wie der 1. Sprint, weil alle Pakete in diesen Sprint verschoben wurden.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{sprint2_plan.png}
+    \caption{Sprintplanung für Sprint 2}
+\end{figure}
+\subsubsection*{Sprintreview}
+Aufgrund von zu wenig Wissen über Hardware und Sensorik war der Fortschritt nur schwerfällig. Mit Hilfe eines Logic Analyzer (LA) konnte die RTC und der Sensor überprüft werden. Daraus ergab sich das der Sensor neu gelötet werden muss. Die RTC war in Ordnung. Der Zugriff auf die GPIO wurde ebenfalls umgesetzt. Somit wurden alle Sprintziele erreicht
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccp{7cm}}
+        \textbf{User Story} &  \textbf{Status} & \textbf{Sprintziel}& \textbf{Begründung}\\\toprule[2pt]
+        \#19 Referenz Clock messen & erledigt & erreicht & mit LA gemessen\\
+        \#20 Sensordaten visualisieren & erledigt & erreicht & Sensor und GPIO wurden korrekt in Betrieb genommen\\
+        \#18 Messung Sensoren & erledigt & erreicht & LA gab auf Sensor nichts aus dafür aber der provisorische Python Zugriff\\
+    \end{tabular}
+    \caption{Status der User Stories aus Sprint 1}
+\end{table}
+
+\clearpage
+\subsection*{Sprint 3}
+Die Planung und der Abschluss von Sprint 1 ist in diesem Kapitel aufgeführt.
+\subsubsection*{Planung}
+Sprint 3 enthält eine grosse User Story für das Entwerfen und Erstellen eines PCB mit einem Hardware Counter. Dazu wird noch die Datenpersistenz entwickelt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{sprint3_plan.png}
+    \caption{Sprintplanung für Sprint 3}
+\end{figure}

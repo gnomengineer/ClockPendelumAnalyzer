@@ -1,0 +1,17 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+    echo "requires path and ending of files to edit"
+    exit
+fi
+
+FILES=$1/*.$2
+for f in $FILES
+do
+    plantuml -tlatex $f
+    name=${f%.$2}
+    sed -ie '1,4 d' $name.latex
+    sed -e '$ d' $name.latex > $name.tex 
+    echo "converted file $name"
+    rm $name.latex $name.latexe
+done
