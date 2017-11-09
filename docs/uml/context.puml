@@ -1,0 +1,30 @@
+@startuml
+
+rectangle ClockPendulumAnalyzer {
+(Raspberry Pi) as pi
+(Web Client) as web
+() UserInterfacer as ui
+(HW Counter) as hwc
+(Sensor Board) as sensor
+cloud {
+    (external RTC) as rtc
+}
+}
+(Webservice) as srvc
+User <<Clock>> as clk
+User <<Human>> as human
+
+''relations
+ui -left- pi : provides
+hwc <-left- sensor : signal
+hwc <-- pi : reads
+rtc --> hwc : Hz signal
+
+human -left- web : interacts
+srvc -left- ui : uses
+web -- ui: uses
+sensor -[hidden]down- web
+hwc -[hidden]down- web
+web -[hidden]down- pi
+clk -- sensor : triggers
+@enduml
