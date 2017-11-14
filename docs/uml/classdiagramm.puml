@@ -1,0 +1,27 @@
+@startuml
+''classes
+class GPIO 
+class I2CHandler 
+class Analyzer {
+    m_ReferenceTimeFrequency :double
+    m_MeasuredTimeFrequency :double
+    main()
+    + getTimeDifference_us() :double
+    - getTimeCounterValue() :double
+}
+class WebClient
+
+''interfaces
+interface I2C
+interface UserInterface
+interface IDataPersistor
+
+''relations
+GPIO <-- Analyzer
+I2CHandler <-- Analyzer
+UserInterface <-right- Analyzer :uses
+I2C <-left- I2CHandler :uses
+WebClient .up.|> UserInterface :implements
+IDataPersistor <-left- Analyzer :uses
+
+@enduml
