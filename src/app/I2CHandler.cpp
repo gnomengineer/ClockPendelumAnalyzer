@@ -7,7 +7,7 @@ I2CHandler::I2CHandler(const int &address) : m_address(address) {
 
 I2CHandler::I2CHandler(const std::string &device,
         const int &address) : m_address(address) {
-    if ( (m_fileI2C = open(device, O_RDWR)) < 0)
+    if ( (m_fileI2C = open(device.c_str(), O_RDWR)) < 0)
         setErrMsg("failed to open i2c file");
 }
 

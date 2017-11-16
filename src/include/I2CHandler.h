@@ -17,9 +17,9 @@ public:
     ~I2CHandler();
     int readValue(char* rxBuf, const int &address);
     //int writeValue(const double &value, const int &address);
-    int getAddress() { return m_address };
+    int getAddress() { return m_address ;}
 private:
-    int setErrMsg(const std::string &msg)
+    int setErrMsg(const std::string &msg);
     int m_address = -1;
     int m_fileI2C = 0;
     std::string err_msg = "";
