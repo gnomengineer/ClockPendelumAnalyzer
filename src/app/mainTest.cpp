@@ -1,11 +1,13 @@
 #include "../include/GPIO.h"
 #include "../include/RTCModule.h"
+#include "../include/Analyzer.h"
 #include <iostream>
 //#include <pthread.h>
 
 int main( int argc, const char* argv[] )
 {
-    int c;
+    //TODO remove unused code
+/*    int c;
 	pthread_t thread;
 
     RTCModule* module = new RTCModule();
@@ -25,4 +27,11 @@ int main( int argc, const char* argv[] )
 
     module->stopThread();
     delete module;
+    */
+    Analyzer* test = new Analyzer();
+    std::cout << "ms: " << test->getTimeDifference_ms()
+        << " us: " << test->getTimeDifference_us()
+        << " ns: " << test->getTimeDifference_ns()
+        << std::endl;
+    delete test;
 }
