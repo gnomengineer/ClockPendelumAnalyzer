@@ -2,6 +2,7 @@
 ''classes
 class GPIO 
 class I2CHandler 
+class RTCModule
 class Analyzer {
     m_ReferenceTimeFrequency :double
     m_MeasuredTimeFrequency :double
@@ -19,6 +20,7 @@ interface IDataPersistor
 ''relations
 GPIO <-- Analyzer
 I2CHandler <-- Analyzer
+RTCModule <-- Analyzer
 UserInterface <-right- Analyzer :uses
 I2C <-left- I2CHandler :uses
 WebClient .up.|> UserInterface :implements
