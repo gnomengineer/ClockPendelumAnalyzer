@@ -1,0 +1,13 @@
+%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
+\subsection{Umsetzung der Datenpersistenz}
+    Hier stehen Details zur Umsetzung der Datenspeicherung auf dem Raspberry Pi.
+    \subsubsection{Datenspeicher}
+    Da das Operationssystem des Raspberry Pi auf einer SD Karte gespeichert ist, empfiehlt es sich eine Alternative zu finden. SD Karten sind nicht für häufige Schreibzyklen ausgelegt. Für den Clock Pendulum Analyzer wird deshalb ein USB Speicher verwendet. Auf diesem wird die ganze Datenbank abgelegt.\\
+    Der Datenspeicher wird beim Autostart über die \textit{/etc/fstab} Datei automatisch eingebunden.
+    
+    \subsubsection{SQLite als Datenbank}
+    C++ bietet eine grosszügige Schnittstelle für SQLite Datenbanken. Durch SQLite braucht die Applikation auch keine umständliche Datenbankinstallation wie es bei MySQL der Fall wäre, da SQLite nur normale Dateien zum Aufbau verwendet.
+    
+    \subsubsection{Architektur und Beispielverwendung}
+    %TODO architektur beschreiben
+    %TODO beispielverwendung einfügen
