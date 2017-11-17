@@ -6,8 +6,8 @@
 
 class Analyzer {
     //TODO rename those variables
-    const int MS = 1000000;
-    const int US = 1000;
+    const double MS = 1000000;
+    const double US = 1000;
     const int NS = 1000000000;
 public:
     Analyzer();

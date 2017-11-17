@@ -12,7 +12,8 @@ Analyzer::~Analyzer() {
 void Analyzer::updateTimerCounterValue() {
     //TODO update m_MeasuredTimeFrequency with it
     char buffer[60] = {0};
-    m_Counter->readValue(buffer,0x40);
+    //m_Counter->readValue(buffer,0x40);
+    m_MeasuredTimeFrequency = 31980;
 }
 
 double Analyzer::getTimeDifference_us() {
