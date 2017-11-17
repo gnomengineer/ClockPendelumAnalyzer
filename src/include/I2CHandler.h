@@ -15,7 +15,7 @@ public:
     I2CHandler(const std::string &device, const int &address);
     I2CHandler();
     ~I2CHandler();
-    int readValue(char* rxBuf, const int &address);
+    int readValue(char* rxBuf, const int address, const int length);
     //int writeValue(const double &value, const int &address);
     int getAddress() { return m_address ;}
 private:

@@ -21,13 +21,13 @@ I2CHandler::~I2CHandler() {
     }
 }
 
-int I2CHandler::readValue(char *rxBuf, const int &address) {
+int I2CHandler::readValue(char* rxBuf, const int address, const int length) {
     if ( m_fileI2C ) {
         m_address = address;
         if ( ioctl(m_fileI2C, I2C_SLAVE, m_address) < 0) {
             return setErrMsg("couldn't handle IO operations on file");
         }
-        if (read(m_fileI2C, rxBuf, m_address) < 0){
+        if (read(m_fileI2C, rxBuf, length) < 0){
             return setErrMsg("couldn't read from the bus");
         }
         return 0;
