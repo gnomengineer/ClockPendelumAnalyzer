@@ -1,8 +1,7 @@
 #include "../include/I2CHandler.h"
 
-I2CHandler::I2CHandler(const int &address) : m_address(address) { 
-    if ( (m_fileI2C = open(DEFAULTDEVICE, O_RDWR)) < 0)
-        setErrMsg("failed to open i2c file");
+I2CHandler::I2CHandler(const int &address) { 
+    I2CHandler(DEFAULTDEVICE, address);
 }
 
 I2CHandler::I2CHandler(const std::string &device,
@@ -12,8 +11,7 @@ I2CHandler::I2CHandler(const std::string &device,
 }
 
 I2CHandler::I2CHandler() {
-    if ( (m_fileI2C = open(DEFAULTDEVICE, O_RDWR)) < 0)
-        setErrMsg("failed to open i2c file");
+    I2CHandler(DEFAULTDEVICE, -1);
 }
 
 I2CHandler::~I2CHandler() {
