@@ -9,5 +9,24 @@
     C++ bietet eine grosszügige Schnittstelle für SQLite Datenbanken. Durch SQLite braucht die Applikation auch keine umständliche Datenbankinstallation wie es bei MySQL der Fall wäre, da SQLite nur normale Dateien zum Aufbau verwendet.
     
     \subsubsection{Architektur und Beispielverwendung}
-    %TODO architektur beschreiben
+    Die Software speichert die folgenden Daten in einer einzelnen Tabelle ab.
+    \paragraph{clock}
+    Der Wert in \textit{clock} hält den Namen fest der Uhr, von der die weiteren Daten stammen. Dieser wird beim Programmstart mitgeteilt.\\
+    Das Feld ist vom Typ TEXT und besteht aus alphanumerischen Zeichen die der Regular Expression $$[a-zA-Z0-9]\{1,\}$$
+    \paragraph{date}
+    In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des RPi3 verwendet.\\
+    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    $$[0-9]\{15\}$$
+    \paragraph{timediff}
+    Hier steht der aktuell gemessene Wert der Zeitdifferenz zwischen Referenzzeit und der Messzeit. Dieser Wert ist eine Momentaufnahme des Systems und nicht hochgerechnet.\\
+    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    $$[0-9]\{1,\}$$
+    \paragraph{heat}
+    Das Feld heat wird für den optionalen Teil Temperatureinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
+    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    $$[0-9]\{1,2\}$$
+    \paragraph{humidity}
+    Das Feld humidity wird für den optionalen Teil Feuchtigkeitseinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
+    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    $$[0-9]\{1,2\}$$
     %TODO beispielverwendung einfügen
