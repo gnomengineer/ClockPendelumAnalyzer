@@ -10,39 +10,28 @@ Analyzer::~Analyzer() {
 }
 
 void Analyzer::updateTimerCounterValue() {
+    //TODO update m_MeasuredTimeFrequency with it
     char buffer[60] = {0};
     m_Counter->readValue(buffer,0x40);
 }
 
 double Analyzer::getTimeDifference_us() {
-    this->updateTimerCounterValue();
-    double refFreq_us = m_ReferenceTimeFrequency / Analyzer::US;
-    double mesFreq_us = m_MeasuredTimeFrequency / Analyzer::US;
-    return calculateDifference(refFreq_us, mesFreq_us, "us");
+    return getTimeDifference_ns() / Analyzer::US;
 }
 
 double Analyzer::getTimeDifference_ms() {
-    this->updateTimerCounterValue();
-    double refFreq_ms = m_ReferenceTimeFrequency / Analyzer::MS;
-    double mesFreq_ms = m_MeasuredTimeFrequency / Analyzer::MS;
-    return calculateDifference(refFreq_ms, mesFreq_ms, "ms");
+    return getTimeDifference_ns() / Analyzer::MS;
 }
 
-double Analyzer::getTimeDifference_ns() {
-    this->updateTimerCounterValue();
-    double refFreq_ns = m_ReferenceTimeFrequency / Analyzer::NS;
-    double mesFreq_ns = m_MeasuredTimeFrequency / Analyzer::NS;
-    return calculateDifference(refFreq_ns, mesFreq_ns, "ns");
+int Analyzer::getTimeDifference_ns() {
+    return calculateFrequencyDifference() * getTicksInNS();
 }
 
-double Analyzer::calculateDifference(const double &refFreq,
-        const double &mesFreq,
-        const std::string &unit) {
-    double diffFreq = 0.0;
-    //TODO recheck the calculation
-    if (!(diffFreq = refFreq - mesFreq)) {
-        std::cerr << "not possible to measure " 
-            << unit << " due to low frequency" << std::endl;
-    }
-    return diffFreq;
+int Analyzer::getTicksInNS() {
+    return NS / m_ReferenceTimeFrequency;
+}
+
+int Analyzer::calculateFrequencyDifference() {
+    this->updateTimerCounterValue();
+    return m_ReferenceTimeFrequency - m_MeasuredTimeFrequency;
 }

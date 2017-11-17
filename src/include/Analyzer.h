@@ -5,23 +5,23 @@
 #include <string>
 
 class Analyzer {
-    const double MS = 1000;
-    const double US = 1000000;
-    const double NS = 1000000000;
+    //TODO rename those variables
+    const int MS = 1000000;
+    const int US = 1000;
+    const int NS = 1000000000;
 public:
     Analyzer();
     ~Analyzer();
     double getTimeDifference_us();
     double getTimeDifference_ms();
-    double getTimeDifference_ns();
+    int getTimeDifference_ns();
 
 private:
     void updateTimerCounterValue();
-    double calculateDifference(const double &refFreq, 
-            const double &mesFreq, 
-            const std::string &unit);
-    double m_ReferenceTimeFrequency = 32000;
-    double m_MeasuredTimeFrequency;
+    int calculateFrequencyDifference();
+    int getTicksInNS();
+    int m_ReferenceTimeFrequency = 32000;
+    int m_MeasuredTimeFrequency;
     I2CHandler *m_Counter;
 
 };
