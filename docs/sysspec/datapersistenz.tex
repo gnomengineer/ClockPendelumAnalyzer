@@ -14,7 +14,7 @@
     Der Wert in \textit{clock} hält den Namen fest der Uhr, von der die weiteren Daten stammen. Dieser wird beim Programmstart mitgeteilt.\\
     Das Feld ist vom Typ TEXT und besteht aus alphanumerischen Zeichen die der Regular Expression $$[a-zA-Z0-9]\{1,\}$$
     \paragraph{date}
-    In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des RPi3 verwendet.\\
+    In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des RPi3 verwendet. Das Datum wird mit Sekundenzeitstempel gespeichert und anschliessend so konvertiert, dass das Datum im Format \textbf{JJJJMMDDhhmmss} gespeichert werden kann\\
     Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
     $$[0-9]\{15\}$$
     \paragraph{timediff}
