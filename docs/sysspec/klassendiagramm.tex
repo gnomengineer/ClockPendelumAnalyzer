@@ -16,6 +16,5 @@ Die Klassen der Software arbeiten nach dem folgenden Klassendiagramm. Es umfasst
         \item[DataAssembler] Die Klasse ist für das Zusammenfügen von Name (aus der Main Klasse) und den einzelnen Dateninputs aus dem Analyzer zuständig. Im Sequenzdiagramm ist dieser Ablauf dargestellt. %TODO add sequence diagram
         \item[DataTransfer] Diese Klasse ist für den Transport der DataTupel zwischen Webserver, Mainklasse und Datenbank zuständig.
         \item[DataTupel] Ein Daten Transfer Objekt (DTO) als Abstraktion der gemessenen Daten zu einem gegebenen Zeitpunkt. Beinhaltet Datum+Zeit, Name, Differenz und Werte für Feuchtigkeit und Wärme.
-        \item[SQLitePersistor] Die Implementierung der Schnittstelle \textit{IDataPersistor} auf eine SQLite Umgebung.
-        \item[SQLiteConnector] Ipmlementierung der Schnittstelle \textit{IDBConnector} um den Auf- und Abbau zu einer SQLite Datenbank zu verarbeiten.
+        \item[SQLiteImplementation] Die Implementierung der Schnittstelle \textit{IDataPersistor} und der \textit{IDBConnector} auf eine SQLite Umgebung.
     \end{description}
