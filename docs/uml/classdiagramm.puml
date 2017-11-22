@@ -31,8 +31,7 @@ class DataTupel {
     m_heat :int
     m_humidity :int
 }
-class SQLitePersistor
-class SQLiteConnector
+class SQLiteImplementation
 
 ''interfaces
 interface I2C
@@ -73,13 +72,12 @@ DataTupel <-- DataTransfer
 '' DB relations
 IDataPersistor <- DataTransfer :uses
 IDBConnector <- DataTransfer :uses
-IDBConnector <|.. SQLiteConnector :implements
-SQLitePersistor .|> IDataPersistor :implements
+SQLiteImplementation .|> IDBConnector :implements
+SQLiteImplementation ..|> IDataPersistor :implements
 
 
 WebServer .up.|> IRESTServer :implements
 
 ''connections for proper placement (all are hidden)
-''IDBConnector <-[hidden]down- IDataPersistor
-''SQLiteConnector -[hidden]down- SQLitePersistor
+IDBConnector <-[hidden]down- IDataPersistor
 @enduml
