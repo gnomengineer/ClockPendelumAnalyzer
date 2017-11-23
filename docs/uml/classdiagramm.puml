@@ -27,7 +27,7 @@ class DataTransfer {
 class DataTupel {
     m_clockname :string
     m_data :string
-    m_timediff_us :double
+    m_absolutetime_ns:double
     m_heat :int
     m_humidity :int
 }
