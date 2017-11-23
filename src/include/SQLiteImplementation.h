@@ -2,6 +2,8 @@
 #define SQLITEIMPLEMENTATION_H
 
 #include "DataTupel.h"
+#include "IDBConnector.h"
+#include "IDataPersistor.h"
 #include <list>
 #include <string>
 

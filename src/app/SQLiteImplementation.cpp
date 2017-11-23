@@ -15,12 +15,14 @@ void SQLiteImplementation::disconnect(){
 
 std::list<DataTupel> SQLiteImplementation::getDataByDate(const std::string& date){
     std::cout << "return Data by Date" << std::endl;
-    return std::list<DataTupel> dateData;
+    std::list<DataTupel> dateData;
+    return dateData;
 }
 
 std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name){
     std::cout << "return Data by Name" << std::endl;
-    return std::list<DataTupel> nameData;
+    std::list<DataTupel> nameData;
+    return nameData;
 }
 
 void SQLiteImplementation::saveData(DataTupel data){
