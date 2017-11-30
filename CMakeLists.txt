@@ -4,10 +4,13 @@ project (ClockPendulumAnalyzer)
 set(CMAKE_CXX_FLAGS "-std=c++11")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+find_library(SQLITELIB NAMES sqlite3)
+
 #compile setting for application
 set(CLOCKPENDULUM_SOURCE_PATH ${PROJECT_SOURCE_DIR}/src/app)
 file(GLOB_RECURSE CLOCKPENDULUM_SOURCE_FILES ${CLOCKPENDULUM_SOURCE_PATH}/*.cpp)
 add_executable(clockpendulum_analyzer ${CLOCKPENDULUM_SOURCE_FILES})
+target_link_libraries(clockpendulum_analyzer ${SQLITELIB})
 
 #compile setting for unit tests
 set(CLOCKPENDULUM_TEST_SOURCE_PATH ${PROJECT_SOURCE_DIR}/src/test)
