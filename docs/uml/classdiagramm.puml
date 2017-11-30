@@ -1,29 +1,83 @@
 @startuml
 ''classes
+class ClockPendulumAnalyzer {
+    +main()
+}
 class GPIO 
 class I2CHandler 
 class RTCModule
 class Analyzer {
     m_ReferenceTimeFrequency :double
     m_MeasuredTimeFrequency :double
-    main()
     + getTimeDifference_us() :double
     - getTimeCounterValue() :double
 }
-class WebClient
+class WebServer
+class DataAssembler {
+    m_Analyzer :Analyzer
+    m_LatestData :DataTupel
+    +getNewDataSample(string clockname) :DataTupel
+}
+class DataTransfer {
+    m_Persistor :IDataPersistor
+    getDataListByName(string name) :List<DataTupel>
+    getDataListByDate(string date) :List<DataTupel>
+    saveDataList(List<DataTupel>) :void
+}
+class DataTupel {
+    m_clockname :string
+    m_data :string
+    m_absolutetime_ns:double
+    m_heat :int
+    m_humidity :int
+}
+class SQLiteImplementation
 
 ''interfaces
 interface I2C
-interface UserInterface
-interface IDataPersistor
+interface IRESTServer
+interface IDataPersistor {
+    m_DBConnection :db
+    getDataByName(string name) :List<DataTupel>
+    getDataByDate(int date) :List<DataTupel>
+    saveData(DataTupel data) :void
+}
+
+interface IDBConnector {
+    m_Connection
+    connect(string path)
+    disconnect()
+}
 
 ''relations
+'' Analyzer to ...
 GPIO <-- Analyzer
 I2CHandler <-- Analyzer
 RTCModule <-- Analyzer
-UserInterface <-right- Analyzer :uses
-I2C <-left- I2CHandler :uses
-WebClient .up.|> UserInterface :implements
-IDataPersistor <-left- Analyzer :uses
 
+I2C <- I2CHandler :uses
+Analyzer <-- DataAssembler
+
+'' main assoziations
+ClockPendulumAnalyzer --> DataTransfer
+ClockPendulumAnalyzer --> DataAssembler
+ClockPendulumAnalyzer --> IRESTServer :starts
+
+'' who requires DataTupel
+DataTupel <-- ClockPendulumAnalyzer
+DataTupel <- DataAssembler
+DataTupel <-- IDataPersistor
+DataTupel <-- DataTransfer
+
+'' DB relations
+IDataPersistor <- DataTransfer :uses
+IDBConnector <- DataTransfer :uses
+SQLiteImplementation .|> IDBConnector :implements
+SQLiteImplementation ..|> IDataPersistor :implements
+
+
+WebServer .up.|> IRESTServer :implements
+
+''connections for proper placement (all are hidden)
+IDBConnector <-[hidden]down- IDataPersistor
 @enduml

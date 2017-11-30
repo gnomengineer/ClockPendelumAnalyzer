@@ -1,6 +1,6 @@
 #include "../include/Analyzer.h"
 #include <iostream>
-
+//TODO chang Analyzer according to the changes on TinyK20, maybe deprecated
 Analyzer::Analyzer() { 
     m_Counter = new I2CHandler();
 }

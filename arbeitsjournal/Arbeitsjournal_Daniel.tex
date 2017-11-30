@@ -15,7 +15,7 @@
 \usepackage{rotating}
 \usepackage{booktabs}
 \setlength\heavyrulewidth{0.25ex}
-
+\usepackage{longtable}
 
 %mathe packages
 \usepackage{amsmath}
@@ -102,7 +102,7 @@
   \noalign{\global\setlength{\arrayrulewidth}{\arrayrulewidthOriginal}}}
 
 \newcommand{\header}{\textbf{Work Item}&\textbf{Datum}&\textbf{Zeitaufwand (in Std)}\\\toprule}
-\newcommand{\footer}{\midrule\textbf{Total Arbeitsstunden}&-&\textbf{57.25}\\\midrule\bottomrule}
+\newcommand{\footer}{\midrule\textbf{Total Arbeitsstunden}&-&\textbf{59.25}\\\midrule\bottomrule}
 %=============================
 
 \begin{document}
@@ -111,21 +111,21 @@
         Entwickler: & Daniel Föhn \\
         Arbeitsperiode: & 18.09.2017 - 22.12.2017\\
     \end{tabular}
-
-	\begin{table}[H]
-		\centering
-		\begin{tabular}{p{9cm}|p{2cm}|c}
+%TODO update to have a longtable over multiple lines
+		\begin{longtable}{p{9cm}|p{2cm}|c}
             \header
 
             Administrativer Aufwand & 05.10 & 2\\
             & 06.10 & 1\\
             & 19.10 & 1\\
+            & 23.11 & 1.5\\
             
             Dokumentation & 19.10 & 2.5\\
             & 02.11 & 5\\
             & 09.11 & 6\\
             & 14.11 & 0.5\\
             & 17.11 & 5\\
+            & 22.11 & 2\\
             
             Recherche Sensoren & 05.10 & 3\\
             \#3: Die Entwickler haben Zugriff auf PM und VCS& 28.09 & 1.5\\
@@ -146,7 +146,9 @@
             \#45: Software zum Auswerten der Sensoren & 15.11 & 0.5\\
             & 16.11 & 2.5\\
             & 17.11 & 4\\
+            \#47: DB Software implementieren & 22.11 & 3\\
+            & 23.11 & 4.5\\
+            & 30.11 & 3\\
             \footer
-		\end{tabular}
-	\end{table}
+		\end{longtable}
 \end{document}

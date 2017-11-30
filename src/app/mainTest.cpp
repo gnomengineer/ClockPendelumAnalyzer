@@ -4,7 +4,7 @@
 #include <iostream>
 //#include <pthread.h>
 
-int main( int argc, const char* argv[] )
+int main_t( int argc, const char* argv[] )
 {
     //TODO remove unused code
 /*    int c;
