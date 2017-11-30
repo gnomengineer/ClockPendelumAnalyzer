@@ -38,15 +38,19 @@
 #include "BitIoLdd1.h"
 #include "WAIT1.h"
 #include "KSDK1.h"
-#include "TU1.h"
-#include "TI1.h"
-#include "TimerIntLdd1.h"
-#include "TU2.h"
+#include "SensorPin.h"
+#include "ExtIntLdd1.h"
+#include "FixPin.h"
+#include "ExtIntLdd2.h"
+#include "PPSPin.h"
+#include "ExtIntLdd3.h"
+#include "FC1.h"
 #include "KIN1.h"
 #include "UTIL1.h"
 #include "TGT_SWD_OE.h"
 #include "BitIoLdd2.h"
 #include "KSDK1.h"
+#include "RefCnt.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -84,26 +88,69 @@ void Cpu_OnNMIINT(void);
 */
 void TI1_OnInterrupt(void);
 
+void SensorPin_OnInterrupt(void);
 /*
 ** ===================================================================
-**     Event       :  TU2_OnCounterRestart (module Events)
+**     Event       :  SensorPin_OnInterrupt (module Events)
 **
-**     Component   :  TU2 [TimerUnit_LDD]
+**     Component   :  SensorPin [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void PPSPin_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  PPSPin_OnInterrupt (module Events)
+**
+**     Component   :  PPSPin [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void FixPin_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  FixPin_OnInterrupt (module Events)
+**
+**     Component   :  FixPin [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+/*
+** ===================================================================
+**     Event       :  FC1_OnInterrupt (module Events)
+**
+**     Component   :  FC1 [FreeCntr_LDD]
 */
 /*!
 **     @brief
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
+**         This event is called when a compare matches the counter
+**         value (if compare or reload is selected as a interrupt
+**         source) or a counter overflows (for free-running devices).
+**         Component and OnInterrupt event must be enabled. See
 **         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt] is enabled.
+**         available only if a [Interrupt service/event] is enabled.
 **     @param
 **         UserDataPtr     - Pointer to the user or
 **                           RTOS specific data. The pointer passed as
 **                           the parameter of Init method.
 */
 /* ===================================================================*/
-void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr);
+void FC1_OnInterrupt(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 

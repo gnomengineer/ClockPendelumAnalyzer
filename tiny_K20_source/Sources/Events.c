@@ -33,6 +33,7 @@
 extern "C" {
 #endif 
 
+static int overrunCntr = 0;
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
@@ -56,45 +57,90 @@ void Cpu_OnNMIINT(void)
 
 /*
 ** ===================================================================
-**     Event       :  TI1_OnInterrupt (module Events)
+**     Event       :  SensorPin_OnInterrupt (module Events)
 **
-**     Component   :  TI1 [TimerInt]
+**     Component   :  SensorPin [ExtInt]
 **     Description :
-**         When a timer interrupt occurs this event is called (only
-**         when the component is enabled - <Enable> and the events are
-**         enabled - <EnableEvent>). This event is enabled only if a
-**         <interrupt service/event> is enabled.
+**         This event is called when an active signal edge/level has
+**         occurred.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================
 */
-void TI1_OnInterrupt(void)
+void SensorPin_OnInterrupt(void)
 {
+	LED1_Neg();
+	/* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  PPSPin_OnInterrupt (module Events)
+**
+**     Component   :  PPSPin [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void PPSPin_OnInterrupt(void)
+{
+	LED1_Neg();
   /* Write your code here ... */
 }
 
 /*
 ** ===================================================================
-**     Event       :  TU2_OnCounterRestart (module Events)
+**     Event       :  FixPin_OnInterrupt (module Events)
 **
-**     Component   :  TU2 [TimerUnit_LDD]
+**     Component   :  FixPin [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void FixPin_OnInterrupt(void)
+{
+	static LDD_TDeviceData* timerHandle;
+	static FC1_TValueType cnt = 0;
+	static FC1_TValueType lastCnt = 0;
+	static FC1_TValueType diff = 0;
+	LED1_Neg();
+	lastCnt = cnt;
+	cnt = FC1_GetCounterValue(timerHandle);
+	diff = cnt - lastCnt;
+
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  FC1_OnInterrupt (module Events)
+**
+**     Component   :  FC1 [FreeCntr_LDD]
 */
 /*!
 **     @brief
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
+**         This event is called when a compare matches the counter
+**         value (if compare or reload is selected as a interrupt
+**         source) or a counter overflows (for free-running devices).
+**         Component and OnInterrupt event must be enabled. See
 **         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt] is enabled.
+**         available only if a [Interrupt service/event] is enabled.
 **     @param
 **         UserDataPtr     - Pointer to the user or
 **                           RTOS specific data. The pointer passed as
 **                           the parameter of Init method.
 */
 /* ===================================================================*/
-void TU2_OnCounterRestart(LDD_TUserData *UserDataPtr)
+void FC1_OnInterrupt(LDD_TUserData *UserDataPtr)
 {
   /* Write your code here ... */
+	overrunCntr++;
 }
 
 /* END Events */
