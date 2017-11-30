@@ -15,7 +15,7 @@
 \usepackage{rotating}
 \usepackage{booktabs}
 \setlength\heavyrulewidth{0.25ex}
-
+\usepackage{longtable}
 
 %mathe packages
 \usepackage{amsmath}
@@ -112,9 +112,7 @@
         Arbeitsperiode: & 18.09.2017 - 22.12.2017\\
     \end{tabular}
 %TODO update to have a longtable over multiple lines
-	\begin{table}[H]
-		\centering
-		\begin{tabular}{p{9cm}|p{2cm}|c}
+		\begin{longtable}{p{9cm}|p{2cm}|c}
             \header
 
             Administrativer Aufwand & 05.10 & 2\\
@@ -150,7 +148,7 @@
             & 17.11 & 4\\
             \#47: DB Software implementieren & 22.11 & 3\\
             & 23.11 & 4.5\\
+            & 30.11 & 3\\
             \footer
-		\end{tabular}
-	\end{table}
+		\end{longtable}
 \end{document}
