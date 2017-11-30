@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 project (ClockPendulumAnalyzer)
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11 -lpthread")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 #compile setting for application
