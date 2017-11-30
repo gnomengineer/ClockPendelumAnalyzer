@@ -26,6 +26,7 @@ void ClockPendulumAnalyzer::startAnalyze() {
         //TODO use DataAssembler.getNewDataSample and print it to cout
         std::cout << "clock name :" << m_ClockName << std::endl;
         //std::cout << m_DataList.back().getClockName << " in DataTupel" << std::endl;
+        m_DataTransfer.getDataListByName(m_ClockName);
         std::this_thread::sleep_for(timespan);
     }
 }

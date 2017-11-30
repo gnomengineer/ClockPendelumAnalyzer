@@ -6,7 +6,7 @@ DataTransfer::DataTransfer() {
 //TODO open the db
     m_Connector = new SQLiteImplementation();
     if (m_Connector ){
-        m_Connector->connect("");
+        m_Connector->connect("file:/tmp/test.db");
         m_Persistor = dynamic_cast<IDataPersistor*>(m_Connector);
     }
     std::cout << "DataTransfer created" << std::endl;
