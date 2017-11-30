@@ -11,7 +11,7 @@ class ClockPendulumAnalyzer {
         ClockPendulumAnalyzer(std::string clockname);
         void startAnalyze();
     private:
-        const int MAXDATATUPEL = 0;
+        const int MAXDATATUPEL = 5;
         std::list<DataTupel> m_DataList;
         DataTransfer m_DataTransfer;
         std::string m_ClockName;
