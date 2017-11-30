@@ -6,6 +6,7 @@
 #include "IDataPersistor.h"
 #include <list>
 #include <string>
+#include <sqlite3.h>
 
 class SQLiteImplementation : public IDBConnector, public IDataPersistor {
     public:
@@ -16,8 +17,16 @@ class SQLiteImplementation : public IDBConnector, public IDataPersistor {
         std::list<DataTupel> getDataByName(const std::string& name);
         void saveData(DataTupel data);
         void saveDataList(std::list<DataTupel> data);
+        static int addToList(void* info,
+                int numberOfRows, char** data, char** columnNames);
     private:
-        //sqlite
+        const std::string TABLE = "clocktable";
+        void printSQLiteError();
+        void printSQLError();
+        void createTableOnce();
+        sqlite3* m_DataBase;
+        int m_ErrorCode = 0;
+        char* m_SQLErrorMessage = 0;
 };
 
 #endif 
