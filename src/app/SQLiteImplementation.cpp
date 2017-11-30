@@ -8,7 +8,7 @@ SQLiteImplementation::~SQLiteImplementation(){
 }
 
 void SQLiteImplementation::connect(std::string uri){
-    m_ErrorCode = sqlite3_open_v2(uri.c_str(), &m_DataBase, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_URI, nullptr);
+    m_ErrorCode = sqlite3_open_v2(uri.c_str(), &m_DataBase, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_URI, NULL);
     if (m_ErrorCode != SQLITE_OK) {
         printSQLiteError();
     } else {
@@ -40,7 +40,7 @@ std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name
     sqlStatement << "SELECT * FROM " << TABLE << " WHERE clock = '"<< name << "';";
 
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
-            addToList, nullptr , &m_SQLErrorMessage);
+            addToList, NULL , &m_SQLErrorMessage);
     if (m_ErrorCode != SQLITE_OK) {
         printSQLiteError();
         printSQLError();
@@ -51,7 +51,26 @@ std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name
 }
 
 void SQLiteImplementation::saveData(DataTupel data){
-    std::cout << "data tupel saved" << std::endl;
+    std::stringstream sqlStatement;
+    sqlStatement << "INSERT INTO " << TABLE << 
+        " (clock, date, absolutetime, heat, humidity) " <<
+        " VALUES('" <<
+        data.getClockName() << "'," <<
+        data.getDate() << "," <<
+        data.getAbsoluteTime() << "," <<
+        data.getHeat() << "," <<
+        data.getHumidity() << ");";
+
+    m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
+            NULL, NULL, &m_SQLErrorMessage);
+
+    if ( m_ErrorCode != SQLITE_OK ) {
+        printSQLiteError();
+        printSQLError();
+        std::cout << "during saving option" << std::endl;
+    } else {
+        std::cout << "data tupel saved" << std::endl;
+    }
 }
 
 void SQLiteImplementation::saveDataList(std::list<DataTupel> data){
@@ -74,19 +93,19 @@ void SQLiteImplementation::printSQLError() {
 
 void SQLiteImplementation::createTableOnce() {
     std::string sqlStatement = "SELECT * FROM " + TABLE;
-    m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), nullptr, nullptr, &m_SQLErrorMessage);
+    m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), NULL, NULL, &m_SQLErrorMessage);
 
     if (m_ErrorCode != SQLITE_OK ) {
         std::cout << "Table doesn't exist" << std::endl;
         printSQLError();
 
-        sqlStatement = "CREATE TABLE " + TABLE + "( ID INT PRIMARY KEY NOT NULL,"
+        sqlStatement = "CREATE TABLE " + TABLE + "( ID INTEGER PRIMARY KEY AUTOINCREMENT,"
             + " clock TEXT NOT NULL,"
             + " date INT NOT NULL,"
             + " absolutetime INT NOT NULL,"
             + " heat INT,"
             + " humidity INT)";
-        m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), nullptr, nullptr, &m_SQLErrorMessage);
+        m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), NULL, NULL, &m_SQLErrorMessage);
         if(m_ErrorCode != SQLITE_OK) {
             printSQLiteError();
             printSQLError();
@@ -97,6 +116,7 @@ void SQLiteImplementation::createTableOnce() {
 int SQLiteImplementation::addToList(void* info, int numberOfRows,
         char** data, char** columnNames) {
     std::cout << "Test" << std::endl;
+
     //TODO implement adding result rows to a list which will be returned
     return 0;
 }
