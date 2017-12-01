@@ -7,6 +7,7 @@ class DataTupel {
     public:
         DataTupel();
         DataTupel(std::string name, std::string date, int absoluteTime);
+        DataTupel(std::string name, std::string date, std::string absoluteTime);
         std::string getClockName() { return m_ClockName;}
         std::string getDate() { return m_Date; }
         int getAbsoluteTime() { return m_AbsoluteTime; }
@@ -18,6 +19,15 @@ class DataTupel {
         void setAbsoluteTime(int absoluteTime);
         void setHeat(int heat);
         void setHumidity(int humidity);
+
+        enum class Tupel{
+            CLOCKNAME = 1,
+            DATE = 2,
+            ABSOLUTETIME = 3,
+            HEAT = 4,
+            HUMIDITY = 5
+        };
+
     private:
         std::string m_ClockName;
         std::string m_Date = "20171122151059";
