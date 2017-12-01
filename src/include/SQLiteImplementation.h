@@ -15,15 +15,18 @@ class SQLiteImplementation : public IDBConnector, public IDataPersistor {
         void disconnect();
         std::list<DataTupel> getDataByDate(const std::string& date);
         std::list<DataTupel> getDataByName(const std::string& name);
-        void saveData(DataTupel data);
-        void saveDataList(std::list<DataTupel> data);
+        int saveData(DataTupel data);
+        int saveDataList(std::list<DataTupel> data);
         static int addToList(void* info,
                 int numberOfRows, char** data, char** columnNames);
     private:
         const std::string TABLE = "clocktable";
-        void printSQLiteError();
+        void printSQLiteError(const std::string errorOccurence = "");
         void printSQLError();
         void createTableOnce();
+        void getData(const std::string& key, const std::string& value);
+
+        std::list<DataTupel> m_Result;
         sqlite3* m_DataBase;
         int m_ErrorCode = 0;
         char* m_SQLErrorMessage = 0;

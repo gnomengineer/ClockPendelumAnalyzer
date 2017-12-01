@@ -10,7 +10,7 @@ SQLiteImplementation::~SQLiteImplementation(){
 void SQLiteImplementation::connect(std::string uri){
     m_ErrorCode = sqlite3_open_v2(uri.c_str(), &m_DataBase, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_URI, NULL);
     if (m_ErrorCode != SQLITE_OK) {
-        printSQLiteError();
+        printSQLiteError("SQLiteImplementation::connect");
     } else {
         std::cout << "database connected" << std::endl;
     }
@@ -23,34 +23,39 @@ void SQLiteImplementation::connect(std::string uri){
 void SQLiteImplementation::disconnect(){
     m_ErrorCode = sqlite3_close(m_DataBase);
     if (m_ErrorCode != SQLITE_OK) {
-        printSQLiteError();
+        printSQLiteError("SQLiteImplementation::disconnect");
     } else {
         std::cout << "database disconnected" << std::endl;
     }
 }
 
 std::list<DataTupel> SQLiteImplementation::getDataByDate(const std::string& date){
+    m_Result.clear();
+    getData("date", date);
     std::cout << "return Data by Date" << std::endl;
-    std::list<DataTupel> dateData;
-    return dateData;
+    return m_Result;
 }
 
 std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name){
+    m_Result.clear();
+    getData("clock", name);
+    std::cout << "return Data by Name" << std::endl;
+    return m_Result;
+}
+
+void SQLiteImplementation::getData(const std::string& key, const std::string& value) {
     std::stringstream sqlStatement;
-    sqlStatement << "SELECT * FROM " << TABLE << " WHERE clock = '"<< name << "';";
+    sqlStatement << "SELECT * FROM " << TABLE << " WHERE " << key <<"= '"<< value << "';";
 
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
             addToList, NULL , &m_SQLErrorMessage);
     if (m_ErrorCode != SQLITE_OK) {
-        printSQLiteError();
+        printSQLiteError("SQLiteImplementation::getDataByName");
         printSQLError();
     }
-    std::cout << "return Data by Name" << std::endl;
-    std::list<DataTupel> nameData;
-    return nameData;
 }
 
-void SQLiteImplementation::saveData(DataTupel data){
+int SQLiteImplementation::saveData(DataTupel data){
     std::stringstream sqlStatement;
     sqlStatement << "INSERT INTO " << TABLE << 
         " (clock, date, absolutetime, heat, humidity) " <<
@@ -65,21 +70,26 @@ void SQLiteImplementation::saveData(DataTupel data){
             NULL, NULL, &m_SQLErrorMessage);
 
     if ( m_ErrorCode != SQLITE_OK ) {
-        printSQLiteError();
+        printSQLiteError("SQLiteImplementation::saveData");
         printSQLError();
-        std::cout << "during saving option" << std::endl;
-    } else {
-        std::cout << "data tupel saved" << std::endl;
     }
+
+    return m_ErrorCode;
 }
 
-void SQLiteImplementation::saveDataList(std::list<DataTupel> data){
+int SQLiteImplementation::saveDataList(std::list<DataTupel> data){
+    m_ErrorCode = 0; //we assume everything worked fine so far
+    for ( std::list<DataTupel>::iterator element = data.begin();
+            element != data.end(); ++element) {
+        saveData(*element);
+    }
     std::cout << "data list saved" << std::endl;
+    return m_ErrorCode;
 }
 
-void SQLiteImplementation::printSQLiteError() {
+void SQLiteImplementation::printSQLiteError(const std::string errorOccurence) {
     std::cerr << "[EE]: database error occured with error code (" <<
-        m_ErrorCode << ")" << std::endl;
+        m_ErrorCode << ") in method" << errorOccurence << std::endl;
     //TODO pad the error message
     std::cout << std::setw(5) << sqlite3_errstr(m_ErrorCode) << std::endl;
 }
@@ -96,8 +106,7 @@ void SQLiteImplementation::createTableOnce() {
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), NULL, NULL, &m_SQLErrorMessage);
 
     if (m_ErrorCode != SQLITE_OK ) {
-        std::cout << "Table doesn't exist" << std::endl;
-        printSQLError();
+        std::cout << "Table doesn't exist, creating it" << std::endl;
 
         sqlStatement = "CREATE TABLE " + TABLE + "( ID INTEGER PRIMARY KEY AUTOINCREMENT,"
             + " clock TEXT NOT NULL,"
@@ -107,7 +116,7 @@ void SQLiteImplementation::createTableOnce() {
             + " humidity INT)";
         m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), NULL, NULL, &m_SQLErrorMessage);
         if(m_ErrorCode != SQLITE_OK) {
-            printSQLiteError();
+            printSQLiteError("SQLiteImplementation::createTableOnce");
             printSQLError();
         }
     }
