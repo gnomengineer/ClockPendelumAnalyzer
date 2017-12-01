@@ -16,7 +16,7 @@ class ClockPendulumAnalyzer {
         std::list<DataTupel> m_DataList;
         DataTransfer m_DataTransfer;
         std::string m_ClockName;
-        DataAssembler m_DataAssembler; //TODO implement DataAssembler
+        DataAssembler m_DataAssembler;
         //IRESTService m_RestService; //TODO implement REST Service
 };
 

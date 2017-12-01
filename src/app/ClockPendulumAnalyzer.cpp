@@ -5,9 +5,7 @@
 #include <thread>
 #include <stdio.h>
 
-ClockPendulumAnalyzer::ClockPendulumAnalyzer(std::string clockname) : m_ClockName(clockname) {
-    //m_DataAssembler = new DataAssembler();//TODO implement DataAssembler
-}
+ClockPendulumAnalyzer::ClockPendulumAnalyzer(std::string clockname) : m_ClockName(clockname) {}
 
 void ClockPendulumAnalyzer::startAnalyze() {
     bool isSaved = false;

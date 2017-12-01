@@ -3,7 +3,6 @@
 #include <iostream>
 
 DataTransfer::DataTransfer() {
-//TODO open the db
     m_Connector = new SQLiteImplementation();
     if (m_Connector ){
         m_Connector->connect("file:/tmp/test.db");
@@ -13,7 +12,6 @@ DataTransfer::DataTransfer() {
 }
 
 DataTransfer::~DataTransfer() {
-//TODO close the db
     if ( m_Connector) {
         m_Connector->disconnect();
         m_Connector = 0;
