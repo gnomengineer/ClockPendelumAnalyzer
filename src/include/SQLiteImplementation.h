@@ -8,6 +8,9 @@
 #include <string>
 #include <sqlite3.h>
 
+//TODO a static function in a header file of a cpp class ?!
+static int callback(void* object,int numberOfRows, char** data, char** columnNames);
+
 class SQLiteImplementation : public IDBConnector, public IDataPersistor {
     public:
         ~SQLiteImplementation();
@@ -17,8 +20,7 @@ class SQLiteImplementation : public IDBConnector, public IDataPersistor {
         std::list<DataTupel> getDataByName(const std::string& name);
         int saveData(DataTupel data);
         int saveDataList(std::list<DataTupel> data);
-        static int addToList(void* info,
-                int numberOfRows, char** data, char** columnNames);
+        int addToList(int numberOfRows, char** data, char** columnNames);
     private:
         const std::string TABLE = "clocktable";
         void printSQLiteError(const std::string errorOccurence = "");

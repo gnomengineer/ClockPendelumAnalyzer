@@ -4,7 +4,7 @@
 #include <sstream>
 
 SQLiteImplementation::~SQLiteImplementation(){
-
+    disconnect();
 }
 
 void SQLiteImplementation::connect(std::string uri){
@@ -48,7 +48,7 @@ void SQLiteImplementation::getData(const std::string& key, const std::string& va
     sqlStatement << "SELECT * FROM " << TABLE << " WHERE " << key <<"= '"<< value << "';";
 
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
-            addToList, NULL , &m_SQLErrorMessage);
+            callback, this, &m_SQLErrorMessage);
     if (m_ErrorCode != SQLITE_OK) {
         printSQLiteError("SQLiteImplementation::getDataByName");
         printSQLError();
@@ -122,10 +122,43 @@ void SQLiteImplementation::createTableOnce() {
     }
 }
 
-int SQLiteImplementation::addToList(void* info, int numberOfRows,
+int SQLiteImplementation::addToList(int numberOfRows,
         char** data, char** columnNames) {
-    std::cout << "Test" << std::endl;
+    std::string clockname, date, absolutetime, heat, humidity;
+    std::cout << "test";
 
-    //TODO implement adding result rows to a list which will be returned
+    for ( int counter = 0; counter < numberOfRows; counter++ ) {
+        DataTupel::Tupel column = static_cast<DataTupel::Tupel>(counter);
+
+        switch ( column) {
+            case DataTupel::Tupel::CLOCKNAME: 
+                clockname = data[counter];
+                break;
+            case DataTupel::Tupel::DATE: 
+                date = data[counter]; 
+                break;
+            case DataTupel::Tupel::ABSOLUTETIME:
+                absolutetime = data[counter]; 
+                break;
+                /*
+            case DataTupel::Tupel::HEAT: 
+                heat = (int)data[counter]; 
+                break;
+            case DataTupel::Tupel::HUMIDITY:
+                humidity = (int)data[counter];
+                break;
+                */
+            default: break;
+        }
+    }
+    
+    DataTupel resultTupel(clockname,date,absolutetime);
+    m_Result.push_back(resultTupel);
+    
     return 0;
+}
+
+int callback(void* object,int numberOfRows, char** data, char** columnNames) {
+    SQLiteImplementation* sql = reinterpret_cast<SQLiteImplementation*>(object);
+    return sql->addToList(numberOfRows,data,columnNames);
 }
