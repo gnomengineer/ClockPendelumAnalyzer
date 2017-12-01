@@ -10,8 +10,9 @@ DataTupel::DataTupel(std::string name,
 
 DataTupel::DataTupel(std::string name,
         std::string date,
-        std::string time) {
-    DataTupel(name,date,std::stoi(time));
+        std::string time) : m_ClockName(name){
+    setDate(date);
+    setAbsoluteTime(std::stoi(time));
 }
 
 void DataTupel::setClockName(std::string name){
