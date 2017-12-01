@@ -125,7 +125,6 @@ void SQLiteImplementation::createTableOnce() {
 int SQLiteImplementation::addToList(int numberOfRows,
         char** data, char** columnNames) {
     std::string clockname, date, absolutetime, heat, humidity;
-    std::cout << "test";
 
     for ( int counter = 0; counter < numberOfRows; counter++ ) {
         DataTupel::Tupel column = static_cast<DataTupel::Tupel>(counter);
