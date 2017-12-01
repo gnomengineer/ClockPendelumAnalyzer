@@ -41,5 +41,8 @@ std::list<DataTupel> DataTransfer::getDataListByName(std::string name) {
 }
 
 bool DataTransfer::saveDataList(std::list<DataTupel> data) {
-    return false;
+    if (m_Persistor->saveDataList(data) != 0) {
+        return false;
+    }
+    return true;
 }
