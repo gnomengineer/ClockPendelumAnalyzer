@@ -1,10 +1,28 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \section{Hardware Komponenten}
+Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerten zu können, werden diverse Hardwarebausteine benötigt. In diesem Kapitel werden die Aufgabe und Entscheidungsgrundlagen beschrieben.
 \subsection{IR-Sensoren}
 	Alle in Frage kommenden Sensoren für die Ermittlung der Pendeldurchgänge basieren auf optischer Technologie, da Schallsensoren nicht genau genug sind oder zu nahe am Pendel platziert werden müsten. Mechanische Sensoren können aufgrund der physikalischen Effekte auf das Pendel verworfen werden.\\
-	 Bei den optischen Sensoren steellt sich die Frage, ob der Sender und der Empfänger sich im gleichen Sensor befinden und ob ein Reflektor benötigt wird oder nicht.\\
-	Aufgrund der unterschiedlichen Bauarten der Pendeluhren haben wir uns bezüglich für einen Sensortyp entscieden, welcher keinen Reflektor benötigt und bei dem Sender und Empfänger sehr nahe beieinander liegen. Auf diese Weise sind auch kleine Pendel messbar und es müssen keine Reflektoren angebracht werden.\\
-	\textbf{TODO: Sensorbeschrieb mit Bild und Verweis auf Anhang}
+	 Bei den optischen Sensoren stellt sich die Frage, ob der Sender und der Empfänger sich im gleichen Sensor befinden und ob ein Reflektor benötigt wird oder nicht.\\
+	Aufgrund der unterschiedlichen Bauarten der Pendeluhren haben wir uns bezüglich für einen Sensortyp entschieden, welcher keinen Reflektor benötigt und bei dem Sender und Empfänger sehr nahe beieinander liegen. Auf diese Weise sind auch kleine Pendel messbar und es müssen keine Reflektoren angebracht und ausgerichtet werden.\\
+	Aus Kostengründen und seiner kleinen Baugrösse haben wir uns für die Reflektions-Lichtschranke SFH9201 von Osram entschieden (Abbildung \ref{fig:SFH9201}).
+	\begin{figure}[H]
+        \centering
+        \includegraphics[width=.5\textwidth]{reflexions-lichtschranke-sfh91019201-osram-1-st}
+        \caption{Reflexlions-Lichtschranke Osram SFH9201}
+        \label{fig:SFH9201}
+    \end{figure}
+	Der Sender befindet sich im kleineren, oberen Rechteck und der Empfänger im Unteren. Die detaillierten Eigenschaften können dem Datenblatt im Anhang, Seite <tbd> entnommen werden. Anbei die zentralen Eigenschaften:
+	\begin{table}[H]
+		\begin{tabular}{|p{11cm}|p{4cm}|}\hline
+			Reaktionszeit auf Auslösung (Anstiegszeit): & 50$\mu{s}$ \\ \hline
+			Bauteilhöhe:								& 4.2mm\\ \hline
+			Bauteilbreite:								& 6.2mm inkl Anschlusspins\\ \hline
+			Optimaler Arbeitsabstand:					& 1mm bis 5mm \\ \hline
+		\end{tabular}
+		\caption{Übersicht der Eigenschaften der Reflektions-Lichtschranke SFH9201}
+		\label{tab:SFH9201}
+	\end{table}
 \subsection{GPS Receiver}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so keinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert.
