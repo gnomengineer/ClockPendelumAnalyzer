@@ -65,7 +65,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 		E = \frac{1}{f}
 	\]
 	Wobei $f$ der Abtastfrequenz entspricht. Könnten wir unendlich schnell abtasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln bestehen unter Anderem zwei Ansätze. Ein auf IC's basierender Hardware-Counter oder ein Hard-Realtime Mikrocontroller-System.
-	\subsection{Hardware Counter}
+	\subsubsection{Hardware Counter}
 		Ein Hardware-Conter kann mittels verfügbaren Counter-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
 		\begin{figure}[H]
         	\centering
@@ -91,7 +91,7 @@ Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit 
     	\item Auslesen des Zählerwertes benötigt weitere Hardware.
     \end{itemize}
     %
-	\subsection{Mikrocontroller System}
+	\subsubsection{Mikrocontroller System}
    		Da es sich bei den meisten Mikrocontroller-Systemen um Hard-Realtime-Systeme handelt, eignen diese sich ebenfalls zur Realisierung eines Zählers. Ein Realtime-System muss per Definition folgende Kriterien erfüllen:
    		\begin{itemize}
    			\item Das korrekte Resultat.
@@ -113,4 +113,24 @@ Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit 
         	\caption{TinyK20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
+    	Mittels dem TinyK20, lassen sich diverse Timer und Counterarten erzeugen. Ein "freerun"-Counter läuft z.B. unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Der Zähler verfügt zwar nicht über die gleiche Genauigkeit wie ein Hardware-Counter aber dies lässt sich mit Hilfe des GPS Moduls ausgleichen. Dies ist im Kapitel <tbd> noch ausführlicher beschrieben.
+    	Vorteile dieser Lösung:
+    	\begin{itemize}
+    		\item Kostengünstiges Gesamtsystem für Zähler und Auswertung, Systempreis: 20.- CHF.
+    		\item Debug-Schnittstelle zur überprüfung des Systems vorhanden.
+    		\item Über Interrupt-Leitungen können die Pendeldurchgänge ohne periodisches Abtasten erfasst werden.
+    		\item UART RS232 und $I^2C$ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
+    		\item Eignefabrikat der Hochschule Luzern mit entsprechendem Know-how.
+    	\end{itemize}
+    	Nachteile dieser Lösung:
+    	\begin{itemize}
+    		\item Aufggrund mehreren Aufgaben des Systems muss die Genauigkeit überprüft werden, was schwierig werden kann.
+    		\item Debuggen verändert das Systemverhalten.
+    		\item Zählergenauigkeit ist nicht quantifiziert, Kennzahlen fehlen. Das System muss entsprechend diszipliniert werden.
+    	\end{itemize}
+		%    	
+    \subsubsection{Entscheidungsgrundlage}
+		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, allenfalls doch noch einen Hardware-Counter zu nutzen, haben wir uns für die Lösung mittels Mikrocontrollersystems entschieden. Mittels dem GPS-Modul ist es möglich, das TinyK20 zu disziplinieren, zumindest den Counter nach jedem Sekundentakt auszuwerten. Dieser Counter-Wert wird dann als Referenz-Frequenz genutzt.\\
+		Weil das TinyK20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardwarecounter auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
+%%%
 \input{raspberry}
