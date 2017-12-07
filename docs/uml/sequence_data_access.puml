@@ -1,0 +1,9 @@
+@startuml 
+
+''access data
+WebClient -> RESTService : get Data(name = 'testuhr')
+RESTService -> DataTransfer : getDataListByName()
+RESTService <-- DataTransfer : List<DataTupel>
+WebClient <-- RESTService : post List<DataTupel>
+
+@enduml

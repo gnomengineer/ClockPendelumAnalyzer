@@ -1,0 +1,19 @@
+@startuml
+
+''save data
+loop infinite
+    loop 5 times
+        ClockPendulumAnalyzer -> DataAssembler : getNewDataSample()
+        DataAssembler -> Analyzer : getAbsoluteTimeNs()
+        DataAssembler <-- Analyzer : int absoluteTime
+        ClockPendulumAnalyzer <-- DataAssembler : DataTupel
+    end
+
+    ClockPendulumAnalyzer -> DataTransfer : saveDataList()
+    ClockPendulumAnalyzer <-- DataTransfer : bool isSaved
+    alt isSaved == true
+        ClockPendulumAnalyzer -> ClockPendulumAnalyzer : clearList
+    end
+end
+
+@enduml
