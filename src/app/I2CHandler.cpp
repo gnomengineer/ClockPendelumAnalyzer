@@ -41,4 +41,5 @@ int I2CHandler::setErrMsg(const std::string &msg) {
     return -1;
 }
 
+//TODO check if i2c requires write to read
 //int I2CHandler::writeValue(const double &value, const int &address) { }
