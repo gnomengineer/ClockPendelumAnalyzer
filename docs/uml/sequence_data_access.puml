@@ -1,9 +1,16 @@
 @startuml 
 
+participant WebClient as web
+participant RESTService as rest
+participant DataTransfer as dt
+database SQLite as sql
+
 ''access data
-WebClient -> RESTService : get Data(name = 'testuhr')
-RESTService -> DataTransfer : getDataListByName()
-RESTService <-- DataTransfer : List<DataTupel>
-WebClient <-- RESTService : post List<DataTupel>
+web -> rest : get Data(name = 'testuhr')
+rest -> dt : getDataListByName()
+dt -> sql : getDataByName()
+dt <-- sql : data
+rest <-- dt : List<DataTupel>
+web <-- rest : post List<DataTupel>
 
 @enduml
