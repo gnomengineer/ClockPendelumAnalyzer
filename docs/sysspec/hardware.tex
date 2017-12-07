@@ -1,6 +1,9 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \section{Hardware Komponenten}
 Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerten zu können, werden diverse Hardwarebausteine benötigt. In diesem Kapitel werden die Aufgabe und Entscheidungsgrundlagen beschrieben.
+%
+%	IR-Sensoren
+%
 \subsection{IR-Sensoren}
 	Alle in Frage kommenden Sensoren für die Ermittlung der Pendeldurchgänge basieren auf optischer Technologie, da Schallsensoren nicht genau genug sind oder zu nahe am Pendel platziert werden müsten. Mechanische Sensoren können aufgrund der physikalischen Effekte auf das Pendel verworfen werden.\\
 	 Bei den optischen Sensoren stellt sich die Frage, ob der Sender und der Empfänger sich im gleichen Sensor befinden und ob ein Reflektor benötigt wird oder nicht.\\
@@ -23,6 +26,9 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 		\caption{Übersicht der Eigenschaften der Reflektions-Lichtschranke SFH9201}
 		\label{tab:SFH9201}
 	\end{table}
+%
+%	GPS-Modul
+%	
 \subsection{GPS Modul}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so keinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock ist unsere Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit gefallen (Abbildung \ref{fig:GPS3133}). Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit. Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Angang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da nicht im Datenblatt enthalten. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
@@ -32,8 +38,12 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         	\caption{GPS-Modul Draufsicht mit den Pins PPS und FIX (Bildquelle: learn.adafruit.com)}
         	\label{fig:GPS3133}
     	\end{figure}
-	Zur Nutzung des GPS Moduls zum Setzen der Systemzeit kann das GPS-Modul über UART RS232 an den RX-TX Pins ansgeschlossen und angesprochen werden.    	
+	Zur Nutzung des GPS Moduls zum Setzen der Systemzeit kann das GPS-Modul über UART RS232 an den RX-TX Pins ansgeschlossen und angesprochen werden.
+%
+%	RTC
+%	
 \subsection{Real Time Clock}
+\label{cap:RTC}
 	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32KHz signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert. Auf ein Jahr ergibt dies eine Abweichung von:
 	\[
 		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
@@ -45,6 +55,62 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         	\includegraphics[width=.5\textwidth]{feather_3028-04}
         	\caption{RTC-Modul 3028 Draufsicht (Bildquelle: learn.adafruit.com)}
         	\label{fig:RTC3028}
-    	\end{figure}	
-\subsection{Hardware Counter}
+    	\end{figure}
+%
+%	Counter
+%
+\subsection{Counter}
+	Um den Pendeldurchgang auswerten zu können, ist es erforderlich, die vergangene Zweit zwischen zwei oder mehreren Durchgängen so genau wie möglich zu ermitteln. Angenommen der Durchgang würde zwei Mal pro Sekunde abgetastet, dann könnten wir eine Genauigkeit von $\frac{1}{2}$ Sekunde erreichen. Bei Vier Abtastvorgängen wäre es dementsprechend $\frac{1}{4}$ Sekunde. Dies führt zu der Folgenden Formel für den Fehler $E$:
+	\[
+		E = \frac{1}{f}
+	\]
+	Wobei $f$ der Abtastfrequenz entspricht. Könnten wir unendlich schnell abtasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln bestehen unter Anderem zwei Ansätze. Ein auf IC's basierender Hardware-Counter oder ein Hard-Realtime Mikrocontroller-System.
+	\subsection{Hardware Counter}
+		Ein Hardware-Conter kann mittels verfügbaren Counter-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
+		\begin{figure}[H]
+        	\centering
+        	\includegraphics[width=.5\textwidth]{Counter_IC_8Bit_ex}
+        	\caption{Counter IC: Logic IC SN74HC590AN, Texas Instruments (Bildquelle: distrelec.ch)}
+        	\label{fig:SN74HC590AN}
+    	\end{figure}
+    Im Falle eines Zählerüberlaufs wird das Carry-Bit gesetzt an Pin $\overline{RCO}$. Somit kann durch Verketten mehrerer IC's eine höhere Zählerbreite erreicht werden. Das Carry-Bit zählt dann den nächsten Chip hoch und setzt den eigenen Zählerwert zur gleichen Zeit zurück. Die typische Schaltgeschwindigkeit des aufgeführten IC's liegt bei $14ns$, was eine sehr gute Genauigkeit ermöglicht. Der Zählerwert muss dann mit einer entsprechend höheren Abtastfrequenz ermittelt werden, wenn ein Pendeldurchgang registriert worden ist.\\
+Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit ist dabei das Frequenzsignal des in Abschnitt \ref{cap:RTC} beschriebenen RTC-Modules zu verwenden. Mit 32kHz ist dieses allerdings zu langsam, um die geforderte Genauigkeit zu erhalten. Alternativ kann eine ofenkonntrollierte high precision RTC eingesetzt werden, mit einer Frequenz von 10MHz. Die Amplitudenzeit der 10MHz beträgt $100ns$ und kann vom Counter-IC verarbeitet werden.
+    Vorteile dieser Lösung:
+    \begin{itemize}
+    	\item Hohe maximale Zählfrequenz.
+    	\item Speisung mit 2V - 5V möglich.
+    	\item Skalierbarkeit durch Verkennten von Bausteinen.
+    	\item Tiefe Kosten für IC's, Stückpreis des Beispielmodelles bei 0.75CHF.
+    	\item Genauigkeit durch Frequenzgeber anpassbar.
+    	\item Hoch- oder Runterzählen möglich.
+    \end{itemize}
+    Nachteile dieser Lösung:
+    \begin{itemize}
+    	\item Komplexität der Konstruktion des gesamten Zählersystems.
+    	\item Hohe Anschaffungskosten bei einem hochgenauen Frequenzgeber.
+    	\item Auslesen des Zählerwertes benötigt weitere Hardware.
+    \end{itemize}
+    %
+	\subsection{Mikrocontroller System}
+   		Da es sich bei den meisten Mikrocontroller-Systemen um Hard-Realtime-Systeme handelt, eignen diese sich ebenfalls zur Realisierung eines Zählers. Ein Realtime-System muss per Definition folgende Kriterien erfüllen:
+   		\begin{itemize}
+   			\item Das korrekte Resultat.
+   			\item Zur richtigen Zeit.
+   			\item Auf eine unterscheidbare und vorhersehbare Weise.
+		\end{itemize}
+		Wobei Hard-Realtime definiert, dass keine Verletzung der Zeitvorgaben zulässig sind, während ein Soft-Realtimesystem gewisse Abweichungen toleriert. Ein verfügbares Mikrocontroller-System ist das, von der Hochschule Luzern produzierte, TinyK20 Board (Abbildung \ref{fig:TinyK20}). Dieses verfügt über folgende Eigenschaften:
+		\begin{itemize}
+			\item Ein Freescale K20 Mikrocontroller, basierend auf einem Cortex M4 Kern.
+			\item 50MHz Prozessorfrequenz.
+			\item 8MHz Temperaturgestützer Quarz Eingangsfrequenz.
+			\item 3.3V und 5V ausgänge zur Speisung anderer Gräte.
+			\item Micro-USB Anschluss für Kommunikation und Speisung des TinyK20.
+			\item Debug-Anschluss um mittels eines zweiten TinyK20 zu debuggen.
+		\end{itemize}
+		\begin{figure}[H]
+        	\centering
+        	\includegraphics[width=.5\textwidth]{top-side-of-tinyk20}
+        	\caption{TinyK20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
+        	\label{fig:TinyK20}
+    	\end{figure}
 \input{raspberry}
