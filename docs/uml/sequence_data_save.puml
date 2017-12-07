@@ -1,0 +1,32 @@
+@startuml
+
+participant ClockPendulumAnalyzer as cpa
+participant DataAssembler as da
+participant Analyzer as a
+participant I2CHandler as i2c
+participant DataTransfer as dt
+database SQLite as sql
+
+''save data
+loop infinite
+    loop 5 times
+        cpa -> da : getNewDataSample()
+        da -> a : getAbsoluteTimeNs()
+        a -> i2c : readValue()
+        a <-- i2c : new absoluteTime
+        note right: I2C kommuniziert mit dem CounterBoard
+        da <-- a : int absoluteTime
+        cpa <-- da : DataTupel
+        cpa -> cpa : wait(1s)
+    end
+
+    cpa -> dt : saveDataList()
+    dt -> sql : saveData()
+    dt <-- sql : errorNumber
+    cpa <-- dt : bool isSaved
+    alt isSaved == true
+        cpa -> cpa : clearList
+    end
+end
+
+@enduml

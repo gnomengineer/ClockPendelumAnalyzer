@@ -1,3 +1,19 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \subsection{Sequenzdiagramm}
-	\subsubsection{Abruf und Speichern einer Datenmessung}
+In diesem Kapitel werden einzelne Arbeitsabläufe anhand eines Sequenzdiagrammes dargestellt.
+	\subsubsection{Speichern einer Datenmessung}
+    Dieses Sequenzdiagramm zeigt den Ablauf zum Speichern einer Messdatenreihe. Das ganze läuft in einer endlosen Schlaufe und versucht vor einem Speichern in die Datenbank 5 Daten Samples über den I2C zu erhalten.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{sequence_data_save.png}
+        \caption{Sequenzdiagramm zum Daten speichern}
+    \end{figure}
+
+    \clearpage
+    \subsubsection{Abrufen einer Datenmessung}
+    Der Webclient ruft Daten über eine HTTP Request auf die angebotene REST Schnittstelle. Dabei werden folgende Sequenzen abgearbeitet.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.7\textwidth]{sequence_data_access.png}
+        \caption{Sequenzdiagramm zum Daten aufrufen}
+    \end{figure}
