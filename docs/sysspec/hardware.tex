@@ -34,7 +34,17 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
     	\end{figure}
 	Zur Nutzung des GPS Moduls zum Setzen der Systemzeit kann das GPS-Modul über UART RS232 an den RX-TX Pins ansgeschlossen und angesprochen werden.    	
 \subsection{Real Time Clock}
-	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32KHz signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} auf ein \textbf{TODO: exakte Zeiteinheit für die Toleranz einfügen} verspricht.\\
+	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32KHz signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert. Auf ein Jahr ergibt dies eine Abweichung von:
+	\[
+		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
+	\]
+	Gekoppelt mit dem zuvor beschriebenen GPS-Modul kann verhindert werden, dass sich der Fehler aufsummiert und somit liegt die Referenzzeit innerhalb von $0.0000002s = 2\mu{s}$ 
 	Weiter verfügt die RTC über die Möglichkeit, dem Raspberry PI die Absolutzeit zu vermitteln, wenn z.B. keine Netwerkverbindung besteht oder kein NTP\footnote{Network Time Protocol} verfügbar ist.
+		\begin{figure}[H]
+        	\centering
+        	\includegraphics[width=.5\textwidth]{feather_3028-04}
+        	\caption{RTC-Modul 3028 Draufsicht (Bildquelle: learn.adafruit.com)}
+        	\label{fig:RTC3028}
+    	\end{figure}	
 \subsection{Hardware Counter}
 \input{raspberry}
