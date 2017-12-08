@@ -1,3 +1,4 @@
+% !TEX root=SysSpec_ClockPendulumAnalyzer
 \subsection{Umsetzung des GPIO Zugriff}
 Der Zugriff auf die GPIO Pins des Raspberry wurde mit einer simplen Klasse umgesetzt. Diese Klasse ist verantwortlich für das Exportieren und Unexportieren der Pins. Dies geschieht bei der Initialisierung der Klasse beziehungsweise beim Dekonstruktor. Dabei wird das Prinzip der Resourcenbelegung ist Initialisierung (kurz RAII) nicht verletzt.\\
 \\
@@ -23,5 +24,9 @@ Der Counter hat dabei die Adresse %TODO Counter Adresse für i2c
 und die RTC wird über Adresse %TODO RTC Adresse für i2c
 angesprochen.
 
-\subsubsection{UART Implementierung}%TODO UART erklären
+\subsubsection{UART Implementierung}\label{sec:uart}
 Für das Lesen des GPS Signals wird eine UART Kommunikation benötigt. Diese wird ebenfalls wie die oberen Klassen abstrahiert und bietet somit einfache Lese- und Schreibemöglichkeit.\\
+\\
+Die UART Verbindung läuft über die Pins 8 (Tx, Transmitter) und 10 (Rx, Receiver).\\
+Als Komponente des UARTs wird die Adafruit\_GPS Bibliothek\footnote{Adafruit GPS Repository \cite{adafruit}} verwendet. Diese bietet bereits eine vereinfachte  Kommunikation mit dem GPS. Mit Wrapperfunktionen wird der Setup und das Beenden nochmals abstrahiert.\\
+Für die Kommunikation mit dem GPS wird eine Standardgeschwindigkeit (Baudrate) von 9600 gewählt. Vom GPS benötigt das Raspberry nur die Zeit und daher werden nur diese abgefragt.
