@@ -143,6 +143,52 @@ void FC1_OnInterrupt(LDD_TUserData *UserDataPtr)
 	overrunCntr++;
 }
 
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnSlaveBlockSent (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C in slave mode finishes the
+**         transmission of the data successfully. This event is not
+**         available for the MASTER mode and if SlaveSendBlock is
+**         disabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnSlaveBlockSent(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnSlaveBlockReceived (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C in slave mode finishes the
+**         reception of the data successfully. This event is not
+**         available for the MASTER mode and if SlaveReceiveBlock is
+**         disabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnSlaveBlockReceived(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+}
+
 /* END Events */
 
 #ifdef __cplusplus

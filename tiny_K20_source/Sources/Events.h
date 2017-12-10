@@ -45,6 +45,14 @@
 #include "PPSPin.h"
 #include "ExtIntLdd3.h"
 #include "FC1.h"
+#include "I2CSPY1.h"
+#include "GI2C1.h"
+#include "I2C1.h"
+#include "SDA1.h"
+#include "BitIoLdd3.h"
+#include "SCL1.h"
+#include "BitIoLdd4.h"
+#include "CI2C1.h"
 #include "KIN1.h"
 #include "UTIL1.h"
 #include "TGT_SWD_OE.h"
@@ -151,6 +159,46 @@ void FixPin_OnInterrupt(void);
 */
 /* ===================================================================*/
 void FC1_OnInterrupt(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnSlaveBlockSent (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C in slave mode finishes the
+**         transmission of the data successfully. This event is not
+**         available for the MASTER mode and if SlaveSendBlock is
+**         disabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnSlaveBlockSent(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnSlaveBlockReceived (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C in slave mode finishes the
+**         reception of the data successfully. This event is not
+**         available for the MASTER mode and if SlaveReceiveBlock is
+**         disabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnSlaveBlockReceived(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 
