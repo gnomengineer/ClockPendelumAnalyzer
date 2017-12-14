@@ -22,6 +22,7 @@
 \newcommand{\subauthors}{im Auftrag der Hochschule Luzern} %used for title page only
 \newcommand{\subtitle}{Projektdokumentation} % used for title and subtitle pages
 \newcommand{\documentdesc}{Gesamtprojektdokumentation des \documenttitle}
+\newcommand{\dozent}{Josef Bürgler}
 
 
 \begin{document}
@@ -29,7 +30,8 @@
 		\titleGM
 		\thispagestyle{empty}
 	\end{titlepage}
-	
+	\input{redlichkeit}
+    
 	\tableofcontents
 	
     %--- Management Summary ---
@@ -67,11 +69,13 @@
     \input{fazit}
     
     %BIBLIOGRAPHY
+    \clearpage
     \nocite{*}
     \bibliography{bibliography}
     \bibliographystyle{apacite}
     
     %--- Start of Lists ---
+    \clearpage
     \listoffigures
     \listoftables
     

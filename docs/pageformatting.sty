@@ -9,9 +9,11 @@
 \hspace*{0.05\textwidth} % Whitespace between the vertical line and title page text
 \parbox[b]{0.75\textwidth}{ % Paragraph box which restricts text to less than the width of the page
 
-{\noindent\huge\bfseries \documenttitle - \subtitle}\\[2\baselineskip] % Title
+{\noindent\huge\bfseries \documenttitle}\\% Title
+{\noindent\huge\bfseries \subtitle}\\[2\baselineskip] % Subtitle
 {\large \textit{\documentdesc}}\\[4\baselineskip] % Tagline or further description
 {\Large \textsc{\authors}}\\[2\baselineskip]
+{\large \textsc{\textit{Betreuender Dozent: \dozent}}}\\[\baselineskip]
 {\large \textsc{\textit{\subauthors}}} % Author name
 
 \vspace{0.5\textheight} % Whitespace between the title block and the publisher
@@ -24,8 +26,9 @@
 \newcommand*{\subtitleGM}[1]{
 \begingroup
 \hbox{
-\hspace*{0.25\textwidth}
+\hspace*{0.15\textwidth}
 \parbox[b]{0.75\textwidth}{
+    \centering
 	\vspace*{0.4\textheight}
 	{\noindent\huge\bfseries #1}\\[\baselineskip]
 	{\large \textit{\documenttitle - \authors}}\\
