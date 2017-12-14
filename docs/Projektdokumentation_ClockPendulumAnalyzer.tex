@@ -1,0 +1,82 @@
+\documentclass[a4paper, 10pt, fleqn]{article}
+\usepackage{custom}
+\usepackage{pageformatting}
+\usepackage{tikz}
+\usepackage{aeguill}
+\usepackage{import}
+
+\usepackage[ngerman]{babel}
+%mathe packages
+\usepackage{amsmath}
+
+%table packages
+\usepackage{booktabs}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+\graphicspath{{sysspec/pdf/}{images/}{uml/}}
+
+%============PAGE PROPERTIES=============
+\newcommand{\revisiondate}{\today}
+\newcommand{\documenttitle}{Clock Pendulum Analyzer} % used for title in title and subtitle pages
+\newcommand{\authors}{Tobias Kreienbühl \& Daniel Föhn} %used for title page only
+\newcommand{\subauthors}{im Auftrag der Hochschule Luzern} %used for title page only
+\newcommand{\subtitle}{Projektdokumentation} % used for title and subtitle pages
+\newcommand{\documentdesc}{Gesamtprojektdokumentation des \documenttitle}
+
+
+\begin{document}
+	\begin{titlepage}
+		\titleGM
+		\thispagestyle{empty}
+	\end{titlepage}
+	
+	\tableofcontents
+	
+    %--- Management Summary ---
+    \clearpage
+    \input{management_summary}
+	\clearpage
+	\input{introduction.tex}
+    
+    %--- Start of Vision ---
+    \subtitlepage{Vision - Projektauftrag}
+    \subimport{sysspec/}{vision.tex}
+    
+    %--- Start of PMP ---
+    \subtitlepage{Projektmanagement}
+    \subimport{pmp/}{projekt_organisation}
+    \clearpage
+    \subimport{pmp/}{projekt_rahmenplan}
+    \clearpage
+    \subimport{pmp/}{zeitplanung}
+    \clearpage
+    \subimport{pmp/}{risiko}
+    \clearpage
+    \subimport{pmp/}{testing}
+    
+    %--- Start of Sys Spec ---
+    \subtitlepage{System Spezifikation}
+    \subimport{sysspec/}{hardware}
+    \clearpage
+	\subimport{sysspec/}{systemdesign.tex}
+    \clearpage
+    \subimport{sysspec/}{interfaces.tex}
+    
+    %--- Fazit ---
+    \clearpage
+    \input{fazit}
+    
+    %BIBLIOGRAPHY
+    \nocite{*}
+    \bibliography{bibliography}
+    \bibliographystyle{apacite}
+    
+    %--- Start of Lists ---
+    \listoffigures
+    \listoftables
+    
+    %--- Start of Appendix ---
+    \clearpage
+    \thispagestyle{empty}
+    	\section*{Anhang}
+\end{document}
