@@ -1,7 +1,7 @@
 //
 // Created by tobias on 10.12.17.
 //
-#include "../include/RESTInterface.h
+#include "../include/RESTInterface.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib>
@@ -29,7 +29,8 @@ void RESTInterface::startServer() {
     if (socketfd < 0 ) {
         std::cout << "Error opening socket" << std::endl;
     }
-    bzero(dynamic_cast<char*>(&serverAddress), sizeof(serverAddress));
+    //TODO fix compiler error on line below!
+    //bzero(dynamic_cast<char*>(&serverAddress), sizeof(serverAddress));
     portNr = 80;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = INADDR_ANY;
