@@ -4,8 +4,8 @@
 #include "I2CHandler.h"
 #include <string>
 
+//@deprecated
 class Analyzer {
-    //TODO rename those variables
     const double MS = 1000000;
     const double US = 1000;
     const int NS = 1000000000;
