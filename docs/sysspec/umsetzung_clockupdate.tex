@@ -1,17 +1,18 @@
 % !TEX root=SysSpec_ClockPendulumAnalyzer
-\subsection{Umsetzung des Clock Update}%TODO rework chapter clock update
+\subsection{Umsetzung des Clock Update}
 Als Clock Update wird der Prozess verstanden, der die Systemzeit des Raspberry aktualisiert.
 
 \subsubsection{Problemstellung}
-Das System ist nicht zwingend an einem Internet angeschlossen. Über ein einfaches Lokales Netzwerk kann bereits mit HTTP ein Datenabruf stattfinden. Dies bedeutet, dass sich das Raspberry nicht mittels NTP Protokoll aktuell halten kann.
+Das System ist nicht mit dem Internet verbunden. Die Kommunikation der REST Schnittstelle wird über ein lokales LAN umgesetzt. Dies hat zur Folge, dass sich das Raspberry nicht mittels NTP Protokoll aktualisieren kann. Es könnte somit zu Zeitverschiebungen kommen.
 
 \subsubsection{Update der Systemzeit}
-Als Ablösung für das NTP Protokoll wird das am Hardware Counterboard angehängte GPS Modul verwendet. Über den bereits im Kapitel \ref{sec:uart} beschriebenen UART Anschluss kann die genaue Zeit genommen werden.\\
-Dieser Zeitwert vom GPS wird dann für das Setzen der Hardware Clock auf dem Raspberry verwendet.\\
-\\
-Mit einer genauen Uhrzeit und Datum im System kann ein besser Zeitstempel für den Messwert genommen werden. 
+Als Ablösung für das NTP Protokoll wird die RTC des Hardware Boards verwendet. Diese Uhr gibt eine konstante Zeit ab.\\
+Damit die Uhr auch nach einer längeren Zeit immer noch genau läuft, wird diese durch das ebenfalls am Hardware Board montierte GPS aktualisiert.\\
+Da die beiden Geräte nicht direkt kommunizieren können, muss das Raspberry als Übermittler dienen. Periodisch soll somit das Raspberry die GPS Zeit nehmen und damit die RTC neu korrigieren.
+\paragraph{Aufgetretene Probleme:} Wie bereits in den Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben, wird keine Kommunikation zwischen RTC, GPS und Raspberry stattfinden. Auf Grund der kleinen Priorität wird dieses Clock Update nicht weiter umgesetzt.
 
-\subsubsection{Systemzeit für Messdaten}
-Das System erhält einen kontinuierlichen Zeitstempel bei jedem Messdaten Sampling. Dabei wird während der Zusammensetzung von allen Informationen ein Zeitstempel von der GPS regulierten Systemzeit genommen. Unter Informationen sind Angaben zur absoluten Zeit, Uhrennamen und Datum zu verstehen.\\
+\subsubsection{Verwenden der Systemzeit}
+Sobald eine Zeitmessung vom Hardware Board an das Raspberry geschickt wird, wird diese in einer Liste abgespeichert. Diese List beinhaltet jeweils Wertepaare aus Zeitstempel und Messwert.\\
+Der Zeitstempel wird somit beim Speichern der Messwerte gelesen und mitgespeichert.\\
 \\
 Der Zeitstempel ist in einer Form, die für die Datenbank geeignet ist. Näheres zum Format ist dem Kapitel \ref{sec:db_date} zu entnehmen.
