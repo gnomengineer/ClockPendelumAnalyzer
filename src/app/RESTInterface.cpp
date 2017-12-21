@@ -1,7 +1,7 @@
 //
 // Created by tobias on 10.12.17.
 //
-#include "../include/RESTInterface.h
+#include "../include/RESTInterface.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib>
