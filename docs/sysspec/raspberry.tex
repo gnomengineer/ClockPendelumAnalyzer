@@ -7,12 +7,12 @@ Für die Umsetzung auf Computerebene wurde entschieden kein Realtime OS\footnote
 Um mit der Hardware auf einem guten Stand zu sein, wurde die neuste Version 3 des Raspberry Pi gewählt.
 
 \subsubsection{Betriebssystem und Software}
-Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert, dass unerwünschte daemons\footnote{hintergrundprozess unter linux} oder andere Programme den Betrieb verlangsamen. Es wird daher nur das Aller-nötigste installiert. In der untenstehenden Auflistung \ref{tab:installed_sw} sind alle zusätzlich installierten Programme aufgelistet. 
+Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert, dass unerwünschte daemons\footnote{Hintergrundprozess unter linux} oder andere Programme den Betrieb verlangsamen. Es wird daher nur das Aller-nötigste installiert. In der untenstehenden Auflistung \ref{tab:installed_sw} sind alle zusätzlich installierten Programme aufgelistet. 
 
 \begin{table}[h]
     \begin{tabular}{ll}
         ArchlinuxARM & OS für das \rpi\\
-        i2c-tools 3.1.2-1 & i2c tool set für Linux\\
+        i2c-tools 3.1.2-1 & \iic \tablefootnote{Inter-Integrated Circuit} tool set für Linux\\
         libconfig & C/C++ Konfiguration Datei Bibliothek\\
         libbcm2835 & Broadcom BCM 2835 c Bibliothek für das \rpi\\
     \end{tabular}
