@@ -1,25 +1,26 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \subsection{Raspberry Pi}
-Die ganze Software wird mittels C++ auf einem Raspberry Pi Version 3 (kurz RPi3) ausgeführt.
+Ein Grossteil der Software wird mittels C++ auf einem \rpi\ (kurz RPi3) ausgeführt.
 
 \subsubsection{Entscheidungsgrundlage}
-Für die Umsetzung auf Computerebene wurde entschieden kein Realtime OS zu verwenden. Das führte dazu, dass eine der möglichen Lösungen auf das Raspberry Pi fiel. Das Raspberry bietet eine weitverbreitete und aktive Community. Dadurch kann bei Problemen leicht auf gute Lösungsvorschläge zugegriffen werden.\\
+Für die Umsetzung auf Computerebene wurde entschieden kein Realtime OS\footnote{Operations System} zu verwenden. Die Entscheidung fiel auf das \rpi. Es bietet eine weitverbreitete und aktive Community. Dadurch kann bei Problemen leicht auf gute Lösungsvorschläge zugegriffen werden.\\
 Um mit der Hardware auf einem guten Stand zu sein, wurde die neuste Version 3 des Raspberry Pi gewählt.
 
 \subsubsection{Betriebssystem und Software}
-Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert dass ungewünschte daemons oder andere Programme den Betrieb verlangsamen. Es wird daher nur das allernötigste installiert. In der untenstehenden Auflistung sind alle zusätzlich installierten Programme aufgelistet. 
+Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies verhindert dass ungewünschte daemons oder andere Programme den Betrieb verlangsamen. Es wird daher nur das allernötigste installiert. In der untenstehenden Auflistung \ref{tab:installed_sw} sind alle zusätzlich installierten Programme aufgelistet. 
 
 \begin{table}[h]
     \begin{tabular}{ll}
-        ArchlinuxARM & OS für Raspberry Pi\\
+        ArchlinuxARM & OS für das \rpi\\
         i2c-tools 3.1.2-1 & i2c tool set für Linux\\
         libconfig & C/C++ Konfiguration Datei Bibliothek\\
-        libbcm2835 & Broadcom BCM 2835 c Bibliothek für Raspberry Pi\\
+        libbcm2835 & Broadcom BCM 2835 c Bibliothek für das \rpi\\
     \end{tabular}
-    \caption{installierte Software auf dem RPi3}
+    \caption{installierte Software auf dem \rpi}
+    \label{tab:installed_sw}
 \end{table}
 
-\noindent Das Betriebssystem wird mit einem Benutzer und möglichem SSH Zugriff eingerichtet. Um per SSH auf das Raspberry zugreifen zu können muss der Host im Netzwerk 192.168.192.0/24 sein.
+\noindent Das Betriebssystem wird mit einem Benutzer und möglichem SSH\footnote{Secure Shell} Zugriff eingerichtet. Um per SSH auf das \rpi\ zugreifen zu können muss der Host im Netzwerk 192.168.192.0/24 sein. Die Benutzerangaben sind in der Tabelle unten (Tabelle \ref{tab:pi_user})
 \begin{table}[h]
     \begin{tabular}{ll}
         Benutzer: & clockpendulum \\
@@ -27,6 +28,5 @@ Für das Betriebssystem wird ein extrem leicht gewichtetes OS verwendet. Dies ve
         IP: & 192.168.192.75 \\
     \end{tabular}
     \caption{Daten für den Zugriff auf das RPi3}
+    \label{tab:pi_user}
 \end{table}
-%user: clockpendulum
-%pw: cpa_admin

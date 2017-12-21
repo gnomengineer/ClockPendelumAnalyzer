@@ -1,18 +1,18 @@
 % !TEX root=SysSpec_ClockPendulumAnalyzer
 \subsection{Umsetzung des Clock Update}
-Als Clock Update wird der Prozess verstanden, der die Systemzeit des Raspberry aktualisiert.
+Als Clock Update wird der Prozess verstanden, der die Systemzeit des \rpi\ aktualisiert.
 
 \subsubsection{Problemstellung}
-Das System ist nicht mit dem Internet verbunden. Die Kommunikation der REST Schnittstelle wird über ein lokales LAN umgesetzt. Dies hat zur Folge, dass sich das Raspberry nicht mittels NTP Protokoll aktualisieren kann. Es könnte somit zu Zeitverschiebungen kommen.
+Das System ist nicht mit dem Internet verbunden. Die Kommunikation der REST\footnote{Representational State Transfer} Schnittstelle wird über ein lokales LAN umgesetzt. Dies hat zur Folge, dass sich das \rpi\ nicht mittels NTP Protokoll aktualisieren kann. Es könnte somit zu Zeitverschiebungen kommen.
 
 \subsubsection{Update der Systemzeit}
 Als Ablösung für das NTP Protokoll wird die RTC des Hardware Boards verwendet. Diese Uhr gibt eine konstante Zeit ab.\\
 Damit die Uhr auch nach einer längeren Zeit immer noch genau läuft, wird diese durch das ebenfalls am Hardware Board montierte GPS aktualisiert.\\
-Da die beiden Geräte nicht direkt kommunizieren können, muss das Raspberry als Übermittler dienen. Periodisch soll somit das Raspberry die GPS Zeit nehmen und damit die RTC neu korrigieren.
-\paragraph{Aufgetretene Probleme:} Wie bereits in den Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben, wird keine Kommunikation zwischen RTC, GPS und Raspberry stattfinden. Auf Grund der kleinen Priorität wird dieses Clock Update nicht weiter umgesetzt.
+Da die beiden Geräte nicht direkt kommunizieren können, muss das \rpi\ als Übermittler dienen. Periodisch soll somit das \rpi\ die GPS Zeit nehmen und damit die RTC neu korrigieren.
+\paragraph{Aufgetretene Probleme:} Wie bereits in den Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben, wird keine Kommunikation zwischen RTC, GPS und \rpi\ stattfinden. Auf Grund der kleinen Priorität wird dieses Clock Update nicht weiter umgesetzt.
 
 \subsubsection{Verwenden der Systemzeit}
-Sobald eine Zeitmessung vom Hardware Board an das Raspberry geschickt wird, wird diese in einer Liste abgespeichert. Diese List beinhaltet jeweils Wertepaare aus Zeitstempel und Messwert.\\
+Sobald eine Zeitmessung vom Hardware Board an das \rpi\ geschickt wird, wird diese in einer Liste abgespeichert. Diese List beinhaltet jeweils Wertepaare aus Zeitstempel und Messwert.\\
 Der Zeitstempel wird somit beim Speichern der Messwerte gelesen und mitgespeichert.\\
 \\
 Der Zeitstempel ist in einer Form, die für die Datenbank geeignet ist. Näheres zum Format ist dem Kapitel \ref{sec:db_date} zu entnehmen.
