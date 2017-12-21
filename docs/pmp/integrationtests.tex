@@ -1,0 +1,67 @@
+\begin{table}[H]
+	\begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+		\rowcolor{gray!50}
+		%Titelzeile
+			\textbf{ID}          &
+			\begin{tabular}{l}
+				\textbf{I1}
+			\end{tabular}
+			\\ \hline
+		%Zeile
+			\textbf{Bezeichnung}			 &
+			\begin{tabular}{l}
+				Ermitteln Referenzfrequenz ohne GPS Verbindung.
+			\end{tabular}
+			\\ \hline
+		%Zeile
+			\textbf{Beschreibung}   		 &
+			\begin{tabular}{l}
+				Die Referenzfrequenz wird mittels FIX-Pin des GPS-Moduls ermittelt.
+			\end{tabular}
+		\\ \hline
+		%Zeile
+			\textbf{Akteure}              & 
+			\begin{tabular}{l}
+				Entwickler
+			\end{tabular}
+		\\ \hline
+		%Zeile
+			\textbf{Vorbedingungen}       &
+			\begin{tabular}{l}
+				USB-Verbindung von \hwb zu einem Test-PC oder Notebook.\\
+				Optische Überprüfung des laufenden \hwb.\\
+				Die FIX-LED des GPS-Moduls auf dem \hwb blinkt im Sekundentakt. \\
+				Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.
+			\end{tabular}		
+		\\ \hline
+		%Zeile
+			\textbf{Ergebnis}             &        
+			\begin{tabular}{l}
+				Die Referenzfrequenzen werden jede Sekunde aufgelistet. \\
+				Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).
+			\end{tabular}
+		\\ \hline
+		%Zeile
+			\textbf{Ergebnis bei Fehler}  &
+			\begin{tabular}{l}
+				- Fehlerhafte oder fehlende Werte in der Anzeige\\
+				- Anzeigen auf dem \hwb verhalten sich nicht erwartungsgemäss.
+			\end{tabular}
+		\\ \hline
+		%Zeile
+			\textbf{Ablauf}				 &
+			\begin{enumerate}
+				\item USB-Verbindung erstellen.
+				\item Terminal-Programm starten (z.B. Minicom)
+				\item Ergebnis prüfen
+			\end{enumerate}
+		\\ \hline
+			\textbf{Testdaten}            &
+			\begin{tabular}{l}
+				Keine benötigt.
+			\end{tabular}
+		\\ \hline	%Untere Abgrenzung
+	\end{tabular}
+	\caption{Integrationstest 1}
+	\label{tab:inttest1}
+\end{table}
