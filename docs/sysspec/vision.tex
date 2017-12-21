@@ -1,5 +1,5 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
-\section{Ausgangslage}
+\section{Ausgangslage}%TODO Problem ersichtlich machen
 Eine Pendeluhr besteht grundsätzlich aus drei Komponenten: dem Energiespeicher (eine Spiralfeder
 oder ein Gewicht), einer Dosiereinheit (Pendel mit Hemmung), welche die Energie portioniert an ein
 Räderwerk abgibt und einer Anzeigeeinheit (das Zifferblatt).\\
@@ -14,45 +14,45 @@ beim Big-Ben in London ein \glqq{}Penny\grqq{} verwendet, welcher zu einer Ände
 Bei Pendeluhren in Privathaushalten erfolgt die Ermittlung der Abweichung durch Beobachten der Zeitabweichung über eine gewisse Zeitspanne, z.B. eine Woche oder ein Monat, gegenüber einer Referenz. Anschliessend kann die Nachjustierung erfolgen. 
 
 \section{Ziele}
-Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die genauigkeit des Pendels direkt anzeigen kann.\\
-Die Genauigkeit der Messungen soll auf (Sub)-Mikrosekunden genau erfolgen.\\
+Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die Genauigkeit (Abweichung pro Tag) des Pendels direkt anzeigen kann.\\
+Dabei sollen die Messungen in (Sub)-Mikrosekunden erfolgen.\\
 Weiter sollen die Messdaten eines Pendels auch über längere Zeit beobachtet werden können.\\
 Die Messdaten sollen visualisiert werden um die Auswertung der Daten zu erleichtern.
 
 \section{Scope}
-Dieses Projekt beschränkt sich auf das Erstellen von Funktionsmuster (Prototypen) inkl Visualisierung der Messdaten.\\
+Dieses Projekt beschränkt sich auf das Erstellen von Funktionsmuster (Prototypen) inklusive Visualisierung der Messdaten.\\
 Es werden ausschliesslich die folgenden Pendeltypen unterstützt:
 \begin{itemize}
 	\item Einfachpendel
 	\item Doppelpendel
-	\item Kreispendel (typ Atmos)
+	\item Kreispendel (Typ Atmos)
 \end{itemize}
-Die Pendellänge muss zwischen 150 und 1000mm liegen, der Durchmesser bei Kreispendeln zwischen 50mm und 300mm\\
+Die Pendellänge muss zwischen 150 und 1000mm liegen, der Durchmesser bei Kreispendeln zwischen 50 und 300mm\\
 Die Konstruktion eines Pendels ist nicht Teil dieses Projekts.
 
 \section{Anforderungen}
 \subsection{funktionale Anforderungen}
 	\begin{itemize}
         \item Die Genauigkeit soll mit einer quadratischen Approximation erfolgen.
-        \item Die Messung soll an 3 verschiedenen Punkten oder wenn möglich an einem Punkt vorgenommen werden.
+        \item Die Messung soll an einem Punkt vorgenommen werden.
         \item Als Referenzclock soll für Prototyp 1 eine 32kHz RTC\footnote{RTC = Real Time Clock} verwendet werden, für Prototyp 2 eine GPS- disziplinierte 10MHz RTC.
         \item Die Messvorrichtung darf keinerlei mechanische Eingriffe an dem zu messenden Pendel erfordern und soll hinter dem Pendel angebracht werden können.%unklar ob nicht-f oder funktional
         \item Die Messdaten müssen persistent gespeichert werden.
-		\item Die Messdaten müssen in einem Webbrowser visualisiert werden. Es sollen alle gängigen Browser unterstützt werden.
-		\item Die Messvorrichtung muss so gestaltet sein, dass sie auf die Grösse des Pendels angepasst werden kann.
+		\item Die Messdaten müssen in einem Webbrowser visualisiert werden. Es sollen die Browser Google Chrome, Firefox, Safari und Opera unterstützt werden.
+		\item Die Messvorrichtung muss auf die Grösse des Pendels anpassbar sein, um verschieden grosse Pendel zu unterstützen
 		\item Der Pendeltyp, der gemessen wird, soll vom Systembenutzer festgelegt werden können.
 		\item Der Zeitbereich der angezeigten Daten soll vom Benutzer gewählt werden können.
-		\item Die Anzeige soll sowohl auf Desktop-PC's / Notebooks, wie auch auf mobilen Devices möglich sein.
+		\item Die Anzeige soll sowohl auf Desktop-PC's / Notebooks, wie auch auf mobilen Geräten möglich sein.
         
-		\item (Optional) Es soll ein Temperatursensor verwendet werden, um allenfalls den Einfluss der Temperatur auf die Pendelgenauigkeit anzeigen zu können.
-        \item (Optional) Es soll ein Luftfeuchtigkeitssensor verwendet werden können, um auch diesen Einfluss darstellen zu können.
+		\item (Optional) Es soll die Temperatur gemessen werden, um einen allfälligen Einfluss auf die Pendelgenauigkeit anzeigen zu können.
+        \item (Optional) Es soll die Luftfeuchtigkeit gemessen werden, um einen allfälligen Einfluss auf die Pendelgenauigkeit anzeigen zu können.
 	\end{itemize}
 \subsection{nicht-funktionale Anforderungen}
 	\begin{itemize}
-		\item Die Messgenauigkeit muss im Mikrosekundenbereich liegen
-        \item Die Messdaten müssen über einen Zeitraum von 3 Monaten verfügbar sein 
+		\item Die Messgenauigkeit muss im Mikrosekundenbereich liegen.
+        \item Die Messdaten müssen über einen Zeitraum von 3 Monaten verfügbar sein.
         \item Die Messdaten dürfen bei einem Stromunterbruch nicht verloren gehen.
-		\item Die repräsentation der Daten soll in grafischer und tabellarischer Form erfolgen.
+		\item Die Repräsentation der Daten soll in grafischer und tabellarischer Form erfolgen.
         \item (Optional) Die Messgenauigkeit muss im Nanosekundenbereich liegen.
 	\end{itemize}
 
@@ -66,5 +66,5 @@ Es sind die Folgenden Resultate zu erstellen:
 \end{itemize}
 
 \section{Business Case}
-	Basierend auf der manuellen Methode ein Pendel einzustellen, also die Uhr über eine längere Zeit beobachten, Abweichung anhand einer Referenz (z.B. einer Digitalen Funk- oder GPS- Uhr), dem anschliessenden justieren des Pendels und wieder beobachten, kann durch eine genaue Messung eines Pendels der Aufwand, dieses einzustellen, reduziert werden.\\
-	 Weiter können die Messdaten dazu verwendet werden, Einflüsse wie Temperatur und Luftfeuchtigkeit direkt zu berücksichtigen. Dies führt zu einer qualitiativen Verbesserung der Einstellungen.
+    Mit dem zu erstellenden Gerät kann die Abweichung einer Uhr viel effizienter gemessen werden. Der Benutzer braucht nicht mehr Stunden damit zu verbringen die Uhr zu beobachten und kann anhand der Messung die Uhr schneller nachjustieren.\\
+    Weiter kann mit dem Gerät der Einfluss von Temperatur und Feuchtigkeit beachtet werden und somit eine qualitative Verbesserung der Einstellung erzeugt werden.

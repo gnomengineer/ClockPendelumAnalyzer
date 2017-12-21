@@ -12,6 +12,7 @@
 %table packages
 \usepackage{booktabs}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\usepackage{tablefootnote}
 
 \graphicspath{{sysspec/pdf/}{images/}{uml/}}
 
@@ -52,9 +53,11 @@
     \clearpage
     \subimport{pmp/}{projekt_rahmenplan}
     \clearpage
-    \subimport{pmp/}{zeitplanung}
+    %\subimport{pmp/}{zeitplanung}
     \clearpage
     \subimport{pmp/}{risiko}
+    \clearpage
+    \subimport{pmp/}{projekt_unterstutzung}
     \clearpage
     \subimport{pmp/}{testing}
     

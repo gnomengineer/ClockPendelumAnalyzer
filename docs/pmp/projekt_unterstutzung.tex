@@ -1,0 +1,16 @@
+%!TEX root = PMP_ClockPendulumAnalyzer.tex
+\section{Projektunterstützung}
+Dieses Kapitel beschreibt die verwendeten Software zum Umsetzen der Arbeit.
+
+\subsection{Tools für Entwicklung, Building und Deployment}
+\begin{itemize}
+    \item Für die Entwicklung der C++ Software wird das Entwicklerstudio CLion oder der klassische Texteditor VIM\footnote{programmierbarer Texteditor auf Linux} verwendet.
+    \item Für die Entwicklung der C Software auf dem TinyK20 wird das Kinetis Design Studio (KDS) verwendet.
+    \begin{itemize}
+        \item Innerhalb von KDS wird der Processor Expert benutzt um Low-Level Ansteuerung für Register, Counter und Weiteres zu entwickeln.
+    \end{itemize}
+    \item Für die Entwicklung der Weboberfläche wird der klassische Texteditor VIM verwendet.
+    \item Zum ''Builden'' der Software wird CMake Version 2.6 verwendet.
+    \item Für das Deployment wird kein eigenes Tool verwendet. Die Software wird entweder direkt auf dem Target gebaut oder über die Entwicklungsumgebung auf das Target gespielt.
+    \item Das Projektmanagement wird, ganz im Sinne einer agilen Planung, über die Onlineplattform ''Taigo.io'' abgehandelt.
+\end{itemize}

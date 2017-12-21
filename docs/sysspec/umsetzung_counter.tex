@@ -1,5 +1,6 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \subsection{Umsetzung des Counters} %TODO Counter Realisierung beschreiben
+<<<<<<< HEAD
 Der Tick-Conter zwischen den Pendeldurchgängen basiert auf einem Freilaufendem Hardware-Zähler, welcher auf dem Tiny K20 Mikrocontrollerboard läuft, getrieben von dem vorhandenen, termperaturkorrigieren 8MHz Quarz, Mittels Hardware-Einstellung des CPU-Blocks auf 12MHz erhöht. Da diese Erhöhung rein auf Hardware-Einstellungen beruht, wird die Genauigkeit dadurch nicht beeinflusst. Um die Schwankungen des Zählers auszugleichen wird der Sekundenpuls des GPS-Moduls über zwei unabhängige IO-Pins genutzt. Eine Leitung, für den Fall, dass keine GPS-Verbindung besteht, am FIX-Pin des GPS-Moduls angeschlossen und eine Zweite, falls GPS-Verbindung besteht, amm PPS-Pin des GPS-Moduls. Beide Leitungen funktionieren über einen Interrupt der höchsten Priorität. Falls am PPS-Pin Interrupts eingehen, wird der FIX-Pin ignoriert. Beim Umschalten zwischen GPS-Empfang und keinem GPS-Empfang kann daher ein Fehler entstehen, weshalb, dann die nächsten Messwerte mit 0 belegt nach aussen gesendet werden, um diese Messung zu verwerfen. Im Normalbetrieb werden die Interrupts an den IO-Pins, eingehend vom GPS-Modul, dazu genutzt die Differenz zwischen dem vorigen Zählerwert und dem aktuellen Zählerwert zu bilden und so die effektive Frequenz zu ermitteln.\\ 
 Die Pendeldurchgänge werden über einen weiteren IO-Pin über einen Interrupt der höchsten Priorität ermittelt. Dabei wird jede zweite Messung verworfen, um das Pendel immer von der gleichen Seite zu messen. Der ermittelte Zählerwert wird mit der ermittelten Frequenz verrechnet und über die UART-RS232 Schnittstelle gesendet.\\
 Die Verrechnungskorrektur erfolgt über folgende Formel:
@@ -44,9 +45,22 @@ Weiter kann dem Boxplot entnommen werden, dass die Streuung der Werte gleichmäs
 		\label{fig:freq_qq_plot}
 	\end{figure}
 GPS-Modul und Tiny K20 sind auf einem Board gemeinsam angebracht, ebenfalls auf diesem Board befindet sich die RTC und er Anschluss für den Sensor für die Pendel-Registrierung (Abbildung \ref{fig:hardwareboard}).
+=======
+Der Tick-Counter zwischen den Pendeldurchgängen basiert auf einem freilaufendem Zähler, welcher auf dem TinyK20 Mikrocontrollerboard läuft, getrieben von dem vorhandenen, termperaturkorrigierenden 8MHz Quarz.
+Um die Schwankungen des Zählers auszugleichen wird der Sekundenpuls des GPS-Moduls über zwei unabhängige IO-Pins genutzt. Eine Leitung, für den Fall, dass keine GPS-Verbindung besteht, am FIX-Pin des GPS-Moduls angeschlossen und eine zweite Leitung, falls GPS-Verbindung besteht, am PPS-Pin des GPS-Moduls.\\
+Beide Leitungen funktionieren über einen Interrupt der höchsten Priorität. Falls am PPS-Pin Interrupts eingehen, wird der FIX-Pin ignoriert. Beim Umschalten zwischen GPS-Empfang und keinem GPS-Empfang kann daher ein Fehler entstehen, weshalb, dann die nächsten Messwerte mit 0 belegt nach aussen gesendet werden, um diese Messung zu verwerfen.
+Im Normalbetrieb werden die Interrupts an den IO-Pins, eingehend vom GPS-Modul, dazu genutzt die Differenz zwischen dem letzten Zählerwert und dem aktuellen Zählerwert zu bilden und so die effektive Frequenz zu ermitteln.\\ 
+Die Pendeldurchgänge werden über einen weiteren IO-Pin über einen Interrupt der höchsten Priorität ermittelt. Dabei wird jede zweite Messung verworfen, um das Pendel immer von der gleichen Seite zu messen. Der ermittelte Zählerwert wird gemeinsam mit der ermittelten Frequenz gespeichert und bei Anfrage über die \iic\ Schnittstelle gesendet.\\
+\\
+GPS-Modul und TinyK20 sind auf einem Board gemeinsam angebracht, ebenfalls auf diesem Board befindet sich die RTC und er Anschluss für den Sensor für die Pendel-Registrierung (Abbildung \ref{fig:hardware_board}).
+>>>>>>> ad7abfe8d610e26236c446c2974077f3a945a9bc
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.7\textwidth]{HW_Board_Complete}
 		\caption{Gesamtanordnug der Hardware-Komponenten}
+<<<<<<< HEAD
 		\label{fig:hardwareboard}
+=======
+		\label{fig:hardware_board}
+>>>>>>> ad7abfe8d610e26236c446c2974077f3a945a9bc
 	\end{figure}
