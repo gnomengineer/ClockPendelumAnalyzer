@@ -37,15 +37,12 @@
 #include "LEDpin1.h"
 #include "BitIoLdd1.h"
 #include "WAIT1.h"
-#include "KSDK1.h"
 #include "SensorPin.h"
 #include "ExtIntLdd1.h"
 #include "FixPin.h"
 #include "ExtIntLdd2.h"
 #include "PPSPin.h"
 #include "ExtIntLdd3.h"
-#include "FC1.h"
-#include "I2CSPY1.h"
 #include "GI2C1.h"
 #include "I2C1.h"
 #include "SDA1.h"
@@ -53,16 +50,29 @@
 #include "SCL1.h"
 #include "BitIoLdd4.h"
 #include "CI2C1.h"
+#include "CS1.h"
+#include "AS1.h"
+#include "ASerialLdd1.h"
+#include "CLS1.h"
+#include "XF1.h"
+#include "USB1.h"
+#include "CDC1.h"
+#include "Tx1.h"
+#include "Rx1.h"
+#include "USB0.h"
+#include "TMOUT1.h"
+#include "MCUC1.h"
 #include "KIN1.h"
 #include "UTIL1.h"
 #include "TGT_SWD_OE.h"
 #include "BitIoLdd2.h"
-#include "KSDK1.h"
 #include "RefCnt.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif 
+
+RefCnt_TValueType EVENTS_getCounterValue();
 
 /*
 ** ===================================================================
@@ -140,28 +150,6 @@ void FixPin_OnInterrupt(void);
 
 /*
 ** ===================================================================
-**     Event       :  FC1_OnInterrupt (module Events)
-**
-**     Component   :  FC1 [FreeCntr_LDD]
-*/
-/*!
-**     @brief
-**         This event is called when a compare matches the counter
-**         value (if compare or reload is selected as a interrupt
-**         source) or a counter overflows (for free-running devices).
-**         Component and OnInterrupt event must be enabled. See
-**         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt service/event] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void FC1_OnInterrupt(LDD_TUserData *UserDataPtr);
-
-/*
-** ===================================================================
 **     Event       :  CI2C1_OnSlaveBlockSent (module Events)
 **
 **     Component   :  CI2C1 [I2C_LDD]
@@ -199,6 +187,103 @@ void CI2C1_OnSlaveBlockSent(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void CI2C1_OnSlaveBlockReceived(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  RefCnt_OnCounterRestart (module Events)
+**
+**     Component   :  RefCnt [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if counter overflow/underflow or counter is
+**         reinitialized by modulo or compare register matching.
+**         OnCounterRestart event and Timer unit must be enabled. See
+**         [SetEventMask] and [GetEventMask] methods. This event is
+**         available only if a [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void RefCnt_OnCounterRestart(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnError (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnError(void);
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnRxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnRxChar(void);
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnTxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnTxChar(void);
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFullRxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when the input buffer is full;
+**         i.e. after reception of the last character 
+**         that was successfully placed into input buffer.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFullRxBuf(void);
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFreeTxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after the last character in output
+**         buffer is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFreeTxBuf(void);
 
 /* END Events */
 

@@ -28,14 +28,25 @@
 
 #include "Cpu.h"
 #include "Events.h"
+#include "Event.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif 
 
+#define MAX_COUNTER_VALUE 65536
+
 static int overrunCntr = 0;
+static int ppsIsAlive = 0;
+static RefCnt_TValueType referenceCounterGPS = 0;
+static RefCnt_TValueType lastCnt = 0;
+static LDD_TDeviceData* timerHandle;
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+
+RefCnt_TValueType EVENTS_getCounterValue() {
+	return referenceCounterGPS;
+}
 
 /*
 ** ===================================================================
@@ -87,8 +98,11 @@ void SensorPin_OnInterrupt(void)
 */
 void PPSPin_OnInterrupt(void)
 {
+	static RefCnt_TValueType diff = 0;
+	referenceCounterGPS = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
+	EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED);
+	ppsIsAlive = 2;
 	LED1_Neg();
-  /* Write your code here ... */
 }
 
 /*
@@ -105,42 +119,15 @@ void PPSPin_OnInterrupt(void)
 */
 void FixPin_OnInterrupt(void)
 {
-	static LDD_TDeviceData* timerHandle;
-	static FC1_TValueType cnt = 0;
-	static FC1_TValueType lastCnt = 0;
-	static FC1_TValueType diff = 0;
-	LED1_Neg();
-	lastCnt = cnt;
-	cnt = FC1_GetCounterValue(timerHandle);
-	diff = cnt - lastCnt;
-
-  /* Write your code here ... */
-}
-
-/*
-** ===================================================================
-**     Event       :  FC1_OnInterrupt (module Events)
-**
-**     Component   :  FC1 [FreeCntr_LDD]
-*/
-/*!
-**     @brief
-**         This event is called when a compare matches the counter
-**         value (if compare or reload is selected as a interrupt
-**         source) or a counter overflows (for free-running devices).
-**         Component and OnInterrupt event must be enabled. See
-**         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt service/event] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void FC1_OnInterrupt(LDD_TUserData *UserDataPtr)
-{
-  /* Write your code here ... */
-	overrunCntr++;
+	static RefCnt_TValueType diff = 0;
+	if (ppsIsAlive > 0) {
+		--ppsIsAlive;
+	}
+	else {
+		referenceCounterGPS = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
+		EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED);
+		LED1_Neg();
+	}
 }
 
 /*
@@ -185,6 +172,123 @@ void CI2C1_OnSlaveBlockSent(LDD_TUserData *UserDataPtr)
 */
 /* ===================================================================*/
 void CI2C1_OnSlaveBlockReceived(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  RefCnt_OnCounterRestart (module Events)
+**
+**     Component   :  RefCnt [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if counter overflow/underflow or counter is
+**         reinitialized by modulo or compare register matching.
+**         OnCounterRestart event and Timer unit must be enabled. See
+**         [SetEventMask] and [GetEventMask] methods. This event is
+**         available only if a [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void RefCnt_OnCounterRestart(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+	overrunCntr++;
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnError (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnError(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnRxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnRxChar(void)
+{
+  /* Write your code here ... */
+	LED1_Neg();
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnTxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnTxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFullRxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when the input buffer is full;
+**         i.e. after reception of the last character 
+**         that was successfully placed into input buffer.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFullRxBuf(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFreeTxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after the last character in output
+**         buffer is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFreeTxBuf(void)
 {
   /* Write your code here ... */
 }
