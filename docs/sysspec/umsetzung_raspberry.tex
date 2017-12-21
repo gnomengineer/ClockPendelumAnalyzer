@@ -1,6 +1,7 @@
 % !TEX root=SysSpec_ClockPendulumAnalyzer
 \subsection{Umsetzung des GPIO Zugriff}
-Der Zugriff auf die GPIO Pins des \rpi\ wurde mit einer simplen Klasse umgesetzt. Diese Klasse ist verantwortlich für das Exportieren und Unexportieren der Pins. Dies geschieht bei der Initialisierung der Klasse beziehungsweise beim Dekonstruktor. Dabei wird das Prinzip der Resourcenbelegung ist Initialisierung (kurz RAII) nicht verletzt.\\
+Der Zugriff auf die GPIO Pins des \rpi\ wurde mit einer simplen Klasse umgesetzt. Diese Klasse ist verantwortlich für das Exportieren und Unexportieren der Pins.
+Dies geschieht bei der Initialisierung der Klasse beziehungsweise beim Dekonstruktor. Dabei wird das Prinzip der ''Resourcenbelegung ist Initialisierung'' (kurz RAII) nicht verletzt.\\
 \\
 Die Aufgaben des Benutzers sind nur Richtung setzen und dann Lesen bzw. Schreiben der Pins. Die Richtung (Output / Input) kann zur Laufzeit geändert werden.
 
@@ -12,7 +13,7 @@ Die Pinbelegung auf dem \rpi\ sieht wie folgt aus.
     \caption{Pinbelegung des \rpi\ (Originalbild von www.raspberrypi-spy.co.uk)}
 \end{figure}
 
-\noindent Pin 6,8,10,3 und 5 werden nicht durch die GPIO\footnote{General Purpose Input Output} Klasse angesteuert. Diese sind für die UART bzw. \iic\ Kommunikation reserviert, die in den nachfolgenden Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben sind.\\\\
+\noindent Pin 6,8,10,3 und 5 werden nicht durch die GPIO\footnote{General Purpose Input Output} Klasse angesteuert. Diese sind für die UART beziehungsweise \iic\ Kommunikation reserviert, die in den nachfolgenden Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben sind.\\\\
 Pin 7 dient als Interrupt-Pin für den Hardware Counter. Dieser wird bei Programmstart als High Output Pin gesetzt um damit den Counter zurückzusetzen. Damit wird erreicht, dass das System auf unterschiedliche Aufstartzeiten reagieren kann und die ganze Messung gleichzeitig starten kann. Der Counter-Reset wird nur bei Programmstart ausgeführt und danach nicht mehr.
 
 \subsubsection{\iic\ Implementierung}\label{sec:i2c}
@@ -29,9 +30,9 @@ Die Problematik bestand darin, dass die \iic-Geräte auf dem Linux nicht erkannt
 \clearpage
 \subsubsection{UART Implementierung}\label{sec:uart}%TODO rework chapter UART
 Für das Lesen des GPS Signals wird eine UART Kommunikation benötigt.
-Auf Grund der \iic\ Problematik wird die GPS UART Verbindung auf den zwei Pins 8 und 10 nicht weiter verfolgt.\\
+Aufgrund der \iic\ Problematik wird die GPS UART Verbindung auf den zwei Pins 8 und 10 nicht weiter verfolgt.\\
 \\
 Dafür wird eine USB-UART Verbindung zum Counterboard realisiert. Als Übertragungsmedium dient ein micro-USB Kabel und lässt daher nur eine 1-zu-1 Verbindung zu.\\
 \\
 Der Code basiert auf einer bereits implementierten Lösung aus einem früheren Projekt und wird auf die Bedürfnisses dieser Kommunikation angepasst.\\
-Das Lesen des UARTs findet in einem eigenen Thread auf dem \rpi\ ab und empfängt Signale, die vom Counterboard gesendet werden. Wenn eine Nachricht empfangen wird, wird diese an einer Liste angehängt. Nebenbei läuft der Main-Thread und liest, wenn die Liste einen Eintrag enthält, den Zeitstempel und dessen absolute Zeit aus. Danach wird dieser Eintrag aus der Liste entfernt.
+Das Lesen des UARTs findet in einem eigenen Thread auf dem \rpi\ statt und empfängt Signale, die vom Counterboard gesendet werden. Wenn eine Nachricht empfangen wird, wird diese an einer Liste angehängt. Nebenbei läuft der Main-Thread und liest, wenn die Liste einen Eintrag enthält, den Zeitstempel und dessen absolute Zeit aus. Danach wird dieser Eintrag aus der Liste entfernt.
