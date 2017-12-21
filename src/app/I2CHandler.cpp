@@ -1,5 +1,7 @@
 #include "../include/I2CHandler.h"
+#include <iostream>
 
+//@deprecated
 I2CHandler::I2CHandler(const int &address) { 
     I2CHandler(DEFAULTDEVICE, address);
 }
@@ -21,25 +23,64 @@ I2CHandler::~I2CHandler() {
     }
 }
 
-int I2CHandler::readValue(char* rxBuf, const int address, const int length) {
+int I2CHandler::readValue(std::string& data, const int address) {
+    int errorCode = 0;
+    char* rxBuf = getBuffer(data);
+
     if ( m_fileI2C ) {
         m_address = address;
-        if ( ioctl(m_fileI2C, I2C_SLAVE, m_address) < 0) {
-            return setErrMsg("couldn't handle IO operations on file");
+        if ( acquiringConnection() >= 0){
+            if (read(m_fileI2C, rxBuf, data.size()) != data.size()){
+                errorCode = setErrMsg("couldn't read from the bus");
+            }
         }
-        if (read(m_fileI2C, rxBuf, length) < 0){
-            return setErrMsg("couldn't read from the bus");
-        }
-        return 0;
+    } else {
+        return -1; 
     }
-    return -1; 
+
+    std::string buffer(rxBuf);
+    data = buffer;
+    delete[] rxBuf;
+    return errorCode;
 }
 
 int I2CHandler::setErrMsg(const std::string &msg) {
-    err_msg = "ERROR: ";
-    err_msg += msg;
+    std::cout << "ERROR: " << msg << std::endl;
     return -1;
 }
 
-//TODO check if i2c requires write to read
-//int I2CHandler::writeValue(const double &value, const int &address) { }
+int I2CHandler::writeValue(std::string data, const int address) { 
+    int errorCode = 0;
+    char* txBuf = getBuffer(data);
+
+    if ( m_fileI2C ) {
+        m_address = address;
+        if ( acquiringConnection() >= 0) {
+            if ( write(m_fileI2C, txBuf, data.size()) != data.size()) {
+                errorCode = setErrMsg("couldn't write to the bus");
+            }
+        }
+    } else {
+        errorCode = -1;
+    }
+
+    delete[] txBuf;
+    return errorCode;
+}
+
+char* I2CHandler::getBuffer(std::string bufferString){
+    char* buffer = new char[bufferString.size() + 1];
+    std::copy(bufferString.begin(), bufferString.end(), buffer);
+    buffer[bufferString.size()] = '\0';
+
+    return buffer;
+}
+
+
+int I2CHandler::acquiringConnection() {
+    if (ioctl(m_fileI2C, I2C_SLAVE, m_address) < 0) {
+        return setErrMsg("couldn't handle IO operations on file");
+    }
+    return 0;
+}
+

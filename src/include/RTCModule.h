@@ -7,6 +7,7 @@
 
 #include "../include/GPIO.h"
 
+//@deprecated
 class RTCModule {
 public:
 

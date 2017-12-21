@@ -32,7 +32,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 %	
 \subsection{GPS Modul}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so keinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
-	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock ist unsere Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit gefallen (Abbildung \ref{fig:GPS3133}). Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit. Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Angang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da nicht im Datenblatt enthalten. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
+	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock ist unsere Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit gefallen (Abbildung \ref{fig:GPS3133}). Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit. Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Angang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da nicht im Datenblatt enthalten. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{gps_3133_top}
@@ -65,7 +65,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 	\[
 		E = \frac{1}{f}
 	\]
-	Wobei $f$ der Abtastfrequenz entspricht. Könnten wir unendlich schnell abtasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln bestehen unter Anderem zwei Ansätze. Ein auf IC's basierender Hardware-Counter oder ein Hard-Realtime Mikrocontroller-System.
+	Wobei $f$ der Abtastfrequenz entspricht. Könnten wir unendlich schnell abtasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln bestehen unter Anderem zwei Ansätze. Ein auf IC's\footnote{Integrated Circuits} basierender Hardware-Counter oder ein Hard-Realtime Mikrocontroller-System.
 	\subsubsection{Hardware Counter}
 		Ein Hardware-Conter kann mittels verfügbaren Counter-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
 		\begin{figure}[H]
@@ -120,7 +120,7 @@ Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit 
     		\item Kostengünstiges Gesamtsystem für Zähler und Auswertung, Systempreis: 20.- CHF.
     		\item Debug-Schnittstelle zur überprüfung des Systems vorhanden.
     		\item Über Interrupt-Leitungen können die Pendeldurchgänge ohne periodisches Abtasten erfasst werden.
-    		\item UART RS232 und $I^2C$ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
+    		\item UART RS232 und \iic\ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
     		\item Eignefabrikat der Hochschule Luzern mit entsprechendem Know-how.
     	\end{itemize}
     	Nachteile dieser Lösung:
@@ -133,5 +133,8 @@ Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit 
     \subsubsection{Entscheidungsgrundlage}
 		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, allenfalls doch noch einen Hardware-Counter zu nutzen, haben wir uns für die Lösung mittels Mikrocontrollersystems entschieden. Mittels dem GPS-Modul ist es möglich, das TinyK20 zu disziplinieren, zumindest den Counter nach jedem Sekundentakt auszuwerten. Dieser Counter-Wert wird dann als Referenz-Frequenz genutzt.\\
 		Weil das TinyK20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardwarecounter auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
-%%%
+%
+% Raspberry
+%
+\clearpage
 \input{raspberry}
