@@ -1,4 +1,75 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \section{Schnittstellen}
+Dieses Kapitel beschreibt interne Schnittstellen die vom System angeboten werden.
 \subsection{REST Interface}\label{sec:rest}
-%TODO REST Definitionen hinzufügen
+Damit die Daten zugänglich sind, wurde einen REST Schnittstelle implementiert.\\
+REST basiert auf der Struktur und dem Verhalten des World Wide Web. Informationen werden mittels URI übermittelt und geben so Ort und Namen der Ressource an aber nicht die Funktionalität des Aufrufers. Somit wird die Funktionalität von der Ressource entkoppelt \cite{rest}.
+\subsubsection{Interaktionen}
+Die Schnittstelle bietet 3 verschiedene Interaktionen, die über die HTTP-GET Methode realisiert sind.\\
+
+\begin{lstlisting}[caption="Lesen der Referenzzeit",label={code:ref}]
+http://192.168.192.75/referenz
+\end{lstlisting}
+Im Listing \ref{code:ref} ist der HTTP-Aufruf, um die Referenzzeit der Uhr zu erhalten. Der Payload ist dabei eine einzelne Zahl, welche die Hz der Uhr angibt. Dieser Wert ist zur Zeit fix programmiert.\\
+
+\begin{lstlisting}[caption="Lesen eines bestimmten Tages",label={code:date}]
+http://192.168.192.75/date/20171231
+\end{lstlisting}
+Im Listing \ref{code:date} ist ein Aufruf, um die Einträge aller Uhren im Zeitraum eines Tages zu erhalten. Im Beispielt wird der Tag des 31. Dez 2017 benutzt.\\
+
+\begin{lstlisting}[caption="Lesen einer bestimmten Uhr",label={code:name}]
+http://192.168.192.75/clock/name
+\end{lstlisting}
+Im Listing \ref{code:name} ist ein Aufruf, um die Daten einer bestimmten Uhr mit dem Namen ''name'' abzurufen.\\
+\\
+Es gibt keine Interaktion um auf das System etwas zu schreiben. Ein Szenario, in welchem das Mitteilen von Informationen an das System benutzt würde, wäre das Starten mit Uhrenname über eine Weboberfläche.
+
+\clearpage
+\subsubsection{Response Struktur}
+Der Aufbau einer Antwort auf eine Abfrage, wird mit JSON strukturiert und wird in Listing \ref{code:json} gezeigt.
+\begin{lstlisting}[caption="generische Antwortstruktur mit JSON",label={code:json}]
+{
+    "success": true,
+    "payload": {
+        /* Daten definiert nach Aufruf. */
+    }
+...
+}
+\end{lstlisting}
+
+\noindent Bei einem Fehler wird zusätzlich das in Listing \ref{code:error} gezeigte JSON Objekt angehängt.
+\begin{lstlisting}[caption="JSON Objekt bei Fehler",label={code:error}]
+{
+...
+    "error": {
+        "code": 404,
+        "message": "Object not found!"
+    }
+}
+\end{lstlisting}
+
+\noindent Beim Aufruf der Referenzzeit wird der in Listing \ref{code:json_ref} gezeigte Payload übermittelt und bei den anderen Aufrufen wird das JSON Objekt aus Listing \ref{code:json_payload} als Payload übergeben.
+\begin{lstlisting}[caption="Payload für Referenzzeit",label={code:json_ref}]
+...
+"payload": {
+    "hertz": 8000000
+}
+...
+\end{lstlisting}
+\begin{lstlisting}[caption="Payload für Datums und Namensabfrage",label={code:json_payload}]
+...
+"payload": {
+    {
+        "name": name,
+        "time": time,
+        "date": date
+    },
+    {
+        "name": name,
+        "time": time,
+        "date": date
+    },
+    ...
+}
+...
+\end{lstlisting}
