@@ -8,17 +8,17 @@ REST basiert auf der Struktur und dem Verhalten des World Wide Web. Informatione
 Die Schnittstelle bietet 3 verschiedene Interaktionen, die über die HTTP-GET Methode realisiert sind.\\
 
 \begin{lstlisting}[caption="Lesen der Referenzzeit",label={code:ref}]
-http://192.168.192.75/referenz
+http://192.168.192.75?referenz
 \end{lstlisting}
 Im Listing \ref{code:ref} ist der HTTP-Aufruf, um die Referenzzeit der Uhr zu erhalten. Der Payload ist dabei eine einzelne Zahl, welche die Hz der Uhr angibt. Dieser Wert ist zur Zeit fix programmiert.\\
 
 \begin{lstlisting}[caption="Lesen eines bestimmten Tages",label={code:date}]
-http://192.168.192.75/date/20171231
+http://192.168.192.75?date=20171231
 \end{lstlisting}
 Im Listing \ref{code:date} ist ein Aufruf, um die Einträge aller Uhren im Zeitraum eines Tages zu erhalten. Im Beispielt wird der Tag des 31. Dez 2017 benutzt.\\
 
 \begin{lstlisting}[caption="Lesen einer bestimmten Uhr",label={code:name}]
-http://192.168.192.75/clock/name
+http://192.168.192.75?clock=name
 \end{lstlisting}
 Im Listing \ref{code:name} ist ein Aufruf, um die Daten einer bestimmten Uhr mit dem Namen ''name'' abzurufen.\\
 \\
