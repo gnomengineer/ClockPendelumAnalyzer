@@ -47,8 +47,103 @@
             Keine benötigt.\\ \hline
         %Untere Abgrenzung
 	\end{tabularx}
-	\caption{Integrationstest 1}
+	\caption{Integrationstest 1 - Ermitteln Referenzfrequenz ohne GPS}
 	\label{tab:inttest1}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+        \rowcolor{gray!50}
+        %Titelzeile
+        \textbf{ID} & \textbf{I2}\\ \hline
+        %Zeile
+        \textbf{Bezeichnung} & 
+        Speichern von Datensätzen.\\ \hline
+        %Zeile
+        \textbf{Beschreibung} & 
+        Datensätze werden korrekt in der SQLite Datenbank abgespeichert.\\ \hline
+        %Zeile
+        \textbf{Akteure} &
+        Entwickler\\ \hline
+        %Zeile
+        \textbf{Vorbedingungen} &
+        \begin{itemize}
+            \item SQLite installiert.
+            \item Konsolenprogramm zum Lesen der SQLite Datenbank gestartet.
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ergebnis} &        
+        \begin{itemize}
+            \item Es sind neue Datensätze vorhanden.
+            \item Korrektes Speichern wird vom System gemeldet.
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ergebnis bei Fehler} &
+        \begin{itemize}
+            \item Keine neuen Datensätze vorhanden.
+            \item Fehler wird vom System gemeldet.
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ablauf} &
+        \begin{enumerate}
+            \item Programm starten.
+            \item Warten bis Bestätigung des Speicherns erscheint.
+            \item Datenbank in Konsole lesen.
+            \item Ergebnis prüfen.
+        \end{enumerate}\\ \hline
+        %Zeile
+        \textbf{Testdaten} &
+        Testdaten werden mittels Software erstellt.\\ \hline
+        %Untere Abgrenzung
+    \end{tabularx}
+    \caption{Integrationstest 2 - Speichern von Datensätzen}
+    \label{tab:inttest2}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+        \rowcolor{gray!50}
+        %Titelzeile
+        \textbf{ID} & \textbf{I3}\\ \hline
+        %Zeile
+        \textbf{Bezeichnung} & 
+        Abfragen der Daten über REST.\\ \hline
+        %Zeile
+        \textbf{Beschreibung} & 
+        Daten können über die REST Schnittstelle korrekt empfangen werden.\\ \hline
+        %Zeile
+        \textbf{Akteure} &
+        Entwickler\\ \hline
+        %Zeile
+        \textbf{Vorbedingungen} &
+        \begin{itemize}
+            \item Es existieren Daten zum lesen.
+            \item Programm ist gestartet
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ergebnis} &        
+        \begin{itemize}
+            \item Es wird eine einfache Webseite angezeigt mit allen Daten seit Messbeginn.
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ergebnis bei Fehler} &
+        \begin{itemize}
+            \item Es wird eine Fehlerseite angezeigt.
+        \end{itemize}\\ \hline
+        %Zeile
+        \textbf{Ablauf} &
+        \begin{enumerate}
+            \item Browser öffnen
+            \item URL ''http://192.168.192.75?date'' eingeben
+            \item Ergebnis prüfen.
+        \end{enumerate}\\ \hline
+        %Zeile
+        \textbf{Testdaten} &
+        Testdaten werden mittels Software erstellt.\\ \hline
+        %Untere Abgrenzung
+    \end{tabularx}
+    \caption{Integrationstest 3 - Abrufen von Daten mit REST}
+    \label{tab:inttest3}
 \end{table}
 
 \renewcommand{\labelitemi}{$\bullet$}
