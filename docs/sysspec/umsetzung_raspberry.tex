@@ -6,11 +6,12 @@ Dies geschieht bei der Initialisierung der Klasse beziehungsweise beim Dekonstru
 Die Aufgaben des Benutzers sind nur Richtung setzen und dann Lesen bzw. Schreiben der Pins. Die Richtung (Output / Input) kann zur Laufzeit geändert werden.
 
 \subsubsection{Pinbelegung}
-Die Pinbelegung auf dem \rpi\ sieht wie folgt aus.
+Die Pinbelegung auf dem \rpi\ wird in Bild \ref{fig:pi_belegung} gezeigt.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{pinbelegung}
     \caption{Pinbelegung des \rpi\ (Originalbild von www.raspberrypi-spy.co.uk)}
+    \label{fig:pi_belegung}
 \end{figure}
 
 \noindent Pin 6,8,10,3 und 5 werden nicht durch die GPIO\footnote{General Purpose Input Output} Klasse angesteuert. Diese sind für die UART beziehungsweise \iic\ Kommunikation reserviert, die in den nachfolgenden Kapitel \ref{sec:i2c} und \ref{sec:uart} beschrieben sind.\\\\
@@ -28,7 +29,7 @@ Aufgrund des gewählten Betriebssystem und der dadurch entstandenen Problematik 
 Die Problematik bestand darin, dass die \iic-Geräte auf dem Linux nicht erkannt wurden. Nach mehreren Versuchen die Geräte zu erkennen, wurde entschieden, dass zur Kommunikation eine USB-UART Verbindung aufgebaut wird. Diese Verbindung beinhaltet nur noch die Kommunikation mit dem Counterboard. Mehr zum UART ist im folgenden Kapitel \ref{sec:uart} zu lesen.
 
 \clearpage
-\subsubsection{UART Implementierung}\label{sec:uart}%TODO rework chapter UART
+\subsubsection{UART Implementierung}\label{sec:uart}
 Für das Lesen des GPS Signals wird eine UART Kommunikation benötigt.
 Aufgrund der \iic\ Problematik wird die GPS UART Verbindung auf den zwei Pins 8 und 10 nicht weiter verfolgt.\\
 \\
