@@ -1,67 +1,54 @@
+%\newcommand{\tempitem}{\labelitemi}
+\renewcommand{\labelitemi}{-}
+
 \begin{table}[H]
-	\begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+	\begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
 		\rowcolor{gray!50}
 		%Titelzeile
-			\textbf{ID}          &
-			\begin{tabular}{l}
-				\textbf{I1}
-			\end{tabular}
-			\\ \hline
+			\textbf{ID} & \textbf{I1}\\ \hline
 		%Zeile
-			\textbf{Bezeichnung}			 &
-			\begin{tabular}{l}
-				Ermitteln Referenzfrequenz ohne GPS Verbindung.
-			\end{tabular}
-			\\ \hline
+			\textbf{Bezeichnung} & 
+            Ermitteln Referenzfrequenz ohne GPS Verbindung.\\ \hline
 		%Zeile
-			\textbf{Beschreibung}   		 &
-			\begin{tabular}{l}
-				Die Referenzfrequenz wird mittels FIX-Pin des GPS-Moduls ermittelt.
-			\end{tabular}
-		\\ \hline
+			\textbf{Beschreibung} & 
+            Die Referenzfrequenz wird mittels FIX-Pin des GPS-Moduls ermittelt.\\ \hline
 		%Zeile
-			\textbf{Akteure}              & 
-			\begin{tabular}{l}
-				Entwickler
-			\end{tabular}
-		\\ \hline
+			\textbf{Akteure} &
+            Entwickler\\ \hline
 		%Zeile
-			\textbf{Vorbedingungen}       &
-			\begin{tabular}{l}
-				USB-Verbindung von \hwb zu einem Test-PC oder Notebook.\\
-				Optische Überprüfung des laufenden \hwb.\\
-				Die FIX-LED des GPS-Moduls auf dem \hwb blinkt im Sekundentakt. \\
-				Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.
-			\end{tabular}		
-		\\ \hline
+			\textbf{Vorbedingungen} &
+            \begin{itemize}
+                \item USB-Verbindung von \hwb zu einem Test-PC oder Notebook.
+                \item Optische Überprüfung des laufenden \hwb.
+                \item Die FIX-LED des GPS-Moduls auf dem \hwb blinkt im Sekundentakt.
+                \item Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.
+            \end{itemize}\\ \hline
 		%Zeile
-			\textbf{Ergebnis}             &        
-			\begin{tabular}{l}
-				Die Referenzfrequenzen werden jede Sekunde aufgelistet. \\
-				Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).
-			\end{tabular}
-		\\ \hline
+			\textbf{Ergebnis} &        
+			\begin{itemize}
+				\item Die Referenzfrequenzen werden jede Sekunde aufgelistet.
+				\item Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).
+			\end{itemize}\\ \hline
 		%Zeile
-			\textbf{Ergebnis bei Fehler}  &
-			\begin{tabular}{l}
-				- Fehlerhafte oder fehlende Werte in der Anzeige\\
-				- Anzeigen auf dem \hwb verhalten sich nicht erwartungsgemäss.
-			\end{tabular}
-		\\ \hline
+			\textbf{Ergebnis bei Fehler} &
+			\begin{itemize}
+				\item Fehlerhafte oder fehlende Werte in der Anzeige.
+				\item Anzeigen auf dem \hwb verhalten sich nicht erwartungsgemäss.
+			\end{itemize}\\ \hline
 		%Zeile
-			\textbf{Ablauf}				 &
+			\textbf{Ablauf} &
 			\begin{enumerate}
 				\item USB-Verbindung erstellen.
 				\item Terminal-Programm starten (z.B. Minicom)
 				\item Ergebnis prüfen
-			\end{enumerate}
-		\\ \hline
-			\textbf{Testdaten}            &
-			\begin{tabular}{l}
-				Keine benötigt.
-			\end{tabular}
-		\\ \hline	%Untere Abgrenzung
-	\end{tabular}
+			\end{enumerate}\\ \hline
+        %Zeile
+			\textbf{Testdaten} &
+            Keine benötigt.\\ \hline
+        %Untere Abgrenzung
+	\end{tabularx}
 	\caption{Integrationstest 1}
 	\label{tab:inttest1}
 \end{table}
+
+\renewcommand{\labelitemi}{$\bullet$}
