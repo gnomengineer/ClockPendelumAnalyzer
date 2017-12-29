@@ -1,17 +1,16 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
-\section{Ausgangslage}%TODO Problem ersichtlich machen
+\section{Ausgangslage}
 Eine Pendeluhr besteht grundsätzlich aus drei Komponenten: dem Energiespeicher (eine Spiralfeder
 oder ein Gewicht), einer Dosiereinheit (Pendel mit Hemmung), welche die Energie portioniert an ein
 Räderwerk abgibt und einer Anzeigeeinheit (das Zifferblatt).\\
-Die Genauigkeit einer Pendeluhr wird wesentlich bestimmt durch das Pendel. Die volle Periode eines Sekundenpendels sollte exakt 2 Sekunden betragen; dann läuft die Uhr exakt. Eine Abweichung von 1 Millisekunde addiert sich im Laufe des Tages auf einen Fehler von ca. 43 Sekunden.\\
-Die genauste, rein mechanische Pendeluhr der Geschichte, die AChF-3, wurde von Fedchenko 1959
-hergestellt. Die durchschnittliche Abweichung pro Tag betrug 0.003 s.\\
-Durch die genaue Messung einer Periode kann der Fehler pro Tag vorausgesagt werden. Durch (a)
-Verlängern oder Verkürzen des Pendels oder durch (b) Vergrössern oder Verkleinern des
-Pendelgewichts kann dann der Fehler minimiert werden. Zur Feinjustierung wird im Falle (b) meist ein
-Gewicht verwendet, welches etwa in halber Pendelhöhe angebracht wird. Beispielsweise wird dazu
-beim Big-Ben in London ein \glqq{}Penny\grqq{} verwendet, welcher zu einer Änderung der Zeit von 0.4 s pro Tag führt.\\
-Bei Pendeluhren in Privathaushalten erfolgt die Ermittlung der Abweichung durch Beobachten der Zeitabweichung über eine gewisse Zeitspanne, z.B. eine Woche oder ein Monat, gegenüber einer Referenz. Anschliessend kann die Nachjustierung erfolgen. 
+\\
+Die Genauigkeit einer Pendeluhr wird wesentlich bestimmt durch das Pendel. 
+Durch die genaue Messung einer Periode kann der Fehler pro Tag vorausgesagt werden.
+Die volle Periode eines Sekundenpendels sollte exakt 2 Sekunden betragen; dann läuft die Uhr exakt.
+Eine Abweichung von 1 Millisekunde addiert sich im Laufe des Tages auf einen Fehler von ca. 43 Sekunden.\\
+\\
+Zur manuellen Überprüfung einer Pendeluhr wird diese meist über eine gewisse Zeitspanne, z.B. eine Woche oder ein Monat, beobachtet und dann mit einer Referenzuhr verglichen.
+Dieser Vorgang ist sehr langsam und je nach Referenzzeit auch ungenau.
 
 \section{Ziele}
 Es soll ein Device erstellt werden, welches die Messung eines Pendels ermöglicht und so die Genauigkeit (Abweichung pro Tag) des Pendels direkt anzeigen kann.\\
