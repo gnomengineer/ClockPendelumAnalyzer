@@ -4,18 +4,10 @@ class ClockPendulumAnalyzer {
     +main()
 }
 class GPIO 
-class I2CHandler 
-class RTCModule
-class Analyzer {
-    m_ReferenceTimeFrequency :double
-    m_MeasuredTimeFrequency :double
-    + getTimeDifference_us() :double
-    - getTimeCounterValue() :double
-}
 class WebServer
 class DataAssembler {
-    m_Analyzer :Analyzer
     m_LatestData :DataTupel
+    m_TimeList :List<Pair<string,int>>
     +getNewDataSample(string clockname) :DataTupel
 }
 class DataTransfer {
@@ -32,9 +24,10 @@ class DataTupel {
     m_humidity :int
 }
 class SQLiteImplementation
+class UARTHandler
+class UARTReceiver
 
 ''interfaces
-interface I2C
 interface IRESTServer
 interface IDataPersistor {
     m_DBConnection :db
@@ -49,18 +42,21 @@ interface IDBConnector {
     disconnect()
 }
 
-''relations
-'' Analyzer to ...
-GPIO <-- Analyzer
-I2CHandler <-- Analyzer
-RTCModule <-- Analyzer
+interface IObserver {
+    addToList(string timeKey, int absoluteTime)
+}
 
-I2C <- I2CHandler :uses
-Analyzer <-- DataAssembler
+''relations
+ClockPendulumAnalyzer --> GPIO
+''IObserver <|.down. DataAssembler :implements
+DataAssembler .down.|> IObserver :implements
+ClockPendulumAnalyzer --> UARTReceiver
+UARTHandler <- UARTReceiver
+IObserver <-- UARTReceiver
 
 '' main assoziations
-ClockPendulumAnalyzer --> DataTransfer
-ClockPendulumAnalyzer --> DataAssembler
+ClockPendulumAnalyzer -right-> DataTransfer
+ClockPendulumAnalyzer -right-> DataAssembler
 ClockPendulumAnalyzer --> IRESTServer :starts
 
 '' who requires DataTupel
@@ -79,5 +75,6 @@ SQLiteImplementation ..|> IDataPersistor :implements
 WebServer .up.|> IRESTServer :implements
 
 ''connections for proper placement (all are hidden)
+WebServer <-[hidden] UARTHandler
 IDBConnector <-[hidden]down- IDataPersistor
 @enduml
