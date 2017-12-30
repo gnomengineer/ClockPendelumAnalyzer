@@ -1,5 +1,8 @@
 #include "../include/UARTReceiver.hpp"
 #include <string.h>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
 UARTReceiver::UARTReceiver(UARTHandler* handler, IObserver* observer) {
 	m_uart0_filestream = handler->getFileStream();
@@ -39,7 +42,11 @@ void UARTReceiver::readAndPlotData() {
 }
 
 void UARTReceiver::decodeRecievedString(std::string message) {
-    //TODO change this to call observers addTime metho	
+    //TODO change this to call observers addTime method
+    std::time_t time = std::time(0);
+    std::stringstream timeString;
+    timeString << std::put_time(std::localtime(&time),"%Y%m%d%H%M%S");
+    m_Observer->addToVector(timeString.str(),std::stoi( message ));
 }
 
 void* UARTReceiver::staticEntryPoint(void* threadId) {
