@@ -42,7 +42,6 @@ void UARTReceiver::readAndPlotData() {
 }
 
 void UARTReceiver::decodeRecievedString(std::string message) {
-    //TODO change this to call observers addTime method
     std::time_t time = std::time(0);
     std::stringstream timeString;
     timeString << std::put_time(std::localtime(&time),"%Y%m%d%H%M%S");
