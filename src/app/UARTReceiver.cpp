@@ -43,6 +43,7 @@ void UARTReceiver::decodeRecievedString(std::string message) {
 }
 
 void* UARTReceiver::staticEntryPoint(void* threadId) {
+    cout << "Thread UARTReceiver started" << endl;
 	((UARTReceiver*)threadId)->startRecording();
 	cout << "Thread UARTReceiver ended" << endl;
 	pthread_exit(threadId);
