@@ -1,6 +1,6 @@
 #include "../include/DataAssembler.h"
-#include <ctime>
 #include <iostream>
+#include <stdexcept>
 
 DataTupel DataAssembler::getNewDataSample(std::string clockname) {
     std::pair<std::string, int> timePair;
@@ -8,12 +8,16 @@ DataTupel DataAssembler::getNewDataSample(std::string clockname) {
     if ( m_time_list.size() != 0) {
         timePair = m_time_list.front();
         m_time_list.pop_front();
+    } else {
+        timePair = std::pair<std::string, int>("exit",1);
     }
     m_time_list_mutex.unlock();
 
-    std::cout << std::get<0>(timePair) << ":" << std::get<1>(timePair) << std::endl;
+    if (std::get<0>(timePair) == "exit") {
+        throw std::length_error("nothing received from counter");
+    }
 
-    DataTupel dataSample(clockname,"00000000",1);
+    DataTupel dataSample(clockname,std::get<0>(timePair),std::get<1>(timePair));
     return dataSample;
 }
 

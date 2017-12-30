@@ -18,7 +18,7 @@ void ClockPendulumAnalyzer::startAnalyze() {
     pthread_t thread;
     int rc = pthread_create(&thread, NULL, UARTReceiver::staticEntryPoint, m_Receiver);
 	if (rc) {
-		cout << "Error:unable to create thread," << rc << endl;
+        std::cout << "Error:unable to create thread," << rc << std::endl;
 	}
 
     bool isSaved = false;
@@ -32,8 +32,13 @@ void ClockPendulumAnalyzer::startAnalyze() {
             m_DataList.clear();
             isSaved = false;
         }
-        DataTupel singleData = m_DataAssembler.getNewDataSample(m_ClockName);
-        m_DataList.push_back(singleData);
+
+        try {
+            DataTupel singleData = m_DataAssembler.getNewDataSample(m_ClockName);
+            m_DataList.push_back(singleData);
+        } catch (const std::length_error& e) {
+            std::cout << e.what() << std::endl;
+        }
         
         std::this_thread::sleep_for(timespan);
     }
