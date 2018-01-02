@@ -1,0 +1,73 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{custom}[2013/01/13 Custom Style Package]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{textcomp}
+\RequirePackage{lmodern}
+\RequirePackage{enumerate}
+%\RequirePackage[landscape]{geometry} %for horizontal aligned documents
+\RequirePackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+
+%table packages
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{rotating}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{xcolor, colortbl}
+\RequirePackage{longtable}
+
+%figure packages
+\RequirePackage{subcaption}
+\RequirePackage{caption}
+\RequirePackage{float}
+\RequirePackage{graphicx}
+
+%bibliography packages
+\RequirePackage{hyperref}
+\RequirePackage{apacite}
+\RequirePackage{color}
+
+%for displaying source code
+\RequirePackage{listings}
+\lstset{
+                basicstyle=\footnotesize,
+                keywordstyle=\color{blue},
+                stringstyle=\color{red},
+                commentstyle=\color{green},
+}
+
+\RequirePackage{float}
+%========================================
+%============OWN COMMANDS================
+%========================================
+%===========TABLE COMMANDS===============
+\renewcommand\tabularxcolumn[1]{>{\small}m{#1}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{a}[1]{>{\columncolor{yellow}}p{#1}}
+\newcolumntype{A}[1]{>{\centering\columncolor{yellow}}p{#1}}
+\newcommand\RotText[1]{\rotatebox{90}{\parbox{2cm}{\centering#1}}}
+\renewcommand{\arraystretch}{1.5}
+
+\newlength{\arrayrulewidthOriginal}
+\newcommand{\Cline}[2]{%
+  \noalign{\global\setlength{\arrayrulewidthOriginal}{\arrayrulewidth}}%
+  \noalign{\global\setlength{\arrayrulewidth}{#1}}\cline{#2}%
+  \noalign{\global\setlength{\arrayrulewidth}{\arrayrulewidthOriginal}}}
+%========================================
+
+%==============BOXES=====================
+%small colored box with no visible border, breaks before and after box
+\definecolor{shadecolor}{RGB}{200,200,200}
+\definecolor{lightgreen}{RGB}{0,50,0}
+\definecolor{red}{RGB}{255,0,0}
+\definecolor{yellow}{RGB}{255,255,0}
+\newcommand{\shadebox}[1]{\par\noindent\colorbox{shadecolor}
+{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{#1}}}
+%small noncolored box with visible border, breaks before and after box
+\newcommand{\commandbox}[1]{\par\noindent\fbox{\begin{minipage}{\textwidth}#1\end{minipage}}\par\noindent}
+%small colored box with breaks and border
+\newcommand{\lessons}[1]{\par\noindent\colorbox{lightgreen}\fbox{\begin{minipage}{\textwidth}#1\end{minipage}}\par\noindent}
+%========================================
+\endinput
