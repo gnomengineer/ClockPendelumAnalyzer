@@ -1,4 +1,6 @@
 kickoff
+*.snm
+*.nav
 *.aux
 *.dvi
 *.lof
