@@ -64,6 +64,10 @@
 #include "USB0.h"
 #include "TMOUT1.h"
 #include "MCUC1.h"
+#include "HalfSec.h"
+#include "BitIoLdd5.h"
+#include "ResetCnt.h"
+#include "ExtIntLdd4.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

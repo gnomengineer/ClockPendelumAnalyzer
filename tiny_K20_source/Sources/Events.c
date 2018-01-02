@@ -39,6 +39,7 @@ extern "C" {
 static int overrunCntr = 0;
 static int ppsIsAlive = 0;
 static RefCnt_TValueType referenceCounterGPS = 0;
+static RefCnt_TValueType clockPendulumCounter = 0;
 static RefCnt_TValueType lastCnt = 0;
 static LDD_TDeviceData* timerHandle;
 
@@ -80,8 +81,8 @@ void Cpu_OnNMIINT(void)
 */
 void SensorPin_OnInterrupt(void)
 {
-	LED1_Neg();
-	/* Write your code here ... */
+	clockPendulumCounter = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
+	EVNT_SetEvent(EVNT_SENSOR_SIGNAL_REGISTERED);
 }
 
 /*
@@ -98,7 +99,6 @@ void SensorPin_OnInterrupt(void)
 */
 void PPSPin_OnInterrupt(void)
 {
-	static RefCnt_TValueType diff = 0;
 	referenceCounterGPS = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
 	EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED);
 	ppsIsAlive = 2;
@@ -291,6 +291,24 @@ void AS1_OnFullRxBuf(void)
 void AS1_OnFreeTxBuf(void)
 {
   /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  ResetCnt_OnInterrupt (module Events)
+**
+**     Component   :  ResetCnt [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void ResetCnt_OnInterrupt(void)
+{
+	RefCnt_ResetCounter(timerHandle);
+	overrunCntr = 0;
 }
 
 /* END Events */

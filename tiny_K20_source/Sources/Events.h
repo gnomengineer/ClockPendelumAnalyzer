@@ -62,6 +62,10 @@
 #include "USB0.h"
 #include "TMOUT1.h"
 #include "MCUC1.h"
+#include "HalfSec.h"
+#include "BitIoLdd5.h"
+#include "ResetCnt.h"
+#include "ExtIntLdd4.h"
 #include "KIN1.h"
 #include "UTIL1.h"
 #include "TGT_SWD_OE.h"
@@ -284,6 +288,20 @@ void AS1_OnFullRxBuf(void);
 ** ===================================================================
 */
 void AS1_OnFreeTxBuf(void);
+
+void ResetCnt_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  ResetCnt_OnInterrupt (module Events)
+**
+**     Component   :  ResetCnt [ExtInt]
+**     Description :
+**         This event is called when an active signal edge/level has
+**         occurred.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
 
 /* END Events */
 
