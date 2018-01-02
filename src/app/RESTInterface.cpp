@@ -9,8 +9,13 @@
 #include <cstring>
 #include <zconf.h>
 
-RESTInterface::RESTInterface()
+const std::string DATE_DELIMITER = "data=";
+const std::string NAME_DELIMITER = "name=";
+const std::string REFERENCE_DELIMITER = "referenz";
+
+RESTInterface::RESTInterface(DataTransfer* dataTransfer)
     : m_running(false) {
+    m_DataTransfer = dataTransfer;
 }
 
 RESTInterface::~RESTInterface() {
@@ -74,5 +79,34 @@ void RESTInterface::requestHandler(const int newSocketfd) {
         recv(newSocketfd, buffer, 1024, 0);
         std::string message(buffer);
 
+        decodeMessage(message.substr(message.find("?")));
     }
+}
+
+void RESTInterface::decodeMessage(const std::string& parameters){
+    if ( parameters.find(REFERENCE_DELIMITER) != std::string::npos) {
+        generateReferenceResponse();
+    } else {
+        int pos;
+        if ( (pos = parameters.find(DATE_DELIMITER)) != std::string::npos) {
+            m_DateParam = getParam(parameters, pos);
+        }
+        if ( (pos = parameters.find(NAME_DELIMITER)) != std::string::npos) {
+            m_NameParam = getParam(parameters, pos); 
+        }
+        generateNormalResponse();
+    }
+}
+
+std::string RESTInterface::getParam(const std::string& parameters, const int pos) {
+    std::string first_param = parameters.substr(pos,parameters.find("&"));
+    return first_param.substr(first_param.find("=")+1);
+}
+
+void RESTInterface::generateNormalResponse() {
+
+}
+
+void RESTInterface::generateReferenceResponse() {
+
 }

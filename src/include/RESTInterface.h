@@ -12,7 +12,7 @@
 class RESTInterface {
 public:
 
-    RESTInterface();
+    RESTInterface(DataTransfer* dataTransfer);
     ~RESTInterface();
 
     static void* staticEntryPoint(void* threadId);
@@ -26,8 +26,15 @@ private:
 
     void startServer();
     void requestHandler(const int newSocketfd);
+    void decodeMessage(const std::string& parameters);
+    std::string getParam(const std::string& parameters, const int pos);
+    void generateReferenceResponse();
+    void generateNormalResponse();
 
     bool m_running;
+    DataTransfer* m_DataTransfer;
+    std::string m_DateParam;
+    std::string m_NameParam;
 
 };
 
