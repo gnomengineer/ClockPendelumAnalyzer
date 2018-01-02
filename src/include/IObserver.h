@@ -1,7 +1,9 @@
 #pragma once
 
+#include <stdint.h>
+
 class IObserver {
 public:
-    virtual void addToVector(std::string timeKey, int absoluteTime) = 0;
+    virtual void addToVector(std::string timeKey, uint32_t absoluteTime, uint32_t referenceFrequency) = 0;
 
 };

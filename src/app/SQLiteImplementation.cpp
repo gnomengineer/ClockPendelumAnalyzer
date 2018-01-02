@@ -58,11 +58,12 @@ void SQLiteImplementation::getData(const std::string& key, const std::string& va
 int SQLiteImplementation::saveData(DataTupel data){
     std::stringstream sqlStatement;
     sqlStatement << "INSERT INTO " << TABLE << 
-        " (clock, date, absolutetime, heat, humidity) " <<
+        " (clock, date, absolutetime, ref_frequency, heat, humidity) " <<
         " VALUES('" <<
         data.getClockName() << "'," <<
         data.getDate() << "," <<
         data.getAbsoluteTime() << "," <<
+        data.getReferenceFrequency() << "," <<
         data.getHeat() << "," <<
         data.getHumidity() << ");";
 
@@ -112,6 +113,7 @@ void SQLiteImplementation::createTableOnce() {
             + " clock TEXT NOT NULL,"
             + " date INT NOT NULL,"
             + " absolutetime INT NOT NULL,"
+            + " ref_frequency INT NOT NULL,"
             + " heat INT,"
             + " humidity INT)";
         m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.c_str(), NULL, NULL, &m_SQLErrorMessage);
@@ -124,7 +126,8 @@ void SQLiteImplementation::createTableOnce() {
 
 int SQLiteImplementation::addToList(int numberOfRows,
         char** data, char** columnNames) {
-    std::string clockname, date, absolutetime, heat, humidity;
+    std::string clockname, date, heat, humidity;
+    uint32_t absolutetime = 0, refFrequency = 0;
 
     for ( int counter = 0; counter < numberOfRows; counter++ ) {
         DataTupel::Tupel column = static_cast<DataTupel::Tupel>(counter);
@@ -137,8 +140,10 @@ int SQLiteImplementation::addToList(int numberOfRows,
                 date = data[counter]; 
                 break;
             case DataTupel::Tupel::ABSOLUTETIME:
-                absolutetime = data[counter]; 
+                absolutetime = static_cast<uint32_t>(std::stoul(data[counter]));
                 break;
+            case DataTupel::Tupel::REF_FREQUENCY:
+                refFrequency = static_cast<uint32_t>(std::stoul(data[counter]));
                 /*
             case DataTupel::Tupel::HEAT: 
                 heat = (int)data[counter]; 
@@ -151,7 +156,7 @@ int SQLiteImplementation::addToList(int numberOfRows,
         }
     }
     
-    DataTupel resultTupel(clockname,date,absolutetime);
+    DataTupel resultTupel(clockname, date, absolutetime, refFrequency);
     m_Result.push_back(resultTupel);
     
     return 0;

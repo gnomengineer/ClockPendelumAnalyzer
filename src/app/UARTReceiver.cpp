@@ -49,11 +49,12 @@ void UARTReceiver::decodeRecievedString(std::string message) {
 	pendulumTime = message.substr(0, message.find(';'));
     auto pendTime = static_cast<uint32_t>(std::stoul(pendulumTime));
 	referenceFrequency = message.substr(message.find(';') + 1);
-	double corrVal = std::stoi(referenceFrequency) / 12000000.0;
+    auto refFreq = static_cast<uint32_t>(std::stoi(referenceFrequency));
+	double corrVal = refFreq / 12000000.0;
 	if (abs(corrVal) > 0.8 && abs(corrVal) < 1.5) {
 		pendTime = static_cast<uint32_t>(pendTime * corrVal);
 	}
-    m_Observer->addToVector(timeString.str(), pendTime);
+    m_Observer->addToVector(timeString.str(), pendTime, refFreq);
 }
 
 void* UARTReceiver::staticEntryPoint(void* threadId) {

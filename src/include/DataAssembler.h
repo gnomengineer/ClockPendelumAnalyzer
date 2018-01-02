@@ -10,9 +10,9 @@
 class DataAssembler : public IObserver {
     public:
         DataTupel getNewDataSample(std::string clockname);
-        void addToVector(std::string timeKey, int absoluteTimeValue);
+        void addToVector(std::string timeKey, uint32_t absoluteTime, uint32_t referenceFrequency);
 
     private:
         std::mutex m_time_list_mutex;
-        std::list<std::pair<std::string,int>> m_time_list;
+        std::list<std::pair<std::string, DataTupel>> m_time_list;
 };

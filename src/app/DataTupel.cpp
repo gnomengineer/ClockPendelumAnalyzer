@@ -1,21 +1,31 @@
 #include "../include/DataTupel.h"
 #include <regex>
 
-DataTupel::DataTupel(std::string name,
-        std::string date,
-        int absoluteTime) : m_ClockName(name) { 
+DataTupel::DataTupel(std::string& name,
+        std::string& date,
+        uint32_t absoluteTime) : m_ClockName(name) {
     setDate(date);
     setAbsoluteTime(absoluteTime);
 }
 
-DataTupel::DataTupel(std::string name,
-        std::string date,
-        std::string time) : m_ClockName(name){
+DataTupel::DataTupel(std::string& name,
+        std::string& date,
+        std::string& time) : m_ClockName(name){
     setDate(date);
-    setAbsoluteTime(std::stoi(time));
+    setAbsoluteTime(static_cast<uint32_t>(std::stoul(time)));
 }
 
-void DataTupel::setClockName(std::string name){
+DataTupel::DataTupel(std::string& name,
+                     std::string& date,
+                     uint32_t absoluteTime,
+                     uint32_t referenceFrequency)
+        : m_ClockName(name) {
+    setDate(date);
+    setReferenceFrequency(referenceFrequency);
+    setAbsoluteTime(absoluteTime);
+}
+
+void DataTupel::setClockName(std::string& name){
     m_ClockName = name;
 }
 
@@ -25,7 +35,7 @@ void DataTupel::setDate(std::string date){
     }
 }
 
-void DataTupel::setAbsoluteTime(int absoluteTime){
+void DataTupel::setAbsoluteTime(uint32_t absoluteTime){
     if(absoluteTime >= 0){
         m_AbsoluteTime = absoluteTime;
     }
@@ -41,4 +51,8 @@ void DataTupel::setHumidity(int humidity){
     if(humidity > 0 && humidity < 100){
         m_Humidity = humidity;
     }
+}
+
+void DataTupel::setReferenceFrequency(uint32_t frequency) {
+    m_ReferenceFrequency = frequency;
 }
