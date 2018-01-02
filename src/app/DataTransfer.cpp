@@ -5,7 +5,7 @@
 DataTransfer::DataTransfer() {
     m_Connector = new SQLiteImplementation();
     if (m_Connector ){
-        m_Connector->connect("file:/tmp/test.db");
+        m_Connector->connect("file:/mnt/clock_analyzer.db");
         m_Persistor = dynamic_cast<IDataPersistor*>(m_Connector);
     }
     std::cout << "DataTransfer created" << std::endl;
