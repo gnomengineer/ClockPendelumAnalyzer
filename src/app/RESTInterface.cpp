@@ -17,6 +17,13 @@ RESTInterface::~RESTInterface() {
 
 }
 
+void* RESTInterface::staticEntryPoint(void* threadId) {
+    std::cout << "Thread REST started" << std::endl;
+    ((RESTInterface*)threadId)->startServer();
+    std::cout << "Thread REST ended" << std::endl;
+    pthread_exit(threadId);
+}
+
 void RESTInterface::startServer() {
     m_running = true;
     int socketfd, newSocketfd;
@@ -30,7 +37,7 @@ void RESTInterface::startServer() {
         std::cout << "Error opening socket" << std::endl;
     }
     //TODO fix compiler error on line below!
-    //bzero(dynamic_cast<char*>(&serverAddress), sizeof(serverAddress));
+    bzero(&serverAddress, sizeof(serverAddress));
     portNr = 80;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = INADDR_ANY;

@@ -10,11 +10,13 @@ ClockPendulumAnalyzer::ClockPendulumAnalyzer(std::string clockname, bool isAuton
     m_Handler->openSerialIF("/dev/ttyACM0");
     m_Handler->setUartConfig(UARTHandler::MEDIUM);
     m_Receiver = new UARTReceiver(m_Handler, &m_DataAssembler);
+    m_RestService = new RESTInterface(&m_DataTransfer);
 }
 
 ClockPendulumAnalyzer::~ClockPendulumAnalyzer() {
     delete m_Receiver;
     delete m_Handler;
+    delete m_RestService;
 }
 
 void ClockPendulumAnalyzer::startAnalyze() {
@@ -28,6 +30,11 @@ void ClockPendulumAnalyzer::startAnalyze() {
 	if (rc) {
         std::cout << "Error:unable to create thread," << rc << std::endl;
 	}
+    pthread_t rest;
+    rc = pthread_create(&rest, NULL, RESTInterface::staticEntryPoint, m_RestService);
+    if (rc) {
+        std::cout << "Error: unable to create thread, " << rc << std::endl;
+    }
 
     bool isSaved = false;
     std::chrono::milliseconds timespan(1000);
@@ -51,6 +58,7 @@ void ClockPendulumAnalyzer::startAnalyze() {
         std::this_thread::sleep_for(timespan);
     }
     m_Receiver->stopReading();
+    m_RestService->stopServer();
 }
 
 int main( int argc, const char* argv[] ) {

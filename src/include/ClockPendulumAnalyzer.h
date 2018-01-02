@@ -9,6 +9,7 @@
 #include "DataAssembler.h"
 #include "UARTHandler.hpp"
 #include "UARTReceiver.hpp"
+#include "RESTInterface.h"
 
 class ClockPendulumAnalyzer {
     public:
@@ -24,7 +25,7 @@ class ClockPendulumAnalyzer {
         DataAssembler m_DataAssembler;
         UARTHandler* m_Handler;
         UARTReceiver* m_Receiver;
-        //IRESTService m_RestService; //TODO implement REST Service
+        RESTInterface* m_RestService; //TODO implement REST Service
 };
 
 #endif
