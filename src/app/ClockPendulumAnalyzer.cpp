@@ -1,4 +1,5 @@
 #include "../include/ClockPendulumAnalyzer.h"
+#include "../include/GPIO.h"
 #include <iostream>
 #include <time.h>
 #include <chrono>
@@ -17,6 +18,11 @@ ClockPendulumAnalyzer::~ClockPendulumAnalyzer() {
 }
 
 void ClockPendulumAnalyzer::startAnalyze() {
+    GPIO gpio("4");
+    gpio.setDirection(GPIO::OUTPUT);
+    gpio.setValue(GPIO::LOW);
+    gpio.setValue(GPIO::HIGH);
+
     pthread_t thread;
     int rc = pthread_create(&thread, NULL, UARTReceiver::staticEntryPoint, m_Receiver);
 	if (rc) {
