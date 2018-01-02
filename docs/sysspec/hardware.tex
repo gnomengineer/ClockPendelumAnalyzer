@@ -31,6 +31,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 %	GPS-Modul
 %	
 \subsection{GPS Modul}
+\label{cap:gps_modul}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so kleinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock fiel die Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit (Abbildung \ref{fig:GPS3133}).
     Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit. Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Angang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da nicht im Datenblatt enthalten. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
@@ -46,7 +47,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 %	
 \subsection{Real Time Clock}
 \label{cap:RTC}
-	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32KHz Signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert. Auf ein Jahr ergibt dies eine Abweichung von:
+	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32kHz Signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert. Auf ein Jahr ergibt dies eine Abweichung von:
 	\[
 		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
 	\]
@@ -58,17 +59,20 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         	\caption{RTC-Modul 3028 Draufsicht (Bildquelle: learn.adafruit.com)}
         	\label{fig:RTC3028}
     	\end{figure}
+Nachteil des 32kHz signals ist, dass die Frequenz an sich nicht hoch genug ist, um eine ausreichende Abtastgenauigkeit zu erzielen. Deswegen wird im vorliegenden Projekt der Quarz des TinyK20 verwendet, welches im Abschnitt \ref{cap:counter} beschrieben ist.
 %
 %	Counter
 %
-\subsection{Counter}
+\subsection{Zähler}
+\label{cap:counter}
 	Um den Pendeldurchgang auswerten zu können, ist es erforderlich, die vergangene Zeit zwischen zwei oder mehreren Durchgängen so genau wie möglich zu ermitteln. Angenommen der Durchgang würde zwei Mal pro Sekunde abgetastet, dann kann eine Genauigkeit von $\frac{1}{2}$ Sekunde erreicht werden. Bei Vier Abtastvorgängen wäre es dementsprechend $\frac{1}{4}$ Sekunde. Dies führt zu der Folgenden Formel für den Fehler $E$:
 	\[
 		E = \frac{1}{f}
 	\]
-	Wobei $f$ der Abtastfrequenz entspricht. Wäre es möglich unendlich schnell abzutasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln, bestehen unter anderem zwei Ansätze. Ein auf IC's\footnote{Integrated Circuits} basierender Hardware-Counter oder ein Hard-Realtime Mikrocontroller-System.
-	\subsubsection{Hardware Counter}
-		Ein Hardware-Conter kann mittels verfügbaren Counter-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
+	Wobei $f$ der Abtastfrequenz entspricht. Wäre es möglich unendlich schnell abzutasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln, bestehen unter anderem zwei Ansätze. Ein auf IC's\footnote{Integrated Circuits} basierender Hardware-Zähler oder ein Hard-Realtime Mikrocontroller-System.
+	\subsubsection{Hardware Zähler}
+	\label{cap:hw-counter}
+		Ein Hardware-Conter kann mittels verfügbaren Zähler-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{Counter_IC_8Bit_ex}
@@ -76,7 +80,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         	\label{fig:SN74HC590AN}
     	\end{figure}
 \noindent Im Falle eines Zählerüberlaufs wird das Carry-Bit gesetzt an Pin $\overline{RCO}$. Somit kann durch Verketten mehrerer IC's eine höhere Zählerbreite erreicht werden. Das Carry-Bit zählt dann den nächsten Chip hoch und setzt den eigenen Zählerwert zur gleichen Zeit zurück. Die typische Schaltgeschwindigkeit des aufgeführten IC's liegt bei $14ns$, was eine sehr hohe Genauigkeit ermöglicht. Der Zählerwert muss dann mit einer entsprechend höheren Abtastfrequenz ermittelt werden, wenn ein Pendeldurchgang registriert worden ist.\\
-Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit ist dabei das Frequenzsignal des in Abschnitt \ref{cap:RTC} beschriebenen RTC-Modules zu verwenden. Mit 32kHz ist dieses allerdings zu langsam, um die geforderte Genauigkeit zu erhalten. Alternativ kann eine ofen-kontrollierte high precision RTC eingesetzt werden, mit einer Frequenz von 10MHz. Die Amplitudenzeit der 10MHz beträgt $100ns$ und kann vom Counter-IC verarbeitet werden.\\
+Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit ist dabei das Frequenzsignal des in Abschnitt \ref{cap:RTC} beschriebenen RTC-Modules zu verwenden. Mit 32kHz ist dieses allerdings zu langsam, um die geforderte Genauigkeit zu erhalten. Alternativ kann eine ofen-kontrollierte high precision RTC eingesetzt werden, mit einer Frequenz von 10MHz. Die Amplitudenzeit der 10MHz beträgt $100ns$ und kann vom Zähler-IC verarbeitet werden.\\
 \\
 Vorteile dieser Lösung:
     \begin{itemize}
@@ -105,6 +109,7 @@ Vorteile dieser Lösung:
 			\item 3.3V und 5V Ausgänge zur Speisung anderer Gräte.
 			\item Micro-USB Anschluss für Kommunikation und Speisung des TinyK20.
 			\item Debug-Anschluss um mittels eines zweiten TinyK20 zu debuggen.
+			\item Integrierter Hardware-Zähler.
 		\end{itemize}
 		\begin{figure}[H]
         	\centering
@@ -112,7 +117,8 @@ Vorteile dieser Lösung:
         	\caption{TinyK20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
-    	Mittels dem TinyK20, lassen sich diverse Timer und Counterarten erzeugen. Ein ``freerun''-Counter läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Der Zähler verfügt zwar nicht über die gleiche Genauigkeit wie ein Hardware-Counter, aber dies lässt sich mit Hilfe des GPS Moduls ausgleichen. Dies ist im Kapitel <tbd> noch ausführlicher beschrieben.\\
+    	Mittels dem TinyK20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel <tbd> noch ausführlicher beschrieben.\\
+%TODO Kapitelreferenz eintragen.
         \\
     	Vorteile dieser Lösung:
     	\begin{itemize}
@@ -121,6 +127,7 @@ Vorteile dieser Lösung:
     		\item Über Interrupt-Leitungen können die Pendeldurchgänge ohne periodisches Abtasten erfasst werden.
     		\item UART RS232 und \iic\ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
     		\item Eigenfabrikat der Hochschule Luzern mit entsprechendem Know-how.
+    		\item Integrierter Handrware-Zähler ermöglicht auch den Anschluss eines externen Frequenzgebers.
     	\end{itemize}
     	Nachteile dieser Lösung:
     	\begin{itemize}
@@ -130,8 +137,9 @@ Vorteile dieser Lösung:
     	\end{itemize}
 		%    	
     \subsubsection{Entscheidungsgrundlage}
-		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, allenfalls doch noch einen Hardware-Counter zu nutzen, wurde entschieden die Lösung mittels Mikrocontrollersystem umzusetzen. Mittels dem GPS-Modul ist es möglich, das TinyK20 zu disziplinieren, zumindest den Counter nach jedem Sekundentakt auszuwerten. Dieser Counter-Wert wird dann als Referenz-Frequenz genutzt.\\
-		Weil das TinyK20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardwarecounter auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
+		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, allenfalls doch noch einen Hardware-Zähler zu nutzen, wurde entschieden die Lösung mittels Mikrocontrollersystem umzusetzen. Mittels dem GPS-Modul ist es möglich, das TinyK20 zu disziplinieren, zumindest den Zähler nach jedem Sekundentakt auszuwerten. Dieser Zähler-Wert wird dann als Referenz-Frequenz genutzt.\\
+		Das TinyK20 unterstützt auch externe Zähler-Eingänge mittels IO-Pins. Die Auswertung dieses Zählers erfolgt identisch zu einem internen Zähler. 
+		Weil das TinyK20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardware-Zähler auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
 %
 % Raspberry
 %
