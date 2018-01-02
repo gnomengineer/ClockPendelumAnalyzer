@@ -12,7 +12,7 @@
 
 class ClockPendulumAnalyzer {
     public:
-        ClockPendulumAnalyzer(std::string clockname);
+        ClockPendulumAnalyzer(std::string clockname,bool isAutonom);
         ~ClockPendulumAnalyzer();
         void startAnalyze();
     private:
@@ -20,6 +20,7 @@ class ClockPendulumAnalyzer {
         std::list<DataTupel> m_DataList;
         DataTransfer m_DataTransfer;
         std::string m_ClockName;
+        bool m_AutonomousRun = true;
         DataAssembler m_DataAssembler;
         UARTHandler* m_Handler;
         UARTReceiver* m_Receiver;
