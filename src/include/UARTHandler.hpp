@@ -21,7 +21,7 @@ public:
 
 	enum BaudRateE {
 		SLOW = B9600,
-		MEDIUM = B57600,
+		MEDIUM = B38400,
 		FULL_SPEED = B115200
 	};
 

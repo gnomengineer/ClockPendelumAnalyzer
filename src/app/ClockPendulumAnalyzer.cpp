@@ -6,6 +6,8 @@
 
 ClockPendulumAnalyzer::ClockPendulumAnalyzer(std::string clockname) : m_ClockName(clockname) {
     m_Handler = new UARTHandler();
+    m_Handler->openSerialIF("/dev/ttyACM0");
+    m_Handler->setUartConfig(UARTHandler::MEDIUM);
     m_Receiver = new UARTReceiver(m_Handler, &m_DataAssembler);
 }
 
