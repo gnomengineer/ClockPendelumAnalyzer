@@ -14,5 +14,5 @@ class DataAssembler : public IObserver {
 
     private:
         std::mutex m_time_list_mutex;
-        std::list<std::pair<std::string, DataTupel>> m_time_list;
+        std::list<DataTupel> m_time_list;
 };
