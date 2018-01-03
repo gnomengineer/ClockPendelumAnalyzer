@@ -21,4 +21,4 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 build/
-pinbelegung.xcf
+*.xcf
