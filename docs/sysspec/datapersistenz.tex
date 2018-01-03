@@ -2,7 +2,7 @@
 \subsection{Umsetzung der Datenpersistenz}
     Hier stehen die Details zur Umsetzung der Datenspeicherung auf dem Raspberry Pi.
     \subsubsection{Datenspeicher}
-    Da das Operationssystem des \rpi\ auf einer SD Karte gespeichert ist, empfiehlt es sich eine Alternative zu finden. SD Karten sind nicht für häufige Schreibzyklen ausgelegt. Für den Clock Pendulum Analyzer wird deshalb ein USB Speicher verwendet. Auf diesem wird die ganze Datenbank abgelegt.\\
+    Da das Operationssystem des \rpi\ auf einer SD Karte gespeichert ist, empfiehlt es sich eine Alternative zu finden. SD Karten sind nicht für häufige Schreibzyklen ausgelegt. Für den \documenttitle\ wird deshalb ein USB Speicher verwendet. Auf diesem wird die ganze Datenbank abgelegt.\\
     Der Datenspeicher wird beim Autostart über die \textit{/etc/fstab} Datei automatisch eingebunden.
     
     \subsubsection{SQLite als Datenbank}
@@ -18,9 +18,12 @@
     Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
     $$[0-9]\{14\}$$
     \paragraph{absolutetime:}
-    Hier steht der aktuell gemessene Zeitwert in absoluter Zeit. Der Wert bezieht sich auf die aktuell vergangenen Nanosekunden in einem Tag. Er startet bei 0:00 und läuft einen Tag.\\
+    Hier steht der aktuell gemessene Tick-Zählstand zwischen 2 Sekunden unter Berücksichtigung der Referenzfrequenz.\\
     Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
     $$[0-9]\{1,15\}$$
+    \paragraph{ref\_frequency:}
+    In diesem Feld steht die Referenzfrequenz, die beim Messen galt.
+    $$[0-9]\{8\}$$
     \paragraph{heat:}
     Das Feld heat wird für den optionalen Teil Temperatureinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
     Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
