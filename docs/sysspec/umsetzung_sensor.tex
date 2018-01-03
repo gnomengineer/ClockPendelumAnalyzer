@@ -1,5 +1,5 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
-\subsection{Umsetzung Sensor} %TODO describe schematic 1 and 2 each
+\subsection{Umsetzung Sensor}
 	Die Aufbau der Messvorrichtung des Sensors und dessen Anschluss ist nach folgenden Kriterien erfolgt:
 	\begin{itemize}
 		\item Flexible Positionierung des Sensors in der Höhe.
@@ -20,7 +20,10 @@
 		\caption{Anschluss-Schema SFH9201 (Bildquelle aus Datenblatt)}
 		\label{fig:schema_SFH9201}
 	\end{figure}
-	\noindent Da die Speisung der Diode und des Collectors in unserem Falle identisch sind, werden drei Anschlüsse benötigt. Eine Speisung mit 3.3V, ein Ausgang, um den Schaltzustand des Sensors zu ermitteln und ein Anschluss für Ground. Da es sich um einen analogen Sensor handelt, ist dem Ausgang des Sensors ein Schmitt-Trigger angehängt, welcher die Analoge Spannung in ein digitales Signal umwandelt. Da sich das Verhalten des Sensors, abhängig von der Reflektion des Pendels und des Abstandes zum Pendel, verändern kann, sind sowohl der Ausgangswiderstand für den Collector, wie auch der Vergleichswiderstand des Schmitt-Triggers, sowie der Widerstand der Hysterese des Schmitt-Triggers einstellbar gestaltet. Dies mittels Potentiometer. Um die Schaltung für jedes Pendel einfach, mittels visueller Hilfe, einstellen zu können, is eine grüne LED angebracht, die leuchtet, sobald das Pendel erkannt ist. Gemeinsam ist daher das in Abbildung \ref{fig:schema_sensor} dargestellte Schema entstanden.
+	\noindent Da die Speisung der Diode und des Collectors in unserem Falle identisch sind, werden drei Anschlüsse benötigt. Eine Speisung mit 3.3V, ein Ausgang, um den Schaltzustand des Sensors zu ermitteln und ein Anschluss für Ground. 
+Da es sich um einen analogen Sensor handelt, ist dem Ausgang des Sensors ein Schmitt-Trigger angehängt, welcher die Analoge Spannung in ein digitales Signal umwandelt. 
+Das Verhalten des Sensors kann sich, abhängig von der Reflektion des Pendels und des Abstandes zum Pendel, verändern. Deshalb sind sowohl der Vergleichswiderstand des Schmitt-Triggers, sowie der Widerstand der Hysterese des Schmitt-Triggers mittels Potentiometer einstellbar gestaltet. 
+Um die Schaltung für jedes Pendel einfach einstellen zu können, is eine grüne LED angebracht. Diese als visuelle Hilfe. Der Schaltwert ist dabei auf 3.3V, wenn kein Objekt erkannt wird und 0V, wenn ein Objekt erkannt wird. Dementsprechend verhält sich auch die LED. Gemeinsam ist daher das in Abbildung \ref{fig:schema_sensor} dargestellte Schema entstanden.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.8\textwidth]{Circuit_Sensor}

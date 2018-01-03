@@ -9,7 +9,36 @@ Die Verrechnungskorrektur erfolgt über folgende Formel:
 	T_{abs} = \frac{T_{measured} \cdot f_{ref}}{f_{real}}
 \]
 \subsubsection{Genauigkeit Referenzfrequenz TinyK20}
-Die Genauigkeit der Referenzfrequenz ist mittels statistischer Methoden ermittelt worden. Dazu sind zwei Versuchstreihen durchgeführt worden. Jeweils zwanzig Vergleiche mit dem FIX-Pin als Sekundenpuls, somit ohne GPS-Verbiundung und 20 Messungen mit dem PPS-Pin als Sekundenpuls. Temperatur und Luftfeuchtigkeit sind mit einem Sensirion SHTC1- Sensor ermittelt worden.\\
+Die Genauigkeit der Referenzfrequenz ist mittels statistischer Methoden ermittelt worden. Dazu sind zwei Versuchstreihen durchgeführt worden. Jeweils zwanzig Vergleiche mit dem FIX-Pin als Sekundenpuls, somit ohne GPS-Verbiundung und 20 Messungen mit dem PPS-Pin als Sekundenpuls. Temperatur und Luftfeuchtigkeit sind mit einem Sensirion SHTC1- Sensor ermittelt worden.
+Die Frequenzwerte sind dem Debug-Systems aus dem Kinetis Design Studio entnommen, jeweils mit ca zehn Sekunden Pause zwischen zwei Werten. Die ermittelten Daten sind in Tabelle \ref{tab:testvalues} aufgelistet.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|} \hline
+		\textbf{Werte ohne GPS-Empfang}	& \textbf{Werte mit GPS-Empfang} \\ \hline
+		11980515						& 11980579 \\ \hline
+		11980483						& 11980569 \\ \hline
+		11980481						& 11980569 \\ \hline
+		11980487						& 11980577 \\ \hline
+		11980527						& 11980577 \\ \hline
+		11980493						& 11980575 \\ \hline
+		11980532						& 11980578 \\ \hline
+		11980539						& 11980581 \\ \hline
+		11980500						& 11980582 \\ \hline
+		11980546						& 11980577 \\ \hline
+		11980505						& 11980578 \\ \hline
+		11980511						& 11980570 \\ \hline
+		11980518						& 11980585 \\ \hline
+		11980520						& 11980585 \\ \hline
+		11980517						& 11980582 \\ \hline
+		11980521						& 11980581 \\ \hline
+		11980559						& 11980584 \\ \hline
+		11980555						& 11980589 \\ \hline
+		11980529						& 11980590 \\ \hline 
+		11980521						& 11980589 \\ \hline
+	\end{tabular}
+	\caption{Testwerte jeweils ohne- und mit GPS-Empfang}
+	\label{tab:testvalues}
+\end{table}
 Es sind im Anschluss folgende Untersuchungen erfolgt:
 \begin{itemize}
 	\item Streuung der Daten mit Hilfe eines Histogramms und Box-Plots
