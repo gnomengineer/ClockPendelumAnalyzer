@@ -1,7 +1,7 @@
 # Clock Pendelum Analyzer
 a PAWI project of HSLU about a clock pendelum analyzer
 
-![hardware counter M1](docs/images/HW_Board_Complete_1000.JPG)
+![hardware counter M1](docs/images/gesamtansicht_small.png)
 
 ## Documentation
 the repo uses a latex documentation located at [docs/](docs/)  
@@ -51,5 +51,6 @@ make clockpendulum_analyzer
 Once the source code is built, the application can be started as *root* with the following command. The binary file is located in $PROJECTDIR$/build/bin.
 
 ```
-# bin/clockpendulum_analyzer
+# bin/clockpendulum_analyzer clockname [false]
 ```
+The 2nd parameter defines if the application waits for a user input to be closed properly. It is per default *true* (autonomous run) and needs to be specified only for *false*.
