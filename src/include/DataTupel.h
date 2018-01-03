@@ -5,9 +5,9 @@
 
 class DataTupel {
     public:
-        DataTupel(std::string& name, std::string& date, uint32_t absoluteTime);
-        DataTupel(std::string& name, std::string& date, std::string& absoluteTime);
-        DataTupel(std::string& name, std::string& date, uint32_t absoluteTime, uint32_t referenceFrequency);
+        DataTupel(const std::string& name, const std::string& date, uint32_t absoluteTime);
+        DataTupel(const std::string& name, const std::string& date, const std::string& absoluteTime);
+        DataTupel(const std::string& name, const std::string& date, uint32_t absoluteTime, uint32_t referenceFrequency);
         std::string getClockName() { return m_ClockName;}
         std::string getDate() { return m_Date; }
         uint32_t getAbsoluteTime() { return m_AbsoluteTime; }
@@ -15,8 +15,8 @@ class DataTupel {
         int getHeat() { return m_Heat; }
         int getHumidity() { return m_Humidity; }
 
-        void setClockName(std::string& name);
-        void setDate(std::string date);
+        void setClockName(const std::string& name);
+        void setDate(const std::string date);
         void setAbsoluteTime(uint32_t absoluteTime);
         void setReferenceFrequency(uint32_t frequency);
         void setHeat(int heat);
