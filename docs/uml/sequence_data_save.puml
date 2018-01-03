@@ -2,20 +2,21 @@
 
 participant ClockPendulumAnalyzer as cpa
 participant DataAssembler as da
-participant Analyzer as a
-participant I2CHandler as i2c
 participant DataTransfer as dt
+participant RESTService as rest
+participant UARTReceiver as uart
 database SQLite as sql
 
 ''save data
+== Initialization ==
+cpa --> uart : start thread
+cpa --> rest : start thread
+cpa -> cpa : resetCounter
+
+== Saving Loop ==
 loop infinite
     loop 5 times
         cpa -> da : getNewDataSample()
-        da -> a : getAbsoluteTimeNs()
-        a -> i2c : readValue()
-        a <-- i2c : new absoluteTime
-        note right: I2C kommuniziert mit dem CounterBoard
-        da <-- a : int absoluteTime
         cpa <-- da : DataTupel
         cpa -> cpa : wait(1s)
     end
@@ -24,9 +25,6 @@ loop infinite
     dt -> sql : saveData()
     dt <-- sql : errorNumber
     cpa <-- dt : bool isSaved
-    alt isSaved == true
-        cpa -> cpa : clearList
-    end
 end
 
 @enduml
