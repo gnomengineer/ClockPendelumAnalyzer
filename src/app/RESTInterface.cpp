@@ -41,7 +41,6 @@ void RESTInterface::startServer() {
     if (socketfd < 0 ) {
         std::cout << "Error opening socket" << std::endl;
     }
-    //TODO fix compiler error on line below!
     bzero(&serverAddress, sizeof(serverAddress));
     portNr = 80;
     serverAddress.sin_family = AF_INET;

@@ -25,7 +25,7 @@ class ClockPendulumAnalyzer {
         DataAssembler m_DataAssembler;
         UARTHandler* m_Handler;
         UARTReceiver* m_Receiver;
-        RESTInterface* m_RestService; //TODO implement REST Service
+        RESTInterface* m_RestService; 
 };
 
 #endif
