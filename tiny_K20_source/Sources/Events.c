@@ -45,8 +45,12 @@ static LDD_TDeviceData* timerHandle;
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
-RefCnt_TValueType EVENTS_getCounterValue() {
+RefCnt_TValueType EVENTS_getReferenceCounterValue() {
 	return referenceCounterGPS;
+}
+
+RefCnt_TValueType EVENTS_getPendulumCounterValue() {
+	return clockPendulumCounter;
 }
 
 /*
@@ -83,6 +87,7 @@ void SensorPin_OnInterrupt(void)
 {
 	clockPendulumCounter = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
 	EVNT_SetEvent(EVNT_SENSOR_SIGNAL_REGISTERED);
+	LED1_Neg();
 }
 
 /*
@@ -102,7 +107,6 @@ void PPSPin_OnInterrupt(void)
 	referenceCounterGPS = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
 	EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED);
 	ppsIsAlive = 2;
-	LED1_Neg();
 }
 
 /*
@@ -126,7 +130,6 @@ void FixPin_OnInterrupt(void)
 	else {
 		referenceCounterGPS = RefCnt_GetCounterValue(timerHandle) + overrunCntr * MAX_COUNTER_VALUE;
 		EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED);
-		LED1_Neg();
 	}
 }
 

@@ -76,7 +76,9 @@
 extern "C" {
 #endif 
 
-RefCnt_TValueType EVENTS_getCounterValue();
+RefCnt_TValueType EVENTS_getReferenceCounterValue();
+
+RefCnt_TValueType EVENTS_getPendulumCounterValue();
 
 /*
 ** ===================================================================

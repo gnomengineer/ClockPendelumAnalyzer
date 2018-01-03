@@ -3,7 +3,7 @@
   <Header>
     <Name>tinyK20_Operator</Name>
     <SavedBy>Erich Styger Local</SavedBy>
-    <ModificationStamp>70</ModificationStamp>
+    <ModificationStamp>71</ModificationStamp>
     <Date>2017-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -10380,7 +10380,7 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>3</Index>
+        <Index>2</Index>
       </ItemState>
       <ItemState>
         <ItemSymbol>HCS08grp</ItemSymbol>

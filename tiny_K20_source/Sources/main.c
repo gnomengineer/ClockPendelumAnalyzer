@@ -76,27 +76,45 @@
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "Event.h"
 #include "stdbool.h"
+
+#define EXPECTED_FREQUENCY 11980600
+#define MIN_VALID_FREQ 11980499
+#define MAX_VALID_FREQ 11980701
+
 static RefCnt_TValueType lastGPSReferenceCounter = 0;
+static RefCnt_TValueType lastClockPendulumCounter = 0;
 static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
 static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 static bool usb_connected = 0;
 
 void MAIN_EventHandler(EVNT_Handle event) {
 	static RefCnt_TValueType referenceFrequency = 0;
-	char buffer[9];
+	static RefCnt_TValueType clockPendulumTick = 0;
+	char buffer[9 * 2 + 1];
 	RefCnt_TValueType counterValue;
+	RefCnt_TValueType tmpFrequency;
+	double corrFact;
 	switch(event) {
   	case EVNT_GPS_PULSE_REGISTERED:
-  		counterValue = EVENTS_getCounterValue();
-  		referenceFrequency = counterValue - lastGPSReferenceCounter;
+  		counterValue = EVENTS_getReferenceCounterValue();
+  		tmpFrequency = counterValue - lastGPSReferenceCounter;
   		lastGPSReferenceCounter = counterValue;
-  		UTIL1_Num32uToStr(buffer, sizeof(buffer), referenceFrequency);
-  		if (usb_connected) {
-  			CDC1_SendString(buffer);
-  			CDC1_SendString("\n\r");
+  		if (tmpFrequency > MIN_VALID_FREQ && tmpFrequency < MAX_VALID_FREQ) {
+  			referenceFrequency = tmpFrequency;
   		}
 		break;
 	case EVNT_SENSOR_SIGNAL_REGISTERED:
+		counterValue = EVENTS_getPendulumCounterValue();
+		corrFact = referenceFrequency / 12000000.0;
+		clockPendulumTick = counterValue - lastClockPendulumCounter;
+		lastClockPendulumCounter = counterValue;
+		if (usb_connected) {
+			UTIL1_Num32uToStr(buffer, sizeof(buffer), clockPendulumTick);
+			UTIL1_strcat(buffer, sizeof(buffer), ";");
+			UTIL1_strcatNum32u(buffer, sizeof(buffer), referenceFrequency);
+  			CDC1_SendString(buffer);
+  			CDC1_SendString("\n\r");
+  		}
 		break;
 	default:
   		break;
