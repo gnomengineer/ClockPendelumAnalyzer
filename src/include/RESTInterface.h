@@ -5,9 +5,12 @@
 #include <sys/types.h>
 #include <string>
 #include "DataTransfer.h"
+#include "json.hpp"
 
 #ifndef CLOCKPENDULUMANALYZER_RESTINTERFACE_H
 #define CLOCKPENDULUMANALYZER_RESTINTERFACE_H
+
+using json = nlohmann::json;
 
 class RESTInterface {
 public:
@@ -36,6 +39,7 @@ private:
     DataTransfer* m_DataTransfer;
     std::string m_DateParam;
     std::string m_NameParam;
+    json m_Response;
 
 };
 

@@ -78,6 +78,8 @@ void RESTInterface::requestHandler(const int client) {
     
     if(message.size() > 0) {
         decodeMessage(message.substr(message.find("?")));
+        std::string response = m_Response.dump();
+        send(newSocketfd, response.c_str(), response.size(), 0);
     }
     send(client, "Hello, World!",13,0);
 }
@@ -103,9 +105,17 @@ std::string RESTInterface::getParam(const std::string& parameters, const int pos
 }
 
 void RESTInterface::generateNormalResponse() {
-    std::cout << "normal response" << std::endl;
+    std::cout << "Normal: bla" << std::endl;
 }
 
 void RESTInterface::generateReferenceResponse() {
-    std::cout << "reference response" << std::endl;
+    std::cout << "Referenz: 12" << std::endl;
+    json reference_response = {
+        {"success", true},
+        {"payload",
+            {"hertz", 12000000}
+        }
+    };
+
+    m_Response = reference_response;
 }
