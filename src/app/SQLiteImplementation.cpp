@@ -50,9 +50,23 @@ void SQLiteImplementation::getData(const std::string& key, const std::string& va
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
             callback, this, &m_SQLErrorMessage);
     if (m_ErrorCode != SQLITE_OK) {
-        printSQLiteError("SQLiteImplementation::getDataByName");
+        printSQLiteError("SQLiteImplementation::getData[ByName/ByDate]");
         printSQLError();
     }
+}
+
+std::list<DataTupel> SQLiteImplementation::getDataByNameDate(const std::string& name, const std::string& date) {
+    m_Result.clear();
+    std::stringstream sqlStatement;
+    sqlStatement << "SELECT * FROM " << TABLE << " WHERE clock = '"<< name << "' AND date = '" << date << "';";
+
+    m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
+            callback, this, &m_SQLErrorMessage);
+    if (m_ErrorCode != SQLITE_OK) {
+        printSQLiteError("SQLiteImplementation::getDataByNameDate");
+        printSQLError();
+    }
+    return m_Result;
 }
 
 int SQLiteImplementation::saveData(DataTupel data){

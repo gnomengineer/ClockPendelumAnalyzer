@@ -20,7 +20,7 @@ DataTransfer::~DataTransfer() {
     std::cout << "DataTransfer deleted" << std::endl;
 }
 
-std::list<DataTupel> DataTransfer::getDataListByDate(std::string date) {
+std::list<DataTupel> DataTransfer::getDataListByDate(const std::string& date) {
     if (m_Persistor) {
         m_DataList = m_Persistor->getDataByDate(date);
     } else {
@@ -29,9 +29,18 @@ std::list<DataTupel> DataTransfer::getDataListByDate(std::string date) {
     return m_DataList;    
 }
 
-std::list<DataTupel> DataTransfer::getDataListByName(std::string name) {
+std::list<DataTupel> DataTransfer::getDataListByName(const std::string& name) {
     if (m_Persistor) {
         m_DataList = m_Persistor->getDataByName(name);
+    } else {
+        m_DataList.clear();
+    }
+    return m_DataList;    
+}
+
+std::list<DataTupel> DataTransfer::getDataListByNameAndDate(const std::string& name, const std::string& date) {
+    if (m_Persistor) {
+        m_DataList = m_Persistor->getDataByNameDate(name,date);
     } else {
         m_DataList.clear();
     }

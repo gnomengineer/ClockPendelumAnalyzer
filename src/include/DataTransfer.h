@@ -10,8 +10,9 @@ class DataTransfer {
     public:
         DataTransfer();
         ~DataTransfer();
-        std::list<DataTupel> getDataListByName(std::string name);
-        std::list<DataTupel> getDataListByDate(std::string date);
+        std::list<DataTupel> getDataListByName(const std::string& name);
+        std::list<DataTupel> getDataListByDate(const std::string& date);
+        std::list<DataTupel> getDataListByNameAndDate(const std::string& name, const std::string& date);
         bool saveDataList(std::list<DataTupel> data);
     private:
         std::list<DataTupel> m_DataList;

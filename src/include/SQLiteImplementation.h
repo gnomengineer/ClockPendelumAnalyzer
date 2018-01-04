@@ -18,6 +18,7 @@ class SQLiteImplementation : public IDBConnector, public IDataPersistor {
         void disconnect();
         std::list<DataTupel> getDataByDate(const std::string& date);
         std::list<DataTupel> getDataByName(const std::string& name);
+        std::list<DataTupel> getDataByNameDate(const std::string& name, const std::string& date);
         int saveData(DataTupel data);
         int saveDataList(std::list<DataTupel> data);
         int addToList(int numberOfRows, char** data, char** columnNames);
