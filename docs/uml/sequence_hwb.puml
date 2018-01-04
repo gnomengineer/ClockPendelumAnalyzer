@@ -1,0 +1,77 @@
+@startuml
+
+participant Main as mai
+participant USB_CDC as usb
+participant Util as uti
+participant Events as evts
+participant Event as evt
+participant RefCnt as cntr
+actor Sensor as sen
+actor GPSModule as gps
+actor Reset as res
+
+''save data
+== Interrupt GPS ==
+loop infinite
+    gps -> evts : interrupt
+    evts -> cntr : RefCnt_GetCounterValue(timerHandle)
+    evts <-- cntr : 
+    evts -> evt : EVNT_SetEvent(EVNT_GPS_PULSE_REGISTERED)
+end
+
+== Interrupt Sensor ==
+
+loop infinite
+    sen -> evts : interrupt
+    evts -> cntr : RefCnt_GetCounterValue(timerHandle)
+    evts <-- cntr :
+    evts -> evt : EVNT_SetEvent(EVNT_SENSOR_SIGNAL_REGISTERED)
+
+end
+
+== Interrupt Reset ==
+
+loop infinite
+    sen -> evts : interrupt
+    evts -> cntr : RefCnt_ResetCounter(timerHandle)
+    evts <-- cntr :
+
+end
+
+== Measuring Loop ==
+
+loop infinite
+
+    mai	-> mai : wait(10ms)
+    mai -> evt : EVNT_HandleEvent(MAIN_EventHandler, TRUE)    
+ 
+    alt event GPS pulse registered set
+
+        evt -> mai : MAIN_EventHandler(event)
+        mai -> evts : EVENTS_getReferenceCounterValue()
+        mai <-- evts :
+        evt <-- mai :
+        mai <-- evt :
+
+    else event Sensor signal registered set
+	
+        mai -> evts : EVENTS_getPendulumCounterValue()
+        mai <-- evts :
+        mai -> uti : UTIL1_Num32uToStr(buffer, sizeof(buffer), clockPendulumTick)
+        mai <-- uti :
+        mai -> uti : UTIL1_strcat(buffer, sizeof(buffer), ";")
+        mai <-- uti :
+        mai -> uti : UTIL1_strcatNum32u(buffer, sizeof(buffer), referenceFrequency)
+        mai <-- uti :
+        mai -> usb : CDC1_SendString(buffer)
+        mai <-- usb :
+        mai -> usb : CDC1_SendString("\\n\\r");
+        mai <-- usb :
+        evt <-- mai :
+        mai <-- evt :
+    end
+
+
+end
+
+@enduml
