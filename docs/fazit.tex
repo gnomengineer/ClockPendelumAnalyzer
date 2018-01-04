@@ -1,4 +1,38 @@
 %!TEX root=Projektdokumentation_ClockPendulumAnalyzer.tex
 \section{Fazit}
-%TODO write fazit + lesson learned
-%TODO Ausblick -  flexibel konfigurierare Referenzfrequenz
+Das vorliegende Projekt \documenttitle konnte weitgehend erfolgreich abgeschlossen werden. Die meisten Anforderungen und Resultate konnten erfüllt und erreicht werden. 
+Der Vorliegende \documenttitle ermöglicht sowohl das Ausmessen von einfachen Pendeln, von Doppelpendeln und von Kreispendeln. Bei Doppelpendeln wird jeweils nur ein Pendel gemessen.\\
+Durch die optischen Hilfsmittel wie der LED auf dem Sensor benötigt es nur wenig Kenntnisse, um das System erfolgreich nutzen zu können. Auch die benötigten Computerkenntnisse beschränken sich auf ein Minimum.\\
+Das System lässt sich bei Bedarf erweitern und die Grösse des Gehäuses lässt auch noch Umbauten und das Anbringen von Erweiterungen zu. Sämtliche benötigten Anschlüsse sind eindeutig am Gehäuse angebracht, ein Verwechseln beim Anschliessen ist nicht möglich. Auch kann der Sensor nicht falsch angeschlossen werden. Einzig Arbeiten im Inneren des Gehäuses benötigen tiefere Systemkenntnisse.\\
+Mittels der externen GPS Antenne kann eine stabile Verbindung erreicht werden.\\
+\\
+Nicht oder nur teilweise erreicht worden sind die folgenden Anforderungen:
+\begin{itemize}
+	\item Die Genauigkeit soll mit einer quadratischen Approximation erfolgen.\\
+	Die quadratische Approximation dient der Berechnung der Pendelgeschwindigkeit. Es wären entsprechend drei oder mehr Sensoren notwendig gewesen, was aus Platzgründen schon sehr schwierig umzusetzen ist. Die Pendelgeschwindigkeit wird für die Messung zwischen zwei Ticks nicht benötigt. Deshalb ist diese Anforderung verworfen worden.
+	\item Als Referenzclock soll für Prototyp 1 eine 32kHz RTC verwendet werden, für Prototyp 2 eine GPS-
+disziplinierte 10MHz RTC.\\
+	Es konnte mittels dem verwendeten 12MHz Kristall ein guter Kompromiss gefunden werden und das System lässt sich leicht mit einem hochgenauen Kristall optimieren, wie bereits im Ausblick beschrieben.
+	\item (Optional) Es soll die Temperatur gemessen werden, um einen allfälligen Einfluss auf die Pendelge-
+nauigkeit anzeigen zu können.\\
+	Diese, optionale Anforderung wurde aus Zeitgründen weggelassen. Die verwendeten Hardware-Elemente lassen allerdings ein Nachrüsten zu.
+	\item (Optional) Es soll die Luftfeuchtigkeit gemessen werden, um einen allfälligen Einfluss auf die Pen-
+delgenauigkeit anzeigen zu können.\\
+Analog zur Temperaturmessung.
+	\item (Optional) Die Messgenauigkeit muss im Nanosekundenbereich liegen.\\
+	Um die Genauigkeit im Nanosekundenbereich erreichen zu können muss das System mit einem hochgenauen Kristall getaktet werden.
+\end{itemize}
+Bei den Projektresultaten konnten ebenfalls nahezu alle Forderungen erreicht werden, einzig die Browserdarstellung konnte bis zum Abgabetermin der Dokumentation nicht fertiggestellt werden.\\
+\\
+Die Ursache der nicht erreichten Anforderungen und Resultate sind folgendermassen zu begründen:
+\begin{itemize}
+	\item Die Komplexität, insbesondere bei den elektronischen Bauteilen hat zu grösserem Zeitbedarf bei der Realisierung geführt, als gedacht. Bereits kurz nach Projektstart mussten die Entscheide Vorliegen, mit welchen Bauteilen das Projekt umgesetzt werden soll. Wie die Sensoren angeschlossen werden müssen und wie sich diese verhalten musste von Grund auf erlernt werden und wäre ohne Unterstützung durch die Abteilung Elektrotechnik der Hochschule Luzern kaum zu bewältigen gewesen.
+	\item Erfahrungen, welche Sensoren sich gut eignen würden und warum mussten ebenfalls erst gesammelt werden.
+\end{itemize}
+
+\subsection{Lessons learned}
+	Aufgrund der häufigen Team-Besprechungen, die meistens eher kurz ausgefallen sind, konnten allfällige Konfliktpunkte und Schwierigkeiten schnell erkannt und unkompliziert behandelt werden. Aufgrund der Fehlenden Vorkenntnissen des Teams im Bereich der hochgenauen Kristalle und weiteren, hauptsächlich Elektronik-lastigen Themen musste vieles erst erlernt werden.\\
+	Die Schwierigkeiten bei der Inbetriebnahme der elektronischen Bauteile und der Vorgehensweise bei der Auswertung von Zählern hat dann auch zu diversen Verzögerungen und Umorganisationen geführt. Dennoch konnte insgesamt stetig vorwärts gearbeitet und selten angefangene Arbeiten komplett verworfen werden. Einzig einige Sensoren haben die ersten Gehversuche, verbunden mit falschen Schaltungen nicht überstanden und mussten entsprechend nachbestellt werden.\\
+	Um als Team erfolgreich zu sein, braucht es die Bereitschaft, sich auf einander zu verlassen, auf die Stärken jedes Teammitglieds zu Vertrauen und die Bereitschaft, sich Konflikten und Herausforderungen zu stellen, diese zu bewältigen und entsprechende Erfolge gemeinsam zu feiern.
+	Das Team ist Stolz auf die geleistete Arbeit, das erstellte Produkt und jeder konnte viele Erfahrungen Sammeln, die im weiteren Verlauf genutzt werden können.
+		
