@@ -15,7 +15,7 @@ const std::string NAME_DELIMITER = "name=";
 const std::string REFERENCE_DELIMITER = "referenz";
 
 RESTInterface::RESTInterface(DataTransfer* dataTransfer)
-    : m_running(true) {
+    : m_running(true) , m_NameParam(""), m_DateParam(""){
     m_DataTransfer = dataTransfer;
 
     socketAddressIn_t serverAddress;

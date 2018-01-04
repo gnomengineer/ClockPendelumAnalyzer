@@ -36,10 +36,10 @@ private:
     std::string getHeaderInformation(std::string::size_type length, bool isSuccess);
 
     bool m_running;
-    int m_ServerSocket;
-    DataTransfer* m_DataTransfer;
     std::string m_DateParam;
     std::string m_NameParam;
+    int m_ServerSocket;
+    DataTransfer* m_DataTransfer;
     std::string m_Response;
 
 };
