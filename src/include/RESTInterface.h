@@ -21,17 +21,18 @@ public:
 
 private:
 
-    typedef struct sockaddr_in sockaddressIn_t;
+    typedef struct sockaddr_in socketAddressIn_t;
     typedef struct sockaddr socketAddress_t;
 
     void startServer();
-    void requestHandler(const int newSocketfd);
+    void requestHandler(const int clientSocket);
     void decodeMessage(const std::string& parameters);
     std::string getParam(const std::string& parameters, const int pos);
     void generateReferenceResponse();
     void generateNormalResponse();
 
     bool m_running;
+    int m_ServerSocket;
     DataTransfer* m_DataTransfer;
     std::string m_DateParam;
     std::string m_NameParam;

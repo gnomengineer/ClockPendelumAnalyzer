@@ -8,14 +8,33 @@
 #include <iostream>
 #include <cstring>
 #include <zconf.h>
+#include <errno.h>
 
 const std::string DATE_DELIMITER = "data=";
 const std::string NAME_DELIMITER = "name=";
 const std::string REFERENCE_DELIMITER = "referenz";
 
 RESTInterface::RESTInterface(DataTransfer* dataTransfer)
-    : m_running(false) {
+    : m_running(true) {
     m_DataTransfer = dataTransfer;
+
+    socketAddressIn_t serverAddress;
+
+    m_ServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (m_ServerSocket < 0 ) {
+        perror("socket");
+    }
+    bzero(&serverAddress, sizeof(serverAddress));
+    uint16_t portNr = 8080;
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_addr.s_addr = INADDR_ANY;
+    serverAddress.sin_port = htons(portNr);
+
+    if (bind(m_ServerSocket, reinterpret_cast<socketAddress_t*>(&serverAddress), sizeof(serverAddress)) < 0 ) {
+        perror("binding");
+    }
+
+    listen(m_ServerSocket, 5);
 }
 
 RESTInterface::~RESTInterface() {
@@ -30,40 +49,20 @@ void* RESTInterface::staticEntryPoint(void* threadId) {
 }
 
 void RESTInterface::startServer() {
-    m_running = true;
-    int socketfd, newSocketfd;
-    uint16_t portNr;
-    socklen_t clientLength;
+    while (m_running) {
+        socketAddressIn_t clientAddress;
+        socklen_t clientLength = sizeof(clientAddress);
+        int clientSocket = accept(m_ServerSocket, reinterpret_cast<socketAddress_t*>(&clientAddress), &clientLength);
 
-    sockaddressIn_t serverAddress, clientAddress;
+        if (clientSocket < 0) {
+            perror("accept");
+        }
 
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socketfd < 0 ) {
-        std::cout << "Error opening socket" << std::endl;
+        requestHandler(clientSocket);
+
+        close(clientSocket);
     }
-    bzero(&serverAddress, sizeof(serverAddress));
-    portNr = 80;
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_addr.s_addr = INADDR_ANY;
-    serverAddress.sin_port = htons(portNr);
-
-    if (bind(socketfd, reinterpret_cast<socketAddress_t*>(&serverAddress), sizeof(serverAddress)) < 0 ) {
-        std::cout << "ERROR on binding" << std::endl;
-    }
-
-    listen(socketfd, 5);
-
-    clientLength = sizeof(clientAddress);
-    newSocketfd = accept(socketfd, reinterpret_cast<socketAddress_t*>(&clientAddress), &clientLength);
-
-    if (newSocketfd < 0) {
-        std::cout << "ERROR on accept" << std::endl;
-    }
-
-    requestHandler(newSocketfd);
-
-    close(newSocketfd);
-    close(socketfd);
+    close(m_ServerSocket);
 
 }
 
@@ -71,15 +70,16 @@ void RESTInterface::stopServer() {
     m_running = false;
 }
 
-void RESTInterface::requestHandler(const int newSocketfd) {
+void RESTInterface::requestHandler(const int client) {
     char buffer[1024];
-    while (m_running) {
-        bzero(buffer,50);
-        recv(newSocketfd, buffer, 1024, 0);
-        std::string message(buffer);
-
+    bzero(buffer,50);
+    recv(client, buffer, 1024, 0);
+    std::string message(buffer);
+    
+    if(message.size() > 0) {
         decodeMessage(message.substr(message.find("?")));
     }
+    send(client, "Hello, World!",13,0);
 }
 
 void RESTInterface::decodeMessage(const std::string& parameters){
@@ -103,9 +103,9 @@ std::string RESTInterface::getParam(const std::string& parameters, const int pos
 }
 
 void RESTInterface::generateNormalResponse() {
-
+    std::cout << "normal response" << std::endl;
 }
 
 void RESTInterface::generateReferenceResponse() {
-
+    std::cout << "reference response" << std::endl;
 }
