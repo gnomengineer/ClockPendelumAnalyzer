@@ -25,3 +25,16 @@ In diesem Kapitel werden einzelne Arbeitsabläufe anhand eines Sequenzdiagrammes
         \caption{Sequenzdiagramm zum Aufrufen der Daten}
         \label{fig:sequence_get}
     \end{figure}
+    %
+	\subsubsection{Zählersystem}
+	Die Software auf dem \hwb ist in C geschrieben und somit nicht objektorientiert. Dementsprechend sind die einzelnen Lebenslinien keine Objekte sondern eigene C-Dateien, deren Methoden entsprechend dem Diagramm aufgerufen werden. Die Akteure stellen dabei die Interrupt-Eingänge dar.
+	\begin{figure}[H]
+   		\centering
+        \includegraphics[width=.7\textwidth]{sequence_hwb.png}
+        \caption{Sequenzdiagramm Zählersystem zur Pendelerfassung}
+        \label{fig:sequence_hwb}
+    \end{figure}
+	\noindent Der Main-Loop, das eigentliche C-Programm, prüft alle 10 Millisekunden, ob ein Event gesetzt ist, oder ob noch Daten im USB-Kanal zum Senden vorhanden sind. Dementsprechend ist dieser Teil des Programmes nicht besonders zeitkritisch und kann problemlos zwischen den Interrupts durch das GPS-Modul und den Sensor verarbeitet werden.\\
+	Die Interrupts des GPS-Moduls sind zeitkritisch und wie im Abschnitt \ref{cap:counter_realisation} beschrieben, von der höchsten Priorität. Da werden auch die aktuellen Zählerwerte umgehend gespeichert und anschliessend der entsprechende Event gesetzt, welcher dann beim nächsten Durchgang des Main-Loops verarbeitet wird. Der gesamte Ablauf ist im Sequenzdiagramm in Abbildung \ref{fig:sequence_hwb} dargestellt.
+
+   	

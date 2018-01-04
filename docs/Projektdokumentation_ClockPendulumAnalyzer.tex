@@ -4,7 +4,6 @@
 \usepackage{tikz}
 \usepackage{aeguill}
 \usepackage{import}
-\usepackage{pdfpages}
 
 \usepackage[ngerman]{babel}
 %mathe packages
@@ -92,16 +91,5 @@
     \subimport{pmp/}{sprintplanning}
     
     \clearpage
-    \section*{Anhang B - Arbeitsjournals}
-    \input{../arbeitsjournal/RapportDaniel}
-    
-    \clearpage
-    \includepdf[pages=1,pagecommand={\section*{Anhang C - Data Sheets}\subsection*{Adafruit Featherwing}\label{app:adafruit}},scale=0.8,frame=true]{adafruit-ultimate-gps-featherwing.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{adafruit-ultimate-gps-featherwing.pdf}
-    \includepdf[pages={1},pagecommand={\subsection*{Precision RTC Featherwing}\label{app:rtc_featherwing}},scale=0.8,frame=true]{ds3231-precision-rtc-featherwing.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{ds3231-precision-rtc-featherwing.pdf}
-    \includepdf[pages={1},pagecommand={\subsection*{K20PB}\label{app:K20PB}},scale=0.8,frame=true]{K20PB.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{K20PB.pdf}
-    \includepdf[pages={1},pagecommand={\subsection*{Reflexionslichtschranke SFH9201}\label{app:SFH9201}},scale=0.8,frame=true]{Reflexlichtschranke-SFH9201.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{Reflexlichtschranke-SFH9201.pdf}
+    \section*{Anhang B -}
 \end{document}
