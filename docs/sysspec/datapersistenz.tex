@@ -1,6 +1,6 @@
 %!TEX root = SysSpec_ClockPendulumAnalyzer.tex
 \subsection{Umsetzung der Datenpersistenz}
-    Hier stehen die Details zur Umsetzung der Datenspeicherung auf dem Raspberry Pi.
+    Der folgende Abschnitt enthält die Details zur Umsetzung der Datenspeicherung auf dem Raspberry Pi.
     \subsubsection{Datenspeicher}
     Da das Operationssystem des \rpi\ auf einer SD Karte gespeichert ist, empfiehlt es sich eine Alternative zu finden. SD Karten sind nicht für häufige Schreibzyklen ausgelegt. Für den \documenttitle\ wird deshalb ein USB Speicher verwendet. Auf diesem wird die ganze Datenbank abgelegt.\\
     Der Datenspeicher wird beim Autostart über die \textit{/etc/fstab} Datei automatisch eingebunden.
@@ -15,25 +15,25 @@
     Das Feld ist vom Typ TEXT und besteht aus alphanumerischen Zeichen die der Regular Expression $$[a-zA-Z0-9]\{1,\}$$
     \paragraph{date:}\label{sec:db_date}
     In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des \rpi\ gespeichert und anschliessend so konvertiert, dass der Zeitstempel im Format \textbf{yyyyMMddHHmmss} gespeichert werden kann\\
-    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
     $$[0-9]\{14\}$$
     \paragraph{absolutetime:}
     Hier steht der aktuell gemessene Tick-Zählstand zwischen 2 Sekunden unter Berücksichtigung der Referenzfrequenz.\\
-    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
     $$[0-9]\{1,15\}$$
     \paragraph{ref\_frequency:}
     In diesem Feld steht die Referenzfrequenz, die beim Messen galt.
     $$[0-9]\{8\}$$
     \paragraph{heat:}
     Das Feld heat wird für den optionalen Teil Temperatureinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
-    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
     $$[0-9]\{1,2\}$$
     \paragraph{humidity:}
     Das Feld humidity wird für den optionalen Teil Feuchtigkeitseinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
-    Das Feld ist vom Typ INTEGER und entspricht der Regular Expression
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
     $$[0-9]\{1,2\}$$
     
     \subsubsection{Beispielverwendung}
-    Die Wrapperklasse SQLiteImplementation sorgt dafür, dass keine direkten SQL Statements benötigt werden. Im Listing \ref{db_example} ist die Methode getData zu sehen, welche für einen \textbf{key} und \textbf{value} ein SQL Statement verarbeitet. Somit wird nur die Methode verwendet und kein weiterer SQL String ausserhalb dieser Klasse.
+    Die Wrapper-Klasse SQLiteImplementation sorgt dafür, dass keine direkten SQL Statements benötigt werden. Im Listing \ref{db_example} ist die Methode getData zu sehen, welche für einen \textbf{key} und \textbf{value} ein SQL Statement verarbeitet. Somit wird nur die Methode verwendet und kein weiterer SQL String ausserhalb dieser Klasse.
     \lstinputlisting[language=C++, firstline=46, lastline=51, caption={Select Statement für die SQLite DB}, label=db_example]{../../src/app/SQLiteImplementation.cpp}
     

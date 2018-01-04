@@ -1,17 +1,17 @@
 %!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \subsection{Umsetzung des Zählers}
 \label{cap:counter_realisation}
-Der Tick-Conter zwischen den Pendeldurchgängen basiert auf einem Freilaufendem Hardware-Zähler, welcher auf dem Tiny K20 Mikrocontrollerboard läuft, getrieben von dem vorhandenen, termperaturkorrigieren 8MHz Quarz, mittels Hardware-Einstellung des CPU-Blocks auf 12MHz erhöht. Diese Erhöhung beruht rein auf Hardware-Einstellungen, die Genauigkeit wird entsprechend nicht beeinflusst.
+Der Tick-Zähler zwischen den Pendeldurchgängen basiert auf einem Freilaufendem Hardware-Zähler, welcher auf dem tiny K20 Mikrocontrollerboard läuft, getrieben von dem vorhandenen, termperaturkorrigierten 8MHz Quarz, mittels Hardware-Einstellung des CPU-Blocks auf 12MHz erhöht. Diese Erhöhung beruht rein auf Hardware-Einstellungen und ist notwendig, damit die Frequenz auf der Core-Clock und der BUS-Clock stimmt, welche mit dem gleichen Quarz getrieben wird und mindestens 48MHz betragen muss. Die Genauigkeit des Zählers wird dadurch um den Faktor 1.5 verschlechtert, was sich durch die höhere Abtastgenauigkeit wieder ausgleicht, welche entsprechend um den Faktor 1.5 erhöht wird.
 Um die Schwankungen des Zählers auszugleichen wird der Sekundenpuls des GPS-Moduls über zwei unabhängige IO-Pins genutzt. Eine Leitung am FIX-Pin des GPS-Moduls angeschlossen, für den Fall, dass keine GPS-Verbindung besteht und eine Zweite am PPS-Pin des GPS-Moduls, falls GPS-Verbindung besteht.
-Beide Leitungen funktionieren über einen Interrupt der höchsten Priorität. Falls am PPS-Pin Interrupts eingehen, wird der FIX-Pin ignoriert. Beim Umschalten zwischen GPS-Empfang und keinem GPS-Empfang kann daher ein Fehler entstehen. Im Normalbetrieb werden die Interrupts an den IO-Pins, eingehend vom GPS-Modul, dazu genutzt die Differenz zwischen dem vorigen Zählerwert und dem aktuellen Zählerwert zu bilden und so die effektive Frequenz zu ermitteln. Bei Störungen wird die Referenzfrequenz nicht korrigiert und mit dem letzten Wert weitergearbeitet. Um eine Störung festzustwellen wird geprüft, ob die ermittelte Referenz-Frequenz im erlaubten Bereich von +/-100ppm zum erwartenten Wert abweicht.\\ 
+Beide Leitungen funktionieren über einen Interrupt der höchsten Priorität. Falls am PPS-Pin Interrupts eingehen, wird der FIX-Pin ignoriert. Beim Umschalten zwischen GPS-Empfang und keinem GPS-Empfang kann daher ein Fehler entstehen. Im Normalbetrieb werden die Interrupts an den IO-Pins, eingehend vom GPS-Modul, dazu genutzt die Differenz zwischen dem vorigen Zählerwert und dem aktuellen Zählerwert zu bilden und so die effektive Frequenz zu ermitteln. Bei Störungen wird die Referenzfrequenz nicht korrigiert und mit dem letzten Wert weitergearbeitet. Um eine Störung festzustellen wird geprüft, ob die ermittelte Referenz-Frequenz im erlaubten Bereich von +/-100ppm zum erwarteten Wert abweicht.\\ 
 Die Pendeldurchgänge werden über einen weiteren IO-Pin über einen Interrupt der höchsten Priorität ermittelt. Dabei wird jede zweite Messung verworfen, wie bereits im Kapitel \ref{cap:umsetzung_sensor} beschrieben, falls der entsprechende Schalter gesetzt ist. Der ermittelte Zählerwert wird mit der ermittelten Frequenz verkettet und über die UART-RS232 Schnittstelle gesendet, getrennt mit einem Semikolon. Die Berechnung erfolgt im Anschluss auf dem \rpi mittels der folgenden Formel:
 \[
 	T_{abs} = \frac{T_{measured} \cdot f_{ref}}{f_{real}}
 \]
 Dies ist verlegt worden, um einerseits den Mikrocontroller zu entlasten, da Gleitkommazahl-Berechnungen aufwändig sind und andererseits, weil die Referenzfrequenz ebenfalls in der Datenbank gespeichert wird, um dem Nutzer mehr Informationen zur Verfügung zu stellen.
 \subsubsection{Genauigkeit Referenzfrequenz TinyK20}
-Die Genauigkeit der Referenzfrequenz ist mittels statistischer Methoden ermittelt worden. Dazu sind zwei Versuchstreihen durchgeführt worden. Jeweils zwanzig Vergleiche mit dem FIX-Pin als Sekundenpuls, somit ohne GPS-Verbiundung und 20 Messungen mit dem PPS-Pin als Sekundenpuls. Temperatur und Luftfeuchtigkeit sind mit einem Sensirion SHTC1- Sensor ermittelt worden.
-Die Frequenzwerte sind dem Debug-Systems aus dem Kinetis Design Studio entnommen, jeweils mit ca zehn Sekunden Pause zwischen zwei Werten. Die ermittelten Daten sind in Tabelle \ref{tab:testvalues} aufgelistet.
+Die Genauigkeit der Referenzfrequenz ist mittels statistischer Methoden ermittelt worden. Dazu sind zwei Versuchsreihen durchgeführt worden. Jeweils zwanzig Vergleiche mit dem FIX-Pin als Sekundenpuls, somit ohne GPS-Verbindung und 20 Messungen mit dem PPS-Pin als Sekundenpuls. Temperatur und Luftfeuchtigkeit sind mit einem Sensirion SHTC1- Sensor ermittelt worden.
+Die Frequenzwerte sind dem Debug-Systems aus dem Kinetis Design Studio entnommen, jeweils mit ca. zehn Sekunden Pause zwischen zwei Werten. Die ermittelten Daten sind in Tabelle \ref{tab:testvalues} aufgelistet.
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|l|} \hline
@@ -61,7 +61,7 @@ Der Boxplot in Abbildung \ref{fig:freq_boxplot} zeigt auf, dass die Genauigkeit 
 		\label{fig:freq_boxplot}
 	\end{figure}
 %
-Weiter kann dem Boxplot entnommen werden, dass die Streuung der Werte gleichmässig um den Median erfolgen und keine Ausreisser vorhanden sind. Dies legt die Vermutung nahe, dass sich die Streuung Normalverteilt verhält, was bedeuten würde, dass sich der Fehler über lange Sicht aufhebt, bis auf eine Konstante Abweichung, welche sich mit der Differenz zwichen Erwartungswert und dem definierten Wert ermitteln lässt. Diese Vermutung ist mit einem Historgramm (Abbildung \ref{fig:freq_histograms}) und einem QQ-Plot (Abbildung \ref{fig:freq_qq_plot}) überprüft worden.
+Weiter kann dem Boxplot entnommen werden, dass die Streuung der Werte gleichmässig um den Median erfolgen und keine Ausreisser vorhanden sind. Dies legt die Vermutung nahe, dass sich die Streuung Normalverteilt verhält, was bedeuten würde, dass sich der Fehler über lange Sicht aufhebt, bis auf eine Konstante Abweichung, welche sich mit der Differenz zwischen Erwartungswert und dem definierten Wert ermitteln lässt. Diese Vermutung ist mit einem Historgramm (Abbildung \ref{fig:freq_histograms}) mit eingezeichneter Normalverteilung und einem QQ-Plot (Abbildung \ref{fig:freq_qq_plot}) überprüft worden.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{histograms_frequencies}
@@ -75,10 +75,10 @@ Weiter kann dem Boxplot entnommen werden, dass die Streuung der Werte gleichmäs
 		\caption{QQ-Plots der ermittelten Zählerdaten}
 		\label{fig:freq_qq_plot}
 	\end{figure}
-GPS-Modul und Tiny K20 sind auf einem Board gemeinsam angebracht, ebenfalls auf diesem Board befindet sich die RTC und er Anschluss für den Sensor für die Pendel-Registrierung (Abbildung \ref{fig:hardware_board}).
+Das GPS-Modul und das tiny K20 sind auf einem Board gemeinsam angebracht, ebenfalls auf diesem Board befindet sich die RTC und er Anschluss für den Sensor für die Pendel-Registrierung (Abbildung \ref{fig:hardware_board}).
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.7\textwidth]{HW_Board_Complete}
-		\caption{Gesamtanordnug der Hardware-Komponenten}
+		\caption{Gesamt-Anordnung der Hardware-Komponenten}
 		\label{fig:hardware_board}
 	\end{figure}

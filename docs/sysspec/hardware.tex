@@ -9,14 +9,14 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 	Alle in Frage kommenden Sensoren für die Ermittlung der Pendeldurchgänge basieren auf optischer Technologie, da Schallsensoren nicht genau genug sind oder zu nahe am Pendel platziert werden müssten. Mechanische Sensoren können aufgrund der physikalischen Effekte auf das Pendel verworfen werden.\\
 	 Bei den optischen Sensoren stellt sich die Frage, ob der Sender und der Empfänger sich im gleichen Sensor befinden und ob ein Reflektor benötigt wird oder nicht.\\
 	Aufgrund der unterschiedlichen Bauarten der Pendeluhren wurde entschieden einen Sensortyp zu verwenden, welcher keinen zusätzlichen Reflektor benötigt und bei dem Sender und Empfänger sehr nahe beieinander liegen. Auf diese Weise sind auch kleine Pendel messbar und es müssen keine Reflektoren angebracht und ausgerichtet werden.\\
-	Aus Kostengründen und seiner kleinen Baugrösse fiel die Auswahl auf die Reflektions-Lichtschranke SFH9201 von Osram (Abbildung \ref{fig:SFH9201}).
+	Aus Kostengründen und seiner kleinen Baugrösse ist die Auswahl auf die Reflektions-Lichtschranke SFH9201 von Osram (Abbildung \ref{fig:SFH9201}) gefallen.
 	\begin{figure}[H]
         \centering
         \includegraphics[width=.5\textwidth]{reflexions-lichtschranke-sfh91019201-osram-1-st}
         \caption{Reflexlions-Lichtschranke Osram SFH9201 (Bildquelle: www.conrad.ch)}
         \label{fig:SFH9201}
     \end{figure}
-	\noindent Der Sender befindet sich im kleineren, oberen Rechteck und der Empfänger im Unteren. Die detaillierten Eigenschaften können dem Datenblatt im Anhang, Seite <tbd> entnommen werden. Anbei die zentralen Eigenschaften:
+	\noindent Der Sender befindet sich im kleineren, oberen Rechteck und der Empfänger im Unteren. Die detaillierten Eigenschaften können dem Datenblatt im Anhang, Seite <tbd> entnommen werden. Anbei die zentralen Eigenschaften: %TODO Anhang Seite festlegen
 	\begin{table}[H]
 		\begin{tabular}{|p{11cm}|p{4cm}|}\hline
 			Reaktionszeit auf Auslösung (Anstiegszeit): & 50$\mu{s}$ \\ \hline
@@ -34,7 +34,9 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 \label{cap:gps_modul}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so kleinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock fiel die Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit (Abbildung \ref{fig:GPS3133}).
-    Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit. Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Angang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da nicht im Datenblatt enthalten. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
+	Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit.
+	Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Anhang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). %TODO Anhang Seite angeben
+	Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da diese nicht im Datenblatt enthalten ist. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{gps_3133_top}
@@ -52,35 +54,40 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
 	\]
 	Gekoppelt mit dem zuvor beschriebenen GPS-Modul kann verhindert werden, dass sich der Fehler aufsummiert und somit liegt die Referenzzeit innerhalb von $0.0000002s = 2\mu{s}$ 
-	Weiter verfügt die RTC über die Möglichkeit, dem Raspberry PI die Absolutzeit zu vermitteln, wenn z.B. keine Netwerkverbindung besteht oder kein NTP\footnote{Network Time Protocol} verfügbar ist.
+	Weiter verfügt die RTC über die Möglichkeit, dem Raspberry PI die Absolutzeit zu vermitteln, wenn z.B. keine Netzwerk-Verbindung besteht oder kein NTP\footnote{Network Time Protocol} verfügbar ist.
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{feather_3028-04}
         	\caption{RTC-Modul 3028 Draufsicht (Bildquelle: learn.adafruit.com)}
         	\label{fig:RTC3028}
     	\end{figure}
-Nachteil des 32kHz signals ist, dass die Frequenz an sich nicht hoch genug ist, um eine ausreichende Abtastgenauigkeit zu erzielen. Deswegen wird im vorliegenden Projekt der Quarz des TinyK20 verwendet, welches im Abschnitt \ref{cap:counter} beschrieben ist.
+Nachteil des 32kHz signals ist, dass die Frequenz an sich nicht hoch genug ist, um eine ausreichende Abtastgenauigkeit zu erzielen.
+Deswegen wird im vorliegenden Projekt der Quarz des tiny K20 verwendet, welches im Abschnitt \ref{cap:counter} beschrieben ist.
 %
 %	Counter
 %
 \subsection{Zähler}
 \label{cap:counter}
-	Um den Pendeldurchgang auswerten zu können, ist es erforderlich, die vergangene Zeit zwischen zwei oder mehreren Durchgängen so genau wie möglich zu ermitteln. Angenommen der Durchgang würde zwei Mal pro Sekunde abgetastet, dann kann eine Genauigkeit von $\frac{1}{2}$ Sekunde erreicht werden. Bei Vier Abtastvorgängen wäre es dementsprechend $\frac{1}{4}$ Sekunde. Dies führt zu der Folgenden Formel für den Fehler $E$:
+	Um den Pendeldurchgang auswerten zu können, ist es erforderlich, die vergangene Zeit zwischen zwei oder mehreren Durchgängen so genau wie möglich zu ermitteln. Angenommen der Durchgang würde zwei Mal pro Sekunde abgetastet, dann kann eine Genauigkeit von $\frac{1}{2}$ Sekunde erreicht werden. Bei 32000 Abtastungen mit der 32kHz Frequenz des zuvor beschriebenen RTC-Moduls $\frac{1}{32000}$. Dies führt zu der Folgenden Formel für den Fehler $E$:
 	\[
 		E = \frac{1}{f}
 	\]
 	Wobei $f$ der Abtastfrequenz entspricht. Wäre es möglich unendlich schnell abzutasten, wäre der Fehler entsprechend 0. Um nun die vergangene Zeit zu ermitteln, bestehen unter anderem zwei Ansätze. Ein auf IC's\footnote{Integrated Circuits} basierender Hardware-Zähler oder ein Hard-Realtime Mikrocontroller-System.
 	\subsubsection{Hardware Zähler}
 	\label{cap:hw-counter}
-		Ein Hardware-Conter kann mittels verfügbaren Zähler-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pin's $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
+		Ein Hardware-Conter kann mittels verfügbaren Zähler-IC's erstellt werden, welche abhängig vom Modell zwischen 4Bit bis zu 32Bit erhältlich sind, wobei die Kosten pro IC von der Zählerbreite abhängig sind. Der Zählerwert kann dabei direkt den Pins $Q_A$ bis $Q_H$ des IC's entnommen werden (Abbildung \ref{fig:SN74HC590AN}).
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{Counter_IC_8Bit_ex}
         	\caption{Counter IC: Logic IC SN74HC590AN, Texas Instruments (Bildquelle: distrelec.ch)}
         	\label{fig:SN74HC590AN}
     	\end{figure}
-\noindent Im Falle eines Zählerüberlaufs wird das Carry-Bit gesetzt an Pin $\overline{RCO}$. Somit kann durch Verketten mehrerer IC's eine höhere Zählerbreite erreicht werden. Das Carry-Bit zählt dann den nächsten Chip hoch und setzt den eigenen Zählerwert zur gleichen Zeit zurück. Die typische Schaltgeschwindigkeit des aufgeführten IC's liegt bei $14ns$, was eine sehr hohe Genauigkeit ermöglicht. Der Zählerwert muss dann mit einer entsprechend höheren Abtastfrequenz ermittelt werden, wenn ein Pendeldurchgang registriert worden ist.\\
-Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit ist dabei das Frequenzsignal des in Abschnitt \ref{cap:RTC} beschriebenen RTC-Modules zu verwenden. Mit 32kHz ist dieses allerdings zu langsam, um die geforderte Genauigkeit zu erhalten. Alternativ kann eine ofen-kontrollierte high precision RTC eingesetzt werden, mit einer Frequenz von 10MHz. Die Amplitudenzeit der 10MHz beträgt $100ns$ und kann vom Zähler-IC verarbeitet werden.\\
+\noindent Im Falle eines Zählerüberlaufs wird das Carry-Bit gesetzt an Pin $\overline{RCO}$. Somit kann durch Verketten mehrerer IC's eine höhere Zählerbreite erreicht werden. Das Carry-Bit zählt dann den nächsten Chip hoch und setzt den eigenen Zählerwert zur gleichen Zeit zurück. Die typische Schaltgeschwindigkeit des aufgeführten IC's liegt bei $14ns$, was dem minimalen Fehler entspricht und somit eine maximale Abtastfrequenz von 
+\[
+	f_A = \frac{1s}{0.000 000 014s} \approx 71.428MHz
+\]
+ermöglicht. Der Zählerwert muss dann mit einer Abtastfrequenz von 143MHz ermittelt werden, wenn ein Pendeldurchgang registriert worden ist, damit keine Ticks verloren gehen\footnote{Gemäss dem Gesetz von Nyquist-Shannon muss die Abtastfrequenz mindestens doppelt so hoch sein, wie der Zähler, der abgefragt werden soll}.\\
+Um den Zähler zu betreiben wird ein Frequenzgeber benötigt. Eine Möglichkeit ist dabei das Frequenzsignal des in Abschnitt \ref{cap:RTC} beschriebenen RTC-Modules zu verwenden. Mit 32kHz ist dieses allerdings zu langsam, um die geforderte Genauigkeit zu erhalten. Alternativ kann eine Ofen-kontrollierte high precision RTC eingesetzt werden, mit einer Frequenz von 10MHz. Die Amplitudenzeit der 10MHz beträgt $100ns$ und kann vom Zähler-IC verarbeitet werden. Der vorliegende Zähler-IC unterstützt Eingangs-Signale ab minimal 2V bis maximal 5V.\\
 \\
 Vorteile dieser Lösung:
     \begin{itemize}
@@ -101,23 +108,24 @@ Vorteile dieser Lösung:
 	\subsubsection{Mikrocontroller System}
    		Da es sich bei den meisten Mikrocontroller-Systemen um Hard-Realtime-Systeme handelt, eignen diese sich ebenfalls zur Realisierung eines Zählers. Ein Realtime-System muss per Definition das korrekte Resultat, zur richtigen Zeit, auf eine unterscheidbare und vorhersehbare Weise liefern.\\
            \\
-		Wobei Hard-Realtime definiert, dass keine Verletzung der Zeitvorgaben zulässig sind, während ein Soft-Realtimesystem gewisse Abweichungen toleriert. Ein verfügbares Mikrocontroller-System ist das, von der Hochschule Luzern produzierte, TinyK20 Board (Abbildung \ref{fig:TinyK20}). Dieses verfügt über folgende Eigenschaften:
+		Wobei Hard-Realtime definiert, dass keine Verletzung der Zeitvorgaben zulässig sind, während ein Soft-Realtimesystem gewisse Abweichungen toleriert. Ein verfügbares Mikrocontroller-System ist das, von der Hochschule Luzern produzierte, tiny K20 Board (Abbildung \ref{fig:TinyK20}). Dieses verfügt über folgende Eigenschaften:
 		\begin{itemize}
 			\item Ein Freescale K20 Mikrocontroller, basierend auf einem  32-bit ARM Cortex-M4 Kern (freescale.com).
 			\item 50MHz Prozessorfrequenz.
 			\item 8MHz temperaturgestützter Quarz als Eingangsfrequenz.
 			\item 3.3V und 5V Ausgänge zur Speisung anderer Gräte.
-			\item Micro-USB Anschluss für Kommunikation und Speisung des TinyK20.
-			\item Debug-Anschluss um mittels eines zweiten TinyK20 zu debuggen.
+			\item Micro-USB Anschluss für Kommunikation und Speisung des tiny K20.
+			\item Debug-Anschluss um mittels eines zweiten tiny K20 zu debuggen.
 			\item Integrierter Hardware-Zähler, intern oder extern taktbar.
 		\end{itemize}
 		\begin{figure}[H]
         	\centering
         	\includegraphics[width=.5\textwidth]{top-side-of-tinyk20}
-        	\caption{TinyK20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
+        	\caption{Tiny K20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
-    	Mittels dem TinyK20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel \ref{cap:counter_realisation} noch ausführlicher beschrieben.\\
+    	Mittels dem tiny K20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. 
+    	Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel \ref{cap:counter_realisation} noch ausführlicher beschrieben.\\
         \\
     	Vorteile dieser Lösung:
     	\begin{itemize}
@@ -125,21 +133,28 @@ Vorteile dieser Lösung:
     		\item Debug-Schnittstelle zur Überprüfung des Systems vorhanden.
     		\item Über Interrupt-Leitungen können die Pendeldurchgänge ohne periodisches Abtasten erfasst werden.
     		\item UART RS232 und \iic\ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
-    		\item Eigenfabrikat der Hochschule Luzern mit entsprechendem Know-how.
-    		\item Integrierter Hardware-Zähler ermöglicht auch den Anschluss eines externen Frequenzgebers.
+    		\item Eigenfabrikat der Hochschule Luzern mit entsprechendem Know-how und bereits vorhandenen Software- Komponenten (mcuoneclipse.com).
+    		\item Der Zähler des tiny K20 unterstützt nebst der internen Zähler-Taktung mittels dem eigenen Quarz auch zwei externe Zähler-Eingänge mittels IO-Pins.
+    		\item Weil das tiny K20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardware-Zähler auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
     	\end{itemize}
     	Nachteile dieser Lösung:
     	\begin{itemize}
     		\item Aufgrund mehreren Aufgaben des Systems muss die Genauigkeit überprüft werden, was schwierig werden kann.
     		\item Debuggen verändert das Systemverhalten.
     		\item Zählergenauigkeit ist nicht quantifiziert, Kennzahlen fehlen. Das System muss entsprechend diszipliniert werden.
-    		\item Hohe Anschaffungskosten bei einem hochgenauen Frequenzgeber zum externen Takten des Zählers. 
+    		\item Hohe Anschaffungskosten bei einem hochgenauen Frequenzgeber zum externen Takten des Zählers.
+    		\item Um das tiny K20 zu debuggen wird ein zweites tiny K20 benötigt (Abbildung \ref{fig:dbg_tiny_tiny}).
     	\end{itemize}
-		%    	
+		%
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.45\textwidth]{debugging-tinyk20-with-tinyk20}
+		\caption{Debuggen eines tiny K20 mit Hilfe eines zweiten tiny K20.}
+		\label{fig:dbg_tiny_tiny}
+	\end{figure}		
     \subsubsection{Entscheidungsgrundlage}
-		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, allenfalls doch noch einen Hardware-Zähler zu nutzen, wurde entschieden die Lösung mittels Mikrocontrollersystem umzusetzen. Mittels dem GPS-Modul ist es möglich, das TinyK20 zu disziplinieren, zumindest den Zähler nach jedem Sekundentakt auszuwerten. Dieser Zähler-Wert wird dann als Referenz-Frequenz genutzt.\\
-		Das TinyK20 unterstützt auch externe Zähler-Eingänge mittels IO-Pins. Die Auswertung dieses Zählers erfolgt identisch zu einem internen Zähler. 
-		Weil das TinyK20 über ca. 26 frei programmierbare I/O Pins verfügt, wäre es ebenfalls denkbar, damit einen Hardware-Zähler auszuwerten, sollte sich herausstellen, dass die geforderte Genauigkeit nicht erreicht werden kann.
+		Basierend auf Vorkenntnissen, den vorhandenen Zeitverhältnissen, der höheren Flexibilität und der Möglichkeit, den Zähler mittels eines externen Kristalls zu takten und allenfalls doch noch einen externen Hardware-Zähler zu nutzen, wurde entschieden die Lösung mittels Mikrocontroller-System umzusetzen. 
+		Unterstützt durch das GPS-Modul ist es möglich, das tiny K20 zu disziplinieren, zumindest den Zähler nach jedem Sekundentakt auszuwerten. Dieser Zähler-Wert wird dann als Referenz-Frequenz genutzt.
 %
 % Raspberry
 %
