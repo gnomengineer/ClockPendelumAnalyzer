@@ -38,7 +38,9 @@ RESTInterface::RESTInterface(DataTransfer* dataTransfer)
 }
 
 RESTInterface::~RESTInterface() {
-
+    if(m_ServerSocket > 0){
+        close(m_ServerSocket);
+    }
 }
 
 void* RESTInterface::staticEntryPoint(void* threadId) {
@@ -78,10 +80,8 @@ void RESTInterface::requestHandler(const int client) {
     
     if(message.size() > 0) {
         decodeMessage(message.substr(message.find("?")));
-        std::string response = m_Response.dump();
-        send(newSocketfd, response.c_str(), response.size(), 0);
+        send(client, m_Response.c_str(), m_Response.size(), 0);
     }
-    send(client, "Hello, World!",13,0);
 }
 
 void RESTInterface::decodeMessage(const std::string& parameters){
@@ -109,13 +109,40 @@ void RESTInterface::generateNormalResponse() {
 }
 
 void RESTInterface::generateReferenceResponse() {
-    std::cout << "Referenz: 12" << std::endl;
     json reference_response = {
         {"success", true},
-        {"payload",
+        {"payload",{
             {"hertz", 12000000}
+                   }
         }
     };
 
-    m_Response = reference_response;
+    std::string response = reference_response.dump();
+    m_Response = getHeaderInformation(response.size(),true);
+    m_Response += response;
+}
+
+std::string RESTInterface::getHeaderInformation(std::string::size_type length, bool isSuccess) {
+    std::time_t time = std::time(0);
+    std::stringstream timeString;
+    timeString << std::put_time(std::localtime(&time),"%Y%m%d%H%M%S");
+
+    std::string ret_type;
+    if(isSuccess) {
+        ret_type = "200 OK";
+    } else if (length == 0) {
+        ret_type = "501 NOT IMPLEMENTED";
+    } else {
+        ret_type = "500 INTERNAL SERVER ERROR";
+    }
+
+    std::stringstream header;
+    header << "HTTP/1.1 " << ret_type << "\n"
+        << "Date: " << timeString.str() 
+        << "GMT + 1 (CET)\n"
+        << "Server: REST Service - Clock Pendulum Analyzer\n"
+        << "Content-Type: text/plain; charset=utf-8\n Content-Length: " 
+        << length << "\n\n";
+
+    return header.str();
 }

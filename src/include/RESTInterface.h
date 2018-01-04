@@ -33,13 +33,14 @@ private:
     std::string getParam(const std::string& parameters, const int pos);
     void generateReferenceResponse();
     void generateNormalResponse();
+    std::string getHeaderInformation(std::string::size_type length, bool isSuccess);
 
     bool m_running;
     int m_ServerSocket;
     DataTransfer* m_DataTransfer;
     std::string m_DateParam;
     std::string m_NameParam;
-    json m_Response;
+    std::string m_Response;
 
 };
 
