@@ -1,4 +1,4 @@
-%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
+%!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \section{Hardware Komponenten}
 Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerten zu können, werden diverse Hardwarebausteine benötigt. In diesem Kapitel werden die Aufgabe und Entscheidungsgrundlagen beschrieben.
 %
@@ -109,7 +109,7 @@ Vorteile dieser Lösung:
 			\item 3.3V und 5V Ausgänge zur Speisung anderer Gräte.
 			\item Micro-USB Anschluss für Kommunikation und Speisung des TinyK20.
 			\item Debug-Anschluss um mittels eines zweiten TinyK20 zu debuggen.
-			\item Integrierter Hardware-Zähler.
+			\item Integrierter Hardware-Zähler, intern oder extern taktbar.
 		\end{itemize}
 		\begin{figure}[H]
         	\centering
@@ -117,8 +117,7 @@ Vorteile dieser Lösung:
         	\caption{TinyK20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
-    	Mittels dem TinyK20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel <tbd> noch ausführlicher beschrieben.\\
-%TODO Kapitelreferenz eintragen.
+    	Mittels dem TinyK20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel \ref{cap:counter_realisation} noch ausführlicher beschrieben.\\
         \\
     	Vorteile dieser Lösung:
     	\begin{itemize}
@@ -127,13 +126,14 @@ Vorteile dieser Lösung:
     		\item Über Interrupt-Leitungen können die Pendeldurchgänge ohne periodisches Abtasten erfasst werden.
     		\item UART RS232 und \iic\ Schnittstellen vorhanden zur Kommunikation mit Umsystemen.
     		\item Eigenfabrikat der Hochschule Luzern mit entsprechendem Know-how.
-    		\item Integrierter Handrware-Zähler ermöglicht auch den Anschluss eines externen Frequenzgebers.
+    		\item Integrierter Hardware-Zähler ermöglicht auch den Anschluss eines externen Frequenzgebers.
     	\end{itemize}
     	Nachteile dieser Lösung:
     	\begin{itemize}
     		\item Aufgrund mehreren Aufgaben des Systems muss die Genauigkeit überprüft werden, was schwierig werden kann.
     		\item Debuggen verändert das Systemverhalten.
     		\item Zählergenauigkeit ist nicht quantifiziert, Kennzahlen fehlen. Das System muss entsprechend diszipliniert werden.
+    		\item Hohe Anschaffungskosten bei einem hochgenauen Frequenzgeber zum externen Takten des Zählers. 
     	\end{itemize}
 		%    	
     \subsubsection{Entscheidungsgrundlage}

@@ -1,5 +1,6 @@
-%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
+%!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \subsection{Umsetzung des Zählers}
+\label{cap:counter_realisation}
 Der Tick-Conter zwischen den Pendeldurchgängen basiert auf einem Freilaufendem Hardware-Zähler, welcher auf dem Tiny K20 Mikrocontrollerboard läuft, getrieben von dem vorhandenen, termperaturkorrigieren 8MHz Quarz, mittels Hardware-Einstellung des CPU-Blocks auf 12MHz erhöht. Diese Erhöhung beruht rein auf Hardware-Einstellungen, die Genauigkeit wird entsprechend nicht beeinflusst.
 Um die Schwankungen des Zählers auszugleichen wird der Sekundenpuls des GPS-Moduls über zwei unabhängige IO-Pins genutzt. Eine Leitung am FIX-Pin des GPS-Moduls angeschlossen, für den Fall, dass keine GPS-Verbindung besteht und eine Zweite am PPS-Pin des GPS-Moduls, falls GPS-Verbindung besteht.
 Beide Leitungen funktionieren über einen Interrupt der höchsten Priorität. Falls am PPS-Pin Interrupts eingehen, wird der FIX-Pin ignoriert. Beim Umschalten zwischen GPS-Empfang und keinem GPS-Empfang kann daher ein Fehler entstehen. Im Normalbetrieb werden die Interrupts an den IO-Pins, eingehend vom GPS-Modul, dazu genutzt die Differenz zwischen dem vorigen Zählerwert und dem aktuellen Zählerwert zu bilden und so die effektive Frequenz zu ermitteln. Bei Störungen wird die Referenzfrequenz nicht korrigiert und mit dem letzten Wert weitergearbeitet. Um eine Störung festzustwellen wird geprüft, ob die ermittelte Referenz-Frequenz im erlaubten Bereich von +/-100ppm zum erwartenten Wert abweicht.\\ 
