@@ -1,22 +1,22 @@
 #include "../include/DataTupel.h"
 #include <regex>
 
-DataTupel::DataTupel(std::string& name,
-        std::string& date,
+DataTupel::DataTupel(const std::string& name,
+        const std::string& date,
         uint32_t absoluteTime) : m_ClockName(name) {
     setDate(date);
     setAbsoluteTime(absoluteTime);
 }
 
-DataTupel::DataTupel(std::string& name,
-        std::string& date,
-        std::string& time) : m_ClockName(name){
+DataTupel::DataTupel(const std::string& name,
+        const std::string& date,
+        const std::string& time) : m_ClockName(name){
     setDate(date);
     setAbsoluteTime(static_cast<uint32_t>(std::stoul(time)));
 }
 
-DataTupel::DataTupel(std::string& name,
-                     std::string& date,
+DataTupel::DataTupel(const std::string& name,
+                     const std::string& date,
                      uint32_t absoluteTime,
                      uint32_t referenceFrequency)
         : m_ClockName(name) {
@@ -25,11 +25,11 @@ DataTupel::DataTupel(std::string& name,
     setAbsoluteTime(absoluteTime);
 }
 
-void DataTupel::setClockName(std::string& name){
+void DataTupel::setClockName(const std::string& name){
     m_ClockName = name;
 }
 
-void DataTupel::setDate(std::string date){
+void DataTupel::setDate(const std::string date){
     if(std::regex_match(date,std::regex("[0-9]{8}"))){
         m_Date = date;
     }
