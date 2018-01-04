@@ -2,6 +2,7 @@
 // Created by tobias on 10.12.17.
 //
 #include "../include/RESTInterface.h"
+#include "../include/DataTupel.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib>
@@ -10,7 +11,7 @@
 #include <zconf.h>
 #include <errno.h>
 
-const std::string DATE_DELIMITER = "data=";
+const std::string DATE_DELIMITER = "date=";
 const std::string NAME_DELIMITER = "name=";
 const std::string REFERENCE_DELIMITER = "referenz";
 
@@ -79,7 +80,7 @@ void RESTInterface::requestHandler(const int client) {
     std::string message(buffer);
     
     if(message.size() > 0) {
-        decodeMessage(message.substr(message.find("?")));
+        decodeMessage(message.substr(message.find("?")+1));
         send(client, m_Response.c_str(), m_Response.size(), 0);
     }
 }
@@ -91,21 +92,76 @@ void RESTInterface::decodeMessage(const std::string& parameters){
         int pos;
         if ( (pos = parameters.find(DATE_DELIMITER)) != std::string::npos) {
             m_DateParam = getParam(parameters, pos);
+        } else {
+            m_DateParam = "";
         }
         if ( (pos = parameters.find(NAME_DELIMITER)) != std::string::npos) {
             m_NameParam = getParam(parameters, pos); 
+        } else {
+            m_NameParam = "";
         }
         generateNormalResponse();
     }
 }
 
 std::string RESTInterface::getParam(const std::string& parameters, const int pos) {
-    std::string first_param = parameters.substr(pos,parameters.find("&"));
+    int length;
+    if ((length = parameters.find("&")) == std::string::npos) {
+        length = parameters.find(" HTTP");
+    }
+    std::string first_param = parameters.substr(pos,length);
     return first_param.substr(first_param.find("=")+1);
 }
 
 void RESTInterface::generateNormalResponse() {
-    std::cout << "Normal: bla" << std::endl;
+    std::list<DataTupel> results;
+    std::cout << "Parameters: " << m_DateParam << "|" << m_NameParam << ";" << std::endl;
+    bool isSuccess = true;
+    bool commandKnown = true;
+
+    if( m_DateParam != "" && m_NameParam != "") {
+        results = m_DataTransfer->getDataListByNameAndDate(m_NameParam,m_DateParam);
+    } else if( m_DateParam != "") {
+        results = m_DataTransfer->getDataListByDate(m_DateParam);
+    } else if( m_NameParam != "") {
+        results = m_DataTransfer->getDataListByName(m_NameParam);
+    } else {
+        commandKnown = false;
+    }
+
+    results.size();
+
+    json normal_response;
+
+    if(results.size() != 0){
+        isSuccess = true;
+    } else {
+        isSuccess = false;
+    }
+    
+    normal_response["success"] = isSuccess;
+    json payloadContentArray;
+    for(int counter = 0; counter < results.size(); counter++) {
+        json jsonDataTupel;
+        DataTupel dataTupel = results.front();
+        results.pop_front();
+        jsonDataTupel["name"] = dataTupel.getClockName();
+        jsonDataTupel["time"] = dataTupel.getAbsoluteTime();
+        jsonDataTupel["date"] = dataTupel.getDate();
+        jsonDataTupel["referenz"] = dataTupel.getReferenceFrequency();
+
+        payloadContentArray[counter] = jsonDataTupel;
+    }
+    normal_response["payload"] = payloadContentArray;
+
+    std::string response = normal_response.dump();
+    if(!commandKnown) {
+        m_Response = getHeaderInformation(0,isSuccess);
+    } else {
+        m_Response = getHeaderInformation(response.size(),isSuccess);
+    }
+    m_Response += response;
+        // transform data to json and append to header if successfull
 }
 
 void RESTInterface::generateReferenceResponse() {
