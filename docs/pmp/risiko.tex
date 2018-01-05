@@ -1,4 +1,4 @@
-%!TEX root = PMP_ClockPendulumAnalyzer.tex
+%!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \newcommand*{\risk}[2]{
     \begingroup
     \ifnum #1>#2
@@ -10,7 +10,7 @@
 \section{Risikomanagement}
     In diesem Kapitel werden allfällige Risiken identifiziert, bewertet und verwaltet. 
     \subsection{Risikobewertung}
-    Im Projekt wurden folgende Risiken identifiziert und anhand der Auswirkung und Eintrittswahrscheinlichkeit bewertet.
+    Im Projekt wurden folgende Risiken (Tabelle \ref{tab:risks}) identifiziert und anhand der Auswirkung und Eintrittswahrscheinlichkeit bewertet. Die Bewertungsmatrix in Bild \ref{fig:riskmatrix} zeigt die möglichen Risikowerte auf.
     \begin{table}[H]
         \centering
         \begin{tabular}{|l|l|c|c|c|}
@@ -31,17 +31,19 @@
             13 & Umsetzung entspricht nicht den Erwartungen & 3 & 2 & \cellcolor{red}6\\ \hline
         \end{tabular}
         \caption{Tabelle der identifizierten Risiken}
+        \label{tab:risks}
     \end{table}
     
     \begin{figure}[H]
         \centering
         \includegraphics{Risikomatrix.png}
         \caption{Risikobewertung in einer 3x3 Matrix}
+        \label{fig:riskmatrix}
     \end{figure}
     
     \clearpage
     \subsection{Massnahmenkatalog}
-    Die Risiken mit einem Wert von 6 oder 9 werden als kritisch empfunden und erhalten eine Auflistung von Massnahmen gegen Auswirkung und Eintritt.
+    Die Risiken mit einem Wert von 6 oder 9 werden als kritisch empfunden und erhalten eine Auflistung von Massnahmen gegen Auswirkung und Eintritt (Tabelle \ref{tab:arrangements}).
     \begin{table}[h]
         \centering
         \begin{tabular}{cp{7cm}p{7cm}}
@@ -52,4 +54,5 @@
             
         \end{tabular}
         \caption{Massnahmen gegen kritische Risiken}
+        \label{tab:arrangements}
     \end{table}
