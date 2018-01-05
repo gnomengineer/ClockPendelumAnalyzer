@@ -1,4 +1,4 @@
-%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
+%!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \subsection{Umsetzung der Datenpersistenz}
     Der folgende Abschnitt enthält die Details zur Umsetzung der Datenspeicherung auf dem Raspberry Pi.
     \subsubsection{Datenspeicher}
@@ -12,25 +12,27 @@
     Die Software speichert die folgenden Daten in einer einzelnen Tabelle ab.
     \paragraph{clock:}
     Der Wert in \textit{clock} hält den Namen fest der Uhr, von der die weiteren Daten stammen. Dieser wird beim Programmstart mitgeteilt.\\
-    Das Feld ist vom Typ TEXT und besteht aus alphanumerischen Zeichen die der Regular Expression $$[a-zA-Z0-9]\{1,\}$$
+    Das Feld ist vom Typ TEXT und entspricht dem regulären Ausdruck:
+    $$[a-zA-Z0-9]\{1,\}$$
     \paragraph{date:}\label{sec:db_date}
     In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des \rpi\ gespeichert und anschliessend so konvertiert, dass der Zeitstempel im Format \textbf{yyyyMMddHHmmss} gespeichert werden kann\\
     Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
     $$[0-9]\{14\}$$
     \paragraph{absolutetime:}
     Hier steht der aktuell gemessene Tick-Zählstand zwischen 2 Sekunden unter Berücksichtigung der Referenzfrequenz.\\
-    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck:
     $$[0-9]\{1,15\}$$
     \paragraph{ref\_frequency:}
-    In diesem Feld steht die Referenzfrequenz, die beim Messen galt.
+    In diesem Feld steht die Referenzfrequenz, die beim Messen galt.\\
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck:
     $$[0-9]\{8\}$$
     \paragraph{heat:}
     Das Feld heat wird für den optionalen Teil Temperatureinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
-    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck:
     $$[0-9]\{1,2\}$$
     \paragraph{humidity:}
     Das Feld humidity wird für den optionalen Teil Feuchtigkeitseinfluss benötigt. Zum jetzigen Zeitpunkt ist dieses Feld mit 0 initialisiert.
-    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck:
     $$[0-9]\{1,2\}$$
     
     \subsubsection{Beispielverwendung}
