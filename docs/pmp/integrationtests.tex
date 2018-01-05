@@ -1,8 +1,7 @@
-%\newcommand{\tempitem}{\labelitemi}
 \renewcommand{\labelitemi}{-}
 
 \begin{table}[H]
-	\begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+	\begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
 		\rowcolor{gray!50}
 		%Titelzeile
 			\textbf{ID} & \textbf{I1}\\ \hline
@@ -16,43 +15,35 @@
 			\textbf{Akteure} &
             Entwickler\\ \hline
 		%Zeile
-			\textbf{Vorbedingungen} &
-            \begin{itemize}
-                \item USB-Verbindung von \hwb\ zu einem Test-PC oder Notebook.
-                \item Optische Überprüfung des laufenden \hwb.
-                \item Die FIX-LED des GPS-Moduls auf dem \hwb\ blinkt im Sekundentakt.
-                \item Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.
-            \end{itemize}\\ \hline
+			\textbf{Vorbedingungen} 
+            & \tabitem USB-Verbindung von \hwb\ zu einem Test-PC oder Notebook.\\
+            & \tabitem Optische Überprüfung des laufenden \hwb. \\
+            & \tabitem Die FIX-LED des GPS-Moduls auf dem \hwb\ blinkt im Sekundentakt. \\
+            & \tabitem Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.\\ \hline
 		%Zeile
-			\textbf{Ergebnis} &        
-			\begin{itemize}
-				\item Die Referenzfrequenzen werden jede Sekunde aufgelistet.
-				\item Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).
-			\end{itemize}\\ \hline
+			\textbf{Ergebnis}
+            &\tabitem Die Referenzfrequenzen werden jede Sekunde aufgelistet.\\
+			&\tabitem Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).\\ \hline
 		%Zeile
-			\textbf{Ergebnis bei Fehler} &
-			\begin{itemize}
-				\item Fehlerhafte oder fehlende Werte in der Anzeige.
-				\item Anzeigen auf dem \hwb\ verhalten sich nicht erwartungsgemäss.
-			\end{itemize}\\ \hline
+			\textbf{Ergebnis bei Fehler}
+            & \tabitem Fehlerhafte oder fehlende Werte in der Anzeige.\\
+			& \tabitem Anzeigen auf dem \hwb\ verhalten sich nicht erwartungsgemäss.\\ \hline
 		%Zeile
-			\textbf{Ablauf} &
-			\begin{enumerate}
-				\item USB-Verbindung erstellen.
-				\item Terminal-Programm starten (z.B. Minicom)
-				\item Ergebnis prüfen
-			\end{enumerate}\\ \hline
+			\textbf{Ablauf}
+            & 1. USB-Verbindung erstellen.\\
+			& 2. Terminal-Programm starten (z.B. Minicom)\\
+			& 3. Ergebnis prüfen\\ \hline
         %Zeile
 			\textbf{Testdaten} &
             Keine benötigt.\\ \hline
         %Untere Abgrenzung
-	\end{tabularx}
+	\end{tabular}
 	\caption{Integrationstest 1 - Ermitteln Referenzfrequenz ohne GPS}
 	\label{tab:inttest1}
 \end{table}
 
 \begin{table}[H]
-	\begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+	\begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
 		\rowcolor{gray!50}
 		%Titelzeile
 			\textbf{ID} & \textbf{I2}\\ \hline
@@ -66,43 +57,35 @@
 			\textbf{Akteure} &
             Entwickler\\ \hline
 		%Zeile
-			\textbf{Vorbedingungen} &
-            \begin{itemize}
-                \item USB-Verbindung von \hwb\ zu einem Test-PC oder Notebook.
-                \item Optische Überprüfung des laufenden \hwb.
-                \item Die FIX-LED des GPS-Moduls auf dem \hwb\ blinkt alle 15 Sekunden.
-                \item Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.
-            \end{itemize}\\ \hline
+			\textbf{Vorbedingungen}
+            & \tabitem USB-Verbindung von \hwb\ zu einem Test-PC oder Notebook.\\
+            & \tabitem Optische Überprüfung des laufenden \hwb. \\
+            & \tabitem Die FIX-LED des GPS-Moduls auf dem \hwb\ blinkt alle 15 Sekunden. \\
+            & \tabitem Konsolenprogramm zum Empfang von UART-RS232 Signalen gestartet.\\ \hline
 		%Zeile
-			\textbf{Ergebnis} &        
-			\begin{itemize}
-				\item Die Referenzfrequenzen werden jede Sekunde aufgelistet.
-				\item Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).
-			\end{itemize}\\ \hline
+			\textbf{Ergebnis}        
+			& \tabitem Die Referenzfrequenzen werden jede Sekunde aufgelistet.\\
+			& \tabitem Die Streuung zwischen den Werten entspricht der Streuung gemäss Systemspezifikation (Kapitel ).\\ \hline
 		%Zeile
-			\textbf{Ergebnis bei Fehler} &
-			\begin{itemize}
-				\item Fehlerhafte oder fehlende Werte in der Anzeige.
-				\item Anzeigen auf dem \hwb\ verhalten sich nicht erwartungsgemäss.
-			\end{itemize}\\ \hline
+			\textbf{Ergebnis bei Fehler}
+			& \tabitem Fehlerhafte oder fehlende Werte in der Anzeige.\\
+			& \tabitem Anzeigen auf dem \hwb\ verhalten sich nicht erwartungsgemäss.\\ \hline
 		%Zeile
-			\textbf{Ablauf} &
-			\begin{enumerate}
-				\item USB-Verbindung erstellen.
-				\item Terminal-Programm starten (z.B. Minicom)
-				\item Ergebnis prüfen
-			\end{enumerate}\\ \hline
+			\textbf{Ablauf}
+			& 1. USB-Verbindung erstellen.\\
+			& 2. Terminal-Programm starten (z.B. Minicom)\\
+			& 3. Ergebnis prüfen\\ \hline
         %Zeile
 			\textbf{Testdaten} &
             Keine benötigt.\\ \hline
         %Untere Abgrenzung
-	\end{tabularx}
+	\end{tabular}
 	\caption{Integrationstest 1 - Ermitteln Referenzfrequenz ohne GPS}
 	\label{tab:inttest2}
 \end{table}
 
 \begin{table}[H]
-    \begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+    \begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
         \rowcolor{gray!50}
         %Titelzeile
         \textbf{ID} & \textbf{I3}\\ \hline
@@ -116,42 +99,34 @@
         \textbf{Akteure} &
         Entwickler\\ \hline
         %Zeile
-        \textbf{Vorbedingungen} &
-        \begin{itemize}
-            \item SQLite installiert.
-            \item Konsolenprogramm zum Lesen der SQLite Datenbank gestartet.
-        \end{itemize}\\ \hline
+        \textbf{Vorbedingungen}
+        & \tabitem SQLite installiert.\\
+        & \tabitem Konsolenprogramm zum Lesen der SQLite Datenbank gestartet.\\ \hline
         %Zeile
-        \textbf{Ergebnis} &        
-        \begin{itemize}
-            \item Es sind neue Datensätze vorhanden.
-            \item Korrektes Speichern wird vom System gemeldet.
-        \end{itemize}\\ \hline
+        \textbf{Ergebnis}
+        & \tabitem Es sind neue Datensätze vorhanden.\\
+        & \tabitem Korrektes Speichern wird vom System gemeldet.\\ \hline
         %Zeile
-        \textbf{Ergebnis bei Fehler} &
-        \begin{itemize}
-            \item Keine neuen Datensätze vorhanden.
-            \item Fehler wird vom System gemeldet.
-        \end{itemize}\\ \hline
+        \textbf{Ergebnis bei Fehler}
+        & \tabitem Keine neuen Datensätze vorhanden.\\
+        & \tabitem Fehler wird vom System gemeldet.\\ \hline
         %Zeile
-        \textbf{Ablauf} &
-        \begin{enumerate}
-            \item Programm starten.
-            \item Warten bis Bestätigung des Speicherns erscheint.
-            \item Datenbank in Konsole lesen.
-            \item Ergebnis prüfen.
-        \end{enumerate}\\ \hline
+        \textbf{Ablauf}
+        & 1. Programm starten.\\
+        & 2. Warten bis Bestätigung des Speicherns erscheint.\\
+        & 3. Datenbank in Konsole lesen.\\
+        & 4. Ergebnis prüfen.\\ \hline
         %Zeile
         \textbf{Testdaten} &
         Testdaten werden mittels Software erstellt.\\ \hline
         %Untere Abgrenzung
-    \end{tabularx}
+    \end{tabular}
     \caption{Integrationstest 2 - Speichern von Datensätzen}
     \label{tab:inttest3}
 \end{table}
 
 \begin{table}[H]
-    \begin{tabularx}{\textwidth}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
+    \begin{tabular}{ | p{0.22\textwidth} | p{0.68\textwidth} |} \hline
         \rowcolor{gray!50}
         %Titelzeile
         \textbf{ID} & \textbf{I4}\\ \hline
@@ -165,33 +140,25 @@
         \textbf{Akteure} &
         Entwickler\\ \hline
         %Zeile
-        \textbf{Vorbedingungen} &
-        \begin{itemize}
-            \item Es existieren Daten zum lesen.
-            \item Programm ist gestartet
-        \end{itemize}\\ \hline
+        \textbf{Vorbedingungen}
+        & \tabitem Es existieren Daten zum lesen.\\
+        & \tabitem Programm ist gestartet\\ \hline
         %Zeile
-        \textbf{Ergebnis} &        
-        \begin{itemize}
-            \item Es wird eine einfache Webseite angezeigt mit allen Daten seit Messbeginn.
-        \end{itemize}\\ \hline
+        \textbf{Ergebnis}
+        & \tabitem Es wird eine einfache Webseite angezeigt mit allen Daten seit Messbeginn.\\ \hline
         %Zeile
-        \textbf{Ergebnis bei Fehler} &
-        \begin{itemize}
-            \item Es wird eine Fehlerseite angezeigt.
-        \end{itemize}\\ \hline
+        \textbf{Ergebnis bei Fehler}
+        & \tabitem Es wird eine Fehlerseite angezeigt.\\ \hline
         %Zeile
-        \textbf{Ablauf} &
-        \begin{enumerate}
-            \item Browser öffnen
-            \item URL ''http://192.168.192.75?date'' eingeben
-            \item Ergebnis prüfen.
-        \end{enumerate}\\ \hline
+        \textbf{Ablauf}
+        & 1. Browser öffnen\\
+        & 2. URL ''http://192.168.192.75?date'' eingeben\\
+        & 3. Ergebnis prüfen.\\ \hline
         %Zeile
         \textbf{Testdaten} &
         Testdaten werden mittels Software erstellt.\\ \hline
         %Untere Abgrenzung
-    \end{tabularx}
+    \end{tabular}
     \caption{Integrationstest 3 - Abrufen von Daten mit REST}
     \label{tab:inttest4}
 \end{table}
