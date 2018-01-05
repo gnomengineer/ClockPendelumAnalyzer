@@ -1,14 +1,14 @@
 @startuml
 
+actor Sensor as sen
+actor GPSModule as gps
+actor Reset as res
 participant Main as mai
 participant USB_CDC as usb
 participant Util as uti
 participant Events as evts
 participant Event as evt
 participant RefCnt as cntr
-actor Sensor as sen
-actor GPSModule as gps
-actor Reset as res
 
 ''save data
 == Interrupt GPS ==
