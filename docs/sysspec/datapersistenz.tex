@@ -15,8 +15,8 @@
     Das Feld ist vom Typ TEXT und entspricht dem regulären Ausdruck:
     $$[a-zA-Z0-9]\{1,\}$$
     \paragraph{date:}\label{sec:db_date}
-    In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des \rpi\ gespeichert und anschliessend so konvertiert, dass der Zeitstempel im Format \textbf{yyyyMMddHHmmss} gespeichert werden kann\\
-    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck
+    In diesem Feld steht der Zeitpunkt zu welchem der Datenwert entnommen wurde. Dazu wird die Systemzeit des \rpi\ gespeichert und anschliessend so konvertiert, dass der Zeitstempel im Format \textbf{yyyyMMddHHmmss\footnote{Zeitformatierung nach C++11 Standard \cite{puttime}}} gespeichert werden kann\\
+    Das Feld ist vom Typ INTEGER und entspricht dem regulären Ausdruck:
     $$[0-9]\{14\}$$
     \paragraph{absolutetime:}
     Hier steht der aktuell gemessene Tick-Zählstand zwischen 2 Sekunden unter Berücksichtigung der Referenzfrequenz.\\
