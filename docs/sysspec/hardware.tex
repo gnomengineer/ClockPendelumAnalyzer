@@ -54,7 +54,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 	\[
 		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
 	\]
-	Gekoppelt mit dem zuvor beschriebenen GPS-Modul kann verhindert werden, dass sich der Fehler aufsummiert und somit liegt die Referenzzeit innerhalb von $0.0000002s = 2\mu{s}$ 
+	Gekoppelt mit dem zuvor beschriebenen GPS-Modul kann verhindert werden, dass sich der Fehler aufsummiert und somit liegt die Referenzzeit innerhalb von $0.0000002s = 2\mu{s}$. 
 	Weiter verfügt die RTC über die Möglichkeit, dem Raspberry PI die Absolutzeit zu vermitteln, wenn z.B. keine Netzwerk-Verbindung besteht oder kein NTP\footnote{Network Time Protocol} verfügbar ist.
 		\begin{figure}[H]
         	\centering
@@ -62,7 +62,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         	\caption{RTC-Modul 3028 Draufsicht (Bildquelle: learn.adafruit.com)}
         	\label{fig:RTC3028}
     	\end{figure}
-Nachteil des 32kHz signals ist, dass die Frequenz an sich nicht hoch genug ist, um eine ausreichende Abtastgenauigkeit zu erzielen.
+Nachteil des 32kHz Signals ist, dass die Frequenz an sich nicht hoch genug ist, um eine ausreichende Abtastgenauigkeit zu erzielen.
 Deswegen wird im vorliegenden Projekt der Quarz des tiny K20 verwendet, welches im Abschnitt \ref{cap:counter} beschrieben ist.
 %
 %	Counter
@@ -125,7 +125,7 @@ Vorteile dieser Lösung:
         	\caption{Tiny K20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
-    	Mittels dem tiny K20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem, der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. 
+    	Mittels dem tiny K20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem und der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. 
     	Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel \ref{cap:counter_realisation} noch ausführlicher beschrieben.\\
         \\
     	Vorteile dieser Lösung:
