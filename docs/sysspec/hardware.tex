@@ -16,7 +16,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
         \caption{Reflexlions-Lichtschranke Osram SFH9201 (Bildquelle: www.conrad.ch)}
         \label{fig:SFH9201}
     \end{figure}
-	\noindent Der Sender befindet sich im kleineren, oberen Rechteck und der Empfänger im Unteren. Die detaillierten Eigenschaften können dem Datenblatt im Anhang, Seite <tbd> entnommen werden. Anbei die zentralen Eigenschaften: %TODO Anhang Seite festlegen
+	\noindent Der Sender befindet sich im kleineren, oberen Rechteck und der Empfänger im Unteren. Die detaillierten Eigenschaften können dem Datenblatt im Anhang, Seite \pageref{app:SFH9201} entnommen werden. Anbei die zentralen Eigenschaften:
 	\begin{table}[H]
 		\begin{tabular}{|p{11cm}|p{4cm}|}\hline
 			Reaktionszeit auf Auslösung (Anstiegszeit): & 50$\mu{s}$ \\ \hline
@@ -36,7 +36,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so kleinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock fiel die Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit (Abbildung \ref{fig:GPS3133}).
 	Ausschlaggebend dafür sind Modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit.
-	Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Anhang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). %TODO Anhang Seite angeben
+	Die GPS-Zeitgenauigkeit ist im Datenblatt von der auf dem Board aufgebauten GPS-Einheit mit 10 Nanosekunden angegeben, im Anhang auf Seite \pageref{app:gps_occuracy}. 
 	Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da diese nicht im Datenblatt enthalten ist. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
 		\begin{figure}[H]
         	\centering
@@ -50,7 +50,7 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 %	
 \subsection{Real Time Clock}
 \label{cap:RTC}
-	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32kHz Signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert. Auf ein Jahr ergibt dies eine Abweichung von:
+	Die Real-Time Clock (RTC) kann als externer Frequenzgeber verwendet werden, da sie über ein 32kHz Signal verfügt, welches eine Abweichung von +/- 2 ppm\footnote{Parts Per Million} zusichert (Anhang Seite \pageref{app:rtc_osc} ). Auf ein Jahr ergibt dies eine Abweichung von:
 	\[
 		\Delta{T} = 60 \cdot 60 \cdot 24 \cdot 365 \cdot \frac{2}{1\cdot 10^6} = 63.072s
 	\]
@@ -111,7 +111,7 @@ Vorteile dieser Lösung:
            \\
 		Wobei Hard-Realtime definiert, dass keine Verletzung der Zeitvorgaben zulässig sind, während ein Soft-Realtimesystem gewisse Abweichungen toleriert. Ein verfügbares Mikrocontroller-System ist das, von der Hochschule Luzern produzierte, tiny K20 Board (Abbildung \ref{fig:TinyK20}). Dieses verfügt über folgende Eigenschaften:
 		\begin{itemize}
-			\item Ein Freescale K20 Mikrocontroller, basierend auf einem  32-bit ARM Cortex-M4 Kern (freescale.com).
+			\item Ein Freescale K20 Mikrocontroller, basierend auf einem  32-bit ARM Cortex-M4 Kern (freescale.com). Die Prozessoreigenschaften sind im Anhang ab Seite \pageref{app:K20PB} ersichtlich.
 			\item 50MHz Prozessorfrequenz.
 			\item 8MHz temperaturgestützter Quarz als Eingangsfrequenz.
 			\item 3.3V und 5V Ausgänge zur Speisung anderer Gräte.
@@ -125,7 +125,7 @@ Vorteile dieser Lösung:
         	\caption{Tiny K20 noch in der Produktionsform eingefasst (Bildquelle: mcuoneclipse.com)}
         	\label{fig:TinyK20}
     	\end{figure}
-    	Mittels dem tiny K20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem und der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. 
+    	\noindent Mittels dem tiny K20, lassen sich diverse Timer und Zählerarten erzeugen. Ein \glqq{}freerun-counter\grqq{} läuft zum Beispiel unabhängig vom Umsystem und der Zählerwert kann jederzeit über eine Methode ausgelesen und ausgewertet werden. Somit kann bei jedem Interrupt durch einen Pendeldurchgang der Zählerwert benutzt werden, um die vergangene Zeit zum vorherigen Durchgang zu ermitteln. 
     	Die Zählergenauigkeit ist dabei ebenfalls von der Genauigkeit der Eingangsfrequenz abhängig, analog zum im Abschnitt \ref{cap:hw-counter} beschriebenen Hardware-Zähler. Diese Genauigkeit lässt sich mit Hilfe eines GPS-Moduls verbessern. Dies ist im Kapitel \ref{cap:counter_realisation} noch ausführlicher beschrieben.\\
         \\
     	Vorteile dieser Lösung:
