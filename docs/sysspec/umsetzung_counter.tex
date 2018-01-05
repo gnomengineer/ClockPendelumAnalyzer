@@ -9,7 +9,7 @@ Die Pendeldurchgänge werden über einen weiteren IO-Pin über einen Interrupt d
 	T_{abs} = \frac{T_{measured} \cdot f_{ref}}{f_{real}}
 \]
 Dies ist verlegt worden, um einerseits den Mikrocontroller zu entlasten, da Gleitkommazahl-Berechnungen aufwändig sind und andererseits, weil die Referenzfrequenz ebenfalls in der Datenbank gespeichert wird, um dem Nutzer mehr Informationen zur Verfügung zu stellen.
-\subsubsection{Genauigkeit Referenzfrequenz TinyK20}
+\subsubsection{Genauigkeit Referenzfrequenz tiny K20}
 Die Genauigkeit der Referenzfrequenz ist mittels statistischer Methoden ermittelt worden. Dazu sind zwei Versuchsreihen durchgeführt worden. Jeweils zwanzig Vergleiche mit dem FIX-Pin als Sekundenpuls, somit ohne GPS-Verbindung und 20 Messungen mit dem PPS-Pin als Sekundenpuls. Temperatur und Luftfeuchtigkeit sind mit einem Sensirion SHTC1- Sensor ermittelt worden.
 Die Frequenzwerte sind dem Debug-Systems aus dem Kinetis Design Studio entnommen, jeweils mit ca. zehn Sekunden Pause zwischen zwei Werten. Die ermittelten Daten sind in Tabelle \ref{tab:testvalues} aufgelistet.
 \begin{table}[H]
