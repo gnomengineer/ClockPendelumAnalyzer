@@ -3,7 +3,7 @@
   <Header>
     <Name>tinyK20_Operator</Name>
     <SavedBy>Erich Styger Local</SavedBy>
-    <ModificationStamp>71</ModificationStamp>
+    <ModificationStamp>72</ModificationStamp>
     <Date>2017-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -21853,7 +21853,7 @@
     <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
     <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
     <BeanType>BitIO</BeanType>
-    <Name>HalfSec</Name>
+    <Name>TwoValues</Name>
     <CompNumb>69</CompNumb>
     <CompEnabled>true</CompEnabled>
     <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
@@ -21868,7 +21868,7 @@
         <ItemSymbol>DeviceName</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>HalfSec</Value>
+        <Value>TwoValues</Value>
       </ItemState>
       <ItemState>
         <ItemSymbol>_Pin</ItemSymbol>

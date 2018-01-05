@@ -1,6 +1,6 @@
 /* ###################################################################
 **     Filename    : main.c
-**     Project     : tinyK20_Blinky
+**     Project     : tinyK20_Operator
 **     Processor   : MK20DX128VFT5
 **     Version     : Driver 01.01
 **     Compiler    : GNU C Compiler
@@ -64,7 +64,7 @@
 #include "USB0.h"
 #include "TMOUT1.h"
 #include "MCUC1.h"
-#include "HalfSec.h"
+#include "TwoValues.h"
 #include "BitIoLdd5.h"
 #include "ResetCnt.h"
 #include "ExtIntLdd4.h"
@@ -80,16 +80,19 @@
 #define EXPECTED_FREQUENCY 11980600
 #define MIN_VALID_FREQ 11980499
 #define MAX_VALID_FREQ 11980701
+#define DROP_EVERY_SECOND_VALUE !TwoValues_GetVal()
 
 static RefCnt_TValueType lastGPSReferenceCounter = 0;
 static RefCnt_TValueType lastClockPendulumCounter = 0;
 static uint8_t cdc_buffer[USB1_DATA_BUFF_SIZE];
 static uint8_t in_buffer[USB1_DATA_BUFF_SIZE];
 static bool usb_connected = 0;
+static volatile bool dropEverySecondValue = FALSE;
 
 void MAIN_EventHandler(EVNT_Handle event) {
 	static RefCnt_TValueType referenceFrequency = 0;
 	static RefCnt_TValueType clockPendulumTick = 0;
+	static uint8_t cnt = 0;
 	char buffer[9 * 2 + 1];
 	RefCnt_TValueType counterValue;
 	RefCnt_TValueType tmpFrequency;
@@ -104,17 +107,22 @@ void MAIN_EventHandler(EVNT_Handle event) {
   		}
 		break;
 	case EVNT_SENSOR_SIGNAL_REGISTERED:
-		counterValue = EVENTS_getPendulumCounterValue();
-		corrFact = referenceFrequency / 12000000.0;
-		clockPendulumTick = counterValue - lastClockPendulumCounter;
-		lastClockPendulumCounter = counterValue;
-		if (usb_connected) {
-			UTIL1_Num32uToStr(buffer, sizeof(buffer), clockPendulumTick);
-			UTIL1_strcat(buffer, sizeof(buffer), ";");
-			UTIL1_strcatNum32u(buffer, sizeof(buffer), referenceFrequency);
-  			CDC1_SendString(buffer);
-  			CDC1_SendString("\n\r");
-  		}
+		if (!dropEverySecondValue || cnt % 2 == 0) {
+			counterValue = EVENTS_getPendulumCounterValue();
+			clockPendulumTick = counterValue - lastClockPendulumCounter;
+			lastClockPendulumCounter = counterValue;
+			if (usb_connected) {
+				UTIL1_Num32uToStr(buffer, sizeof(buffer), clockPendulumTick);
+				UTIL1_strcat(buffer, sizeof(buffer), ";");
+				UTIL1_strcatNum32u(buffer, sizeof(buffer), referenceFrequency);
+				CDC1_SendString(buffer);
+				CDC1_SendString("\n\r");
+			}
+		}
+		if (cnt >= 2) {
+			cnt = 0;
+		}
+		cnt++;
 		break;
 	default:
   		break;
@@ -137,9 +145,12 @@ int main(void)
 	  /*** End of Processor Expert internal initialization.                    ***/
 
 	 for(;;) {
+		 dropEverySecondValue = DROP_EVERY_SECOND_VALUE;
+
 		 while(CDC1_App_Task(cdc_buffer, sizeof(cdc_buffer))==ERR_BUSOFF) {
 		  /* device not enumerated */
 			 WAIT1_Waitms(10);
+			 dropEverySecondValue = DROP_EVERY_SECOND_VALUE;
 			 EVNT_HandleEvent(MAIN_EventHandler, TRUE);
 			 usb_connected = FALSE;
 		 }
