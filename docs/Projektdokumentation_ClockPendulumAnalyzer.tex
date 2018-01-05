@@ -17,6 +17,9 @@
 
 \graphicspath{{sysspec/pdf/}{images/}{uml/}}
 
+% Einrücken zu Beginn von neuem Absatz unterdrücken
+\setlength{\parindent}{0pt}
+
 %============PAGE PROPERTIES=============
 \newcommand{\revisiondate}{\today}
 \newcommand{\documenttitle}{Clock Pendulum Analyzer} % used for title in title and subtitle pages
@@ -100,11 +103,18 @@
     
     \clearpage
     \includepdf[pages=1,pagecommand={\section*{Anhang C - Data Sheets}\subsection*{Adafruit Featherwing}\label{app:adafruit}},scale=0.8,frame=true]{adafruit-ultimate-gps-featherwing.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{adafruit-ultimate-gps-featherwing.pdf}
+    \includepdf[pages={2-},pagecommand={},scale=0.8,frame=true]{adafruit-ultimate-gps-featherwing.pdf}
+    \includepdf[pages={1},pagecommand={\subsection*{GPS-Einheit}\label{app:gps}},scale=0.8,frame=true]{GlobalTop-FGPMMOPA6H-Datasheet-V0A.pdf}
+    \includepdf[pages={2-4},pagecommand={},scale=0.8,frame=true]{GlobalTop-FGPMMOPA6H-Datasheet-V0A.pdf}
+    \includepdf[pages={5},pagecommand={\label{app:gps_occuracy}},scale=0.8,frame=true]{GlobalTop-FGPMMOPA6H-Datasheet-V0A.pdf}
+    \includepdf[pages={6-},pagecommand={},scale=0.8,frame=true]{GlobalTop-FGPMMOPA6H-Datasheet-V0A.pdf}
     \includepdf[pages={1},pagecommand={\subsection*{Precision RTC Featherwing}\label{app:rtc_featherwing}},scale=0.8,frame=true]{ds3231-precision-rtc-featherwing.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{ds3231-precision-rtc-featherwing.pdf}
+    \includepdf[pages={2-},pagecommand={},scale=0.8,frame=true]{ds3231-precision-rtc-featherwing.pdf}
+    \includepdf[pages={1},pagecommand={\subsection*{RTC Oszillator Kristall}\label{app:rtc_osc}},scale=0.8,frame=true]{DS3231.pdf}
+    \includepdf[pages={2-},pagecommand={},scale=0.8,frame=true]{DS3231.pdf}
     \includepdf[pages={1},pagecommand={\subsection*{K20PB}\label{app:K20PB}},scale=0.8,frame=true]{K20PB.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{K20PB.pdf}
+    \includepdf[pages={2-},pagecommand={},scale=0.8,frame=true]{K20PB.pdf}
     \includepdf[pages={1},pagecommand={\subsection*{Reflexionslichtschranke SFH9201}\label{app:SFH9201}},scale=0.8,frame=true]{Reflexlichtschranke-SFH9201.pdf}
-    \includepdf[pages={2-},scale=0.8,frame=true]{Reflexlichtschranke-SFH9201.pdf}
+    \includepdf[pages={2-},pagecommand={},scale=0.8,frame=true]{Reflexlichtschranke-SFH9201.pdf}
+    \includepdf[pages={1-},pagecommand={\subsection*{Oszillator Kristall NH25M22TA}\label{app:NH25M22TA}},scale=0.8,frame=true]{c_NH25M22TA_e.pdf}
 \end{document}
