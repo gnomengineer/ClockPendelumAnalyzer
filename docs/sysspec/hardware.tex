@@ -30,11 +30,12 @@ Um die Pendeldurchgänge der zu messenden Uhr erfassen, vergleichen und auswerte
 %
 %	GPS-Modul
 %	
+\clearpage
 \subsection{GPS Modul}
 \label{cap:gps_modul}
 	Ein GPS Modul wird benötigt um den Sekundentakt exakt zu synchronisieren und so kleinere Ungenauigkeiten der Messfrequenz ausgleichen zu können. Weiter dient das GPS-Modul zur Ermittlung der aktuellen Absolut-Zeit.\\
 	Die Positionsfunktion des GPS-Moduls wird nicht benötigt und implementiert. Gemeinsam mit der externen Real-Time Clock fiel die Wahl beim GPS-Modul auf ein Modell aus der Feather-Wing Familie von Adafruit (Abbildung \ref{fig:GPS3133}).
-	Ausschlaggebend dafür sind modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit.
+	Ausschlaggebend dafür sind Modularität, Kosten und Funktionsumfang. Das GPS -Modul bietet direkt einen 1-Sekunden-Puls über den FIX-Pin, wenn keine GPS-Verbindung besteht sowie über den PPS\footnote{Pulse per Second}-Pin bei vorhandener Verbindung. Somit ist ein Referenzsignal auch bei unterbrochener Verbindung verfügbar, wenn auch nicht mit der gleichen Genauigkeit.
 	Die GPS-Zeitgenauigkeit ist im Datenblatt von Adafruit, Anhang ab Seite <tbd> nicht angegeben, die GPS-Genauigkeit bezüglich des Sekundenpulses liegt im Bereich von <40ns (gpstime.com). %TODO Anhang Seite angeben
 	Die Genauigkeit des Sekunden-Pulses im Offline-Modus ist nicht verfügbar, da diese nicht im Datenblatt enthalten ist. Für eine präzise Messung ist somit eine GPS-Verbindung Pflicht. Für funktionale Systemtests ohne Berücksichtigung der Messgenauigkeit ist der Offline-Sekundenpuls ausreichend.
 		\begin{figure}[H]
