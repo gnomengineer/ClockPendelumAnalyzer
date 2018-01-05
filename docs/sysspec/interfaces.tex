@@ -1,9 +1,9 @@
-%!TEX root = SysSpec_ClockPendulumAnalyzer.tex
+%!TEX root = Projektdokumentation_ClockPendulumAnalyzer.tex
 \section{Schnittstellen}
 Dieses Kapitel beschreibt interne Schnittstellen die vom System angeboten werden.
 \subsection{REST Interface}\label{sec:rest}
-Damit die Daten zugänglich sind, wurde einen REST Schnittstelle implementiert.\\
-REST basiert auf der Struktur und dem Verhalten des World Wide Web. Informationen werden mittels URI übermittelt und geben so Ort und Namen der Ressource an aber nicht die Funktionalität des Aufrufers. Somit wird die Funktionalität von der Ressource entkoppelt \cite{rest}.
+Damit die Daten zugänglich sind, wurde eine REST Schnittstelle implementiert.\\
+REST basiert auf der Struktur und dem Verhalten des World Wide Web. Informationen werden mittels URI übermittelt und geben so Ort und Namen der Ressource an, aber nicht die Funktionalität des Aufrufers. Somit wird die Funktionalität von der Ressource entkoppelt \cite{rest}.
 \subsubsection{Interaktionen}
 Die Schnittstelle bietet 3 verschiedene Interaktionen, die über die HTTP-GET Methode realisiert sind.\\
 
@@ -37,17 +37,6 @@ Der Aufbau einer Antwort auf eine Abfrage, wird mit JSON strukturiert und wird i
 }
 \end{lstlisting}
 
-\noindent Bei einem Fehler wird zusätzlich das in Listing \ref{code:error} gezeigte JSON Objekt angehängt.
-\begin{lstlisting}[caption="JSON Objekt bei Fehler",label={code:error}]
-{
-...
-    "error": {
-        "code": 404,
-        "message": "Object not found!"
-    }
-}
-\end{lstlisting}
-
 \noindent Beim Aufruf der Referenzzeit wird der in Listing \ref{code:json_ref} gezeigte Payload übermittelt und bei den anderen Aufrufen wird das JSON Objekt aus Listing \ref{code:json_payload} als Payload übergeben.
 \begin{lstlisting}[caption="Payload für Referenzzeit",label={code:json_ref}]
 ...
@@ -58,7 +47,7 @@ Der Aufbau einer Antwort auf eine Abfrage, wird mit JSON strukturiert und wird i
 \end{lstlisting}
 \begin{lstlisting}[caption="Payload für Datums und Namensabfrage",label={code:json_payload}]
 ...
-"payload": {
+"payload": [
     {
         "name": name,
         "time": time,
@@ -70,6 +59,6 @@ Der Aufbau einer Antwort auf eine Abfrage, wird mit JSON strukturiert und wird i
         "date": date
     },
     ...
-}
+]
 ...
 \end{lstlisting}
