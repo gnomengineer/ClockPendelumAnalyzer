@@ -52,7 +52,6 @@ void ClockPendulumAnalyzer::startAnalyze() {
             DataTupel singleData = m_DataAssembler.getNewDataSample(m_ClockName);
             m_DataList.push_back(singleData);
         } catch (const std::length_error& e) {
-            std::cout << e.what() << std::endl;
         }
         
         std::this_thread::sleep_for(timespan);
