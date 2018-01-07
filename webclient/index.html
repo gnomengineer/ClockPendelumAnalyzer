@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Clock Pendulum Analyzer</title>
+    <script language="javascript" type="text/javascript" src="functions.js"></script>
+    <link href="jqueryui/jquery-ui.css" rel="stylesheet">
+    <script src="jqueryui/external/jquery/jquery.js"></script>
+    <script src="jqueryui/jquery-ui.js"></script>
+    <script>
+$(document).ready(function(){
+    var responseObj;
+
+    var date = $( "#date" ).datepicker("yymmdd");
+    <!--$.datepicker.formatDate("yy-mm-dd",date);-->
+    $("button").click(function(){
+        $.ajax({
+            url: "http://localhost:8080?referenz",
+            dataType: "json",
+            success: function(response) {
+                responseObj = $.parseJSON(response);
+            }
+        });
+    });
+});
+    </script>
+</head>
+
+<body>
+    <h1>Clock Pendulum Analyzer</h1>
+    <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
+    Messtag: <input type="text" name="date" id="date"><br/>
+    Uhrenname: <input type="text" name="name" id="name"><br/>
+    Pendelperiode: <input type="text" name="period" id="period"><br/>
+</body>
+
+</html>
