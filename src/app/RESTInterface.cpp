@@ -197,6 +197,7 @@ std::string RESTInterface::getHeaderInformation(std::string::size_type length, b
         << "Date: " << timeString.str() 
         << "GMT + 1 (CET)\n"
         << "Server: REST Service - Clock Pendulum Analyzer\n"
+        << "Access-Control-Allow-Origin: * \n"
         << "Content-Type: text/plain; charset=utf-8\n Content-Length: " 
         << length << "\n\n";
 
