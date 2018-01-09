@@ -1,0 +1,36 @@
+body
+{
+    width: 900px;
+    background-color:#f4f5f4;
+}
+
+h1
+{
+    text-align: center;
+}
+
+input
+{
+    float:right;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+#right_box, #left_box
+{
+    width: 300px;
+    float: left;
+    margin-right: 20px;
+    padding: 5px;
+    border: 1px solid black;
+}
+#right_box
+{
+    width: 500px;
+}
+
+p
+{
+    margin: 0;
+    margin-top: 10px;
+}

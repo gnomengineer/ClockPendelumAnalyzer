@@ -3,33 +3,47 @@
     <title>Clock Pendulum Analyzer</title>
     <script language="javascript" type="text/javascript" src="functions.js"></script>
     <link href="jquery-ui.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <script src="external/jquery/jquery.js"></script>
     <script src="jquery-ui.js"></script>
     <script>
-$(document).ready(function(){
-    var responseObj;
-
-    var date = $( "#date" ).datepicker("yymmdd");
-    <!--$.datepicker.formatDate("yy-mm-dd",date);-->
-    $("button").click(function(){
-        $.ajax({
-            url: "http://localhost:8080?referenz",
-            dataType: "json",
-            success: function(response) {
-                responseObj = $.parseJSON(response);
-            }
+        $(document).ready(function(){
         });
-    });
-});
     </script>
 </head>
 
 <body>
     <h1>Clock Pendulum Analyzer</h1>
-    <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
-    Messtag: <input type="text" name="date" id="date"><br/>
-    Uhrenname: <input type="text" name="name" id="name"><br/>
-    Pendelperiode: <input type="text" name="period" id="period"><br/>
+    <div id="left_box">
+        <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
+        <p>Messtag: <input type="text" name="date" id="date"></p>
+        <p>Uhrenname: <input type="text" name="name" id="name"></p> 
+        <p>Pendelperiode: <input type="text" name="period" id="period"></p> 
+        <br/>
+        <p>
+            Abweichung pro Tag: 
+            <span id="day_differ"></span>
+        </p>
+        <p>
+            Abweichung seit Messbeginn:
+            <span id="measure_differ"></span>
+        </p>
+        <p>
+            Temperatur:
+            <span id="temp"></span>
+        </p>
+        <p>
+            Feuchtigkeit:
+            <span id="humidity"></span>
+        </p>
+    </div>
+    <div id="right_box">
+        Test
+    </div>
+    <script>
+        $("#refresh").button();
+        $("#date").datepicker();
+    </script>
 </body>
 
 </html>
