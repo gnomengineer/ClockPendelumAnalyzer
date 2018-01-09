@@ -8,6 +8,10 @@
     <script src="jquery-ui.js"></script>
     <script>
         $(document).ready(function(){
+            $("#refresh").click(function(){
+                httpGetAsync("http://localhost:8080?name=testclock_3"
+                    ,displayResponse);
+            });
         });
     </script>
 </head>
@@ -38,7 +42,14 @@
         </p>
     </div>
     <div id="right_box">
-        Test
+        <table id="table">
+            <tr>
+                <th>Uhrenname</th>
+                <th>Absolutzeit</th>
+                <th>Datum</th>
+                <th>Zeit</th>
+            </tr>
+        </table>
     </div>
     <script>
         $("#refresh").button();

@@ -1,6 +1,6 @@
 body
 {
-    width: 900px;
+    width: 1000px;
     background-color:#f4f5f4;
 }
 
@@ -16,6 +16,19 @@ input
     border-bottom: 1px solid black;
 }
 
+table
+{
+    width: 595px;
+    border-collapse: collapse;
+}
+
+table th, table td
+{
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+
 #right_box, #left_box
 {
     width: 300px;
@@ -26,7 +39,7 @@ input
 }
 #right_box
 {
-    width: 500px;
+    width: 600px;
 }
 
 p
