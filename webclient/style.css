@@ -58,10 +58,22 @@ table th, table td
     padding: 10px;
 }
 
-#info_text
+#info_text 
 {
     margin-top: 40px;
     margin-left: 20px;
+}
+#info_text_detail
+{
+    margin-left:20px;
+}
+.success
+{
+    color: #11731e;
+}
+.fail
+{
+    color: red;
 }
 
 p

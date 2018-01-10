@@ -2,8 +2,18 @@ function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            $("#info_text").text("Erfolgreich aktualisiert!");
+            $("#info_text").addClass("success");
             callback(xmlHttp.responseText);
+        } else if (xmlHttp.status == 500) {
+            $("#info_text").text("Fehler! Die gewünschten Messresultate konnten nicht gefunden werden.");
+            $("#info_text_detail").text($("#name").val() + " oder " + $("#date").val());
+            $("#info_text").addClass("fail");
+        } else if (xmlHttp.status == 501) {
+            $("#info_text").text("Fehler! Falsche Funktionalität abgerufen.");
+            $("#info_text").addClass("fail");
+        }
     }
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
     xmlHttp.send(null);
