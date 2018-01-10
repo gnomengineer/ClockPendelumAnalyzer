@@ -11,6 +11,7 @@
         $(document).ready(function(){
             $("#refresh").click(function(){
                 refreshInput($("#name").val(),$("#date").val());
+                calculateMeasureDiffer($("#name").val());
             });
         });
     </script>
@@ -23,7 +24,7 @@
             <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
             <p>Messtag: <input type="text" name="date" id="date"></p>
             <p>Uhrenname: <input type="text" name="name" id="name"></p> 
-            <p>Pendelperiode: <input type="text" name="period" id="period"></p> 
+            <p>Pendelperiode: <input type="text" name="period" value="1" id="period"></p> 
             <br/>
             <p>
                 Abweichung pro Tag: 

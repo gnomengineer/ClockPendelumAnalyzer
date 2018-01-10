@@ -34,7 +34,6 @@ function displayResponse(responseText)
     headRow.append($("<th></th>").text("Zeit"));
     $("#table").append(headRow);
 
-    console.log(response.payload);
     response.payload.forEach( function (item){
         //var object = $.parseJSON(item);
         var row = $("<tr></tr>");
@@ -56,9 +55,23 @@ function calculateDailyDiffer()
     
 }
 
-function calculateMeasureDiffer()
+function calculateMeasureDiffer(clockname)
 {
+    if(clockname === "")
+        clockname = "%"
+    var url = "http://192.168.192.75:8080?name=" + clockname;
+    httpGetAsync(url, function(data) {
+        var response = $.parseJSON(data);
+        var ticks = 0;
 
+        response.payload.forEach( function (item){
+            ticks += item.time;
+        });
+        
+        var measurediffer = ticks - (12000000 * $("#period").val() * response.payload.length);
+        measurediffer = measurediffer / 12000;
+        $("#measure_differ").text("~ " + measurediffer + "ms");
+    });
 }
 
 function refreshInput(clockname, date) 
@@ -80,7 +93,6 @@ function refreshInput(clockname, date)
 
     if ( clockname === "" )
         clockname = "%";
-    var url = "http://localhost:8080?name=" + clockname + "&date=" + date;
-    console.log(url);
+    var url = "http://192.168.192.75:8080?name=" + clockname + "&date=" + date;
     httpGetAsync(url, displayResponse);
 }
