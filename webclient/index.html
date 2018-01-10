@@ -18,26 +18,31 @@
 <body>
     <h1>Clock Pendulum Analyzer</h1>
     <div id="left_box">
-        <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
-        <p>Messtag: <input type="text" name="date" id="date"></p>
-        <p>Uhrenname: <input type="text" name="name" id="name"></p> 
-        <p>Pendelperiode: <input type="text" name="period" id="period"></p> 
-        <br/>
-        <p>
-            Abweichung pro Tag: 
-            <span id="day_differ"></span>
-        </p>
-        <p>
-            Abweichung seit Messbeginn:
-            <span id="measure_differ"></span>
-        </p>
-        <p>
-            Temperatur:
-            <span id="temp"></span>
-        </p>
-        <p>
-            Feuchtigkeit:
-            <span id="humidity"></span>
+        <div id="left_box_user">
+            <button type="button" id="refresh">Aktualisiere Ergebnisse</button><br/>
+            <p>Messtag: <input type="text" name="date" id="date"></p>
+            <p>Uhrenname: <input type="text" name="name" id="name"></p> 
+            <p>Pendelperiode: <input type="text" name="period" id="period"></p> 
+            <br/>
+            <p>
+                Abweichung pro Tag: 
+                <span id="day_differ"></span>
+            </p>
+            <p>
+                Abweichung seit Messbeginn:
+                <span id="measure_differ"></span>
+            </p>
+            <p>
+                Temperatur:
+                <span id="temp"></span>
+            </p>
+            <p>
+                Feuchtigkeit:
+                <span id="humidity"></span>
+            </p>
+        </div>
+        <p id="info_text">
+            
         </p>
     </div>
     <div id="right_box">
