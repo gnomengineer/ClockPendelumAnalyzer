@@ -66,6 +66,10 @@ table th, table td
 {
     margin-top:0px;
 }
+.info
+{
+    color: #90901b;
+}
 .success
 {
     color: #11731e;

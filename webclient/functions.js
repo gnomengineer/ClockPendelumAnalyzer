@@ -53,20 +53,26 @@ function displayResponse(responseText)
 
 function calculateDailyDiffer()
 {
-
+    
 }
 
-function calculateDailyDiffer()
+function calculateMeasureDiffer()
 {
 
 }
 
 function refreshInput(clockname, date) 
 {
+    $("#info_text").text("verarbeiten....");
+    $("#info_text").removeClass("fail");
+    $("#info_text").removeClass("success");
+    $("#info_text").addClass("info");
+    $("#info_text_detail").empty();
+
     if ( date != "" ){
         date = date.split("/");
-        var day = date[0];
-        var month = date[1];
+        var day = date[1];
+        var month = date[0];
         var year = date[2];
         date = year + month + day;
     } 
