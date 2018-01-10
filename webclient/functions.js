@@ -56,13 +56,11 @@ function refreshInput(clockname, date)
         var month = date[1];
         var year = date[2];
         date = year + month + day;
-    } else {
-        date = "*";
-    }
-
+    } 
+    date += "%";
 
     if ( clockname === "" )
-        clockname = "*";
+        clockname = "%";
     var url = "http://localhost:8080?name=" + clockname + "&date=" + date;
     console.log(url);
     httpGetAsync(url, displayResponse);
