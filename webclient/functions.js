@@ -27,9 +27,13 @@ function displayResponse(responseText)
         var row = $("<tr></tr>");
         row.append($("<td></td>").text(item.name));
         row.append($("<td></td>").text(item.time));
-        var dateTime = item.date.split("");
-        //var time = TODO join time (last 6)
-        //var datum = TODO join date (first 8)
+        var time = item.date.slice(8,14);
+        time = time.slice(0,2) + ":" + time.slice(2,4) + ":" + time.slice(4,6);
+        var datum = item.date.slice(0,8);
+        datum = datum.slice(0,4) + "-" + datum.slice(4,6) + "-" + datum.slice(6,8);
+        row.append($("<td></td>").text(datum));
+        row.append($("<td></td>").text(time));
+
         $("#table").append(row);
     })
 }
