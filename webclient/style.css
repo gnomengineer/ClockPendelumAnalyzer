@@ -40,6 +40,8 @@ table th, table td
 #right_box
 {
     width: 600px;
+    height: 500px;
+    overflow-y: auto;
 }
 
 p
