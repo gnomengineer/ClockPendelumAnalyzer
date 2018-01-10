@@ -68,7 +68,6 @@ int main( int argc, const char* argv[] ) {
             std::string s(argv[2]);
             if ( s == "false") {
                 isAutonom = false;
-                std::cout << "test" << std::endl;
             }
         }
 

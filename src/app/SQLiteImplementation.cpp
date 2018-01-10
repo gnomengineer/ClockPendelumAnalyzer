@@ -32,14 +32,12 @@ void SQLiteImplementation::disconnect(){
 std::list<DataTupel> SQLiteImplementation::getDataByDate(const std::string& date){
     m_Result.clear();
     getData("date", date);
-    std::cout << "return Data by Date" << std::endl;
     return m_Result;
 }
 
 std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name){
     m_Result.clear();
     getData("clock", name);
-    std::cout << "return Data by Name" << std::endl;
     return m_Result;
 }
 
@@ -98,7 +96,6 @@ int SQLiteImplementation::saveDataList(std::list<DataTupel> data){
             element != data.end(); ++element) {
         saveData(*element);
     }
-    std::cout << "data list saved" << std::endl;
     return m_ErrorCode;
 }
 
