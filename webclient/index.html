@@ -9,8 +9,7 @@
     <script>
         $(document).ready(function(){
             $("#refresh").click(function(){
-                httpGetAsync("http://localhost:8080?name=testclock_3"
-                    ,displayResponse);
+                refreshInput($("#name").val(),$("#date").val());
             });
         });
     </script>

@@ -48,4 +48,22 @@ function calculateDailyDiffer()
 
 }
 
+function refreshInput(clockname, date) 
+{
+    if ( date != "" ){
+        date = date.split("/");
+        var day = date[0];
+        var month = date[1];
+        var year = date[2];
+        date = year + month + day;
+    } else {
+        date = "*";
+    }
 
+
+    if ( clockname === "" )
+        clockname = "*";
+    var url = "http://localhost:8080?name=" + clockname + "&date=" + date;
+    console.log(url);
+    httpGetAsync(url, displayResponse);
+}
