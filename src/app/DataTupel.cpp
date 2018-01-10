@@ -30,7 +30,7 @@ void DataTupel::setClockName(const std::string& name){
 }
 
 void DataTupel::setDate(const std::string date){
-    if(std::regex_match(date,std::regex("[0-9]{8}"))){
+    if(std::regex_match(date,std::regex("[0-9]{14}"))){
         m_Date = date;
     }
 }
