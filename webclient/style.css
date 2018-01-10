@@ -58,14 +58,13 @@ table th, table td
     padding: 10px;
 }
 
-#info_text 
+#info_text , #info_text_detail
 {
-    margin-top: 40px;
-    margin-left: 20px;
+    margin: 20px;
 }
 #info_text_detail
 {
-    margin-left:20px;
+    margin-top:0px;
 }
 .success
 {

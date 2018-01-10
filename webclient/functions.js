@@ -7,9 +7,12 @@ function httpGetAsync(theUrl, callback)
             $("#info_text").addClass("success");
             callback(xmlHttp.responseText);
         } else if (xmlHttp.status == 500) {
-            $("#info_text").text("Fehler! Die gewünschten Messresultate konnten nicht gefunden werden.");
-            $("#info_text_detail").text($("#name").val() + " oder " + $("#date").val());
+            $("#info_text").text("Fehler! Die gesuchten Messresultate konnten nicht gefunden werden.");
+            var nameval = $("#name").val() === "" ? "*" : $("#name").val();
+            var dateval = $("#date").val() === "" ? "*" : $("#date").val();
+            $("#info_text_detail").text(nameval + " oder " + dateval);
             $("#info_text").addClass("fail");
+            $("#info_text_detail").addClass("fail");
         } else if (xmlHttp.status == 501) {
             $("#info_text").text("Fehler! Falsche Funktionalität abgerufen.");
             $("#info_text").addClass("fail");
