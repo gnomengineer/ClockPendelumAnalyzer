@@ -51,7 +51,16 @@
 
 \subsection{REST Service}
 \begin{frame}
-
+    \frametitle{REST Service}
+    \begin{itemize}
+        \item Einfacher Aufruf auf Daten von ausserhalb
+        \begin{itemize}
+            \item Uhrenname, Datum, Zeit, Absolute Ticks und Referenz
+            \item \textit{192.168.192.75:8080/?name=test\_uhr1\&date=20180104\%}
+        \end{itemize}
+        \item TCP Socket auf Port 8080
+        \item Abkopplung des Zugriffs
+    \end{itemize}
 \end{frame}
 
 \subsection{C++ Software}
