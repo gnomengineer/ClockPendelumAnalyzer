@@ -80,7 +80,9 @@ void RESTInterface::requestHandler(const int client) {
     std::string message(buffer);
     
     if(message.size() > 0) {
-        decodeMessage(message.substr(message.find("?")+1));
+        std::string parameters = message.substr(message.find("?")+1);
+        parameters = parameters.substr(0,parameters.find(" HTTP"));
+        decodeMessage(parameters);
         send(client, m_Response.c_str(), m_Response.size(), 0);
     }
 }
@@ -105,17 +107,13 @@ void RESTInterface::decodeMessage(const std::string& parameters){
 }
 
 std::string RESTInterface::getParam(const std::string& parameters, const int pos) {
-    int length;
-    if ((length = parameters.find("&")) == std::string::npos) {
-        length = parameters.find(" HTTP");
-    }
+    int length = parameters.find("&",pos);
     std::string first_param = parameters.substr(pos,length);
     return first_param.substr(first_param.find("=")+1);
 }
 
 void RESTInterface::generateNormalResponse() {
     std::list<DataTupel> results;
-    std::cout << "Parameters: " << m_DateParam << "|" << m_NameParam << ";" << std::endl;
     bool isSuccess = true;
     bool commandKnown = true;
 

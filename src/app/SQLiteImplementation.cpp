@@ -45,7 +45,7 @@ std::list<DataTupel> SQLiteImplementation::getDataByName(const std::string& name
 
 void SQLiteImplementation::getData(const std::string& key, const std::string& value) {
     std::stringstream sqlStatement;
-    sqlStatement << "SELECT * FROM " << TABLE << " WHERE " << key <<"= '"<< value << "';";
+    sqlStatement << "SELECT * FROM " << TABLE << " WHERE " << key <<" LIKE '"<< value << "';";
 
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
             callback, this, &m_SQLErrorMessage);
@@ -58,7 +58,7 @@ void SQLiteImplementation::getData(const std::string& key, const std::string& va
 std::list<DataTupel> SQLiteImplementation::getDataByNameDate(const std::string& name, const std::string& date) {
     m_Result.clear();
     std::stringstream sqlStatement;
-    sqlStatement << "SELECT * FROM " << TABLE << " WHERE clock = '"<< name << "' AND date = '" << date << "';";
+    sqlStatement << "SELECT * FROM " << TABLE << " WHERE clock LIKE '"<< name << "' AND date LIKE '" << date << "';";
 
     m_ErrorCode = sqlite3_exec(m_DataBase, sqlStatement.str().c_str(),
             callback, this, &m_SQLErrorMessage);
