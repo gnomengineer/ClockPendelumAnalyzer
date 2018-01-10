@@ -29,7 +29,7 @@ function displayResponse(responseText)
 
     var headRow = $("<tr></tr>");
     headRow.append($("<th></th>").text("Uhrenname"));
-    headRow.append($("<th></th>").text("Absolutzeit"));
+    headRow.append($("<th></th>").text("Ticks/s"));
     headRow.append($("<th></th>").text("Datum"));
     headRow.append($("<th></th>").text("Zeit"));
     $("#table").append(headRow);
